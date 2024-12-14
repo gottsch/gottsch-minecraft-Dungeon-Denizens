@@ -96,6 +96,11 @@ public class DeathTyrant extends Beholderkin {
 	}
 
 	@Override
+	public boolean requiresCustomPersistence() {
+		return !Config.Mobs.DEATH_TYRANT.despawn.get();
+	}
+
+	@Override
 	public int getAmbientSoundInterval() {
 		return 160;
 	}

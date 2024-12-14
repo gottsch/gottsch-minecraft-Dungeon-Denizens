@@ -402,12 +402,18 @@ public final class Config extends AbstractConfig {
 	 * 
 	 */
 	public static class BoulderConfig extends MobConfig {
-		// boulder specific		
+		// boulder specific
+		public BooleanValue despawn;
 
 		public BoulderConfig(ForgeConfigSpec.Builder builder) {
 			builder.comment(CATEGORY_DIV, " Boulder properties.", CATEGORY_DIV).push("boulder");				
 
 			spawnConfig = new CommonSpawnConfig(builder, false, 35, 1, 1,  MIN_HEIGHT, 60);//,
+
+			despawn = builder
+					.comment(" Whether the mob despawns or is persistent.",
+							" true = depsawns. Default.")
+					.define("despawns", true);
 
 			builder.pop();
 		}
@@ -467,6 +473,7 @@ public final class Config extends AbstractConfig {
 		public IntValue maxSummonSpawns;
 
 		public IntValue summonDaemonCooldownTime;
+		public BooleanValue despawn;
 
 		public BeholderConfig(ForgeConfigSpec.Builder builder) {
 			builder.comment(CATEGORY_DIV, " Beholder properties.", CATEGORY_DIV).push(Registration.BEHOLDER);
@@ -503,6 +510,11 @@ public final class Config extends AbstractConfig {
 					.comment(" The cooldown time of a summon daemon spell (measured in ticks).")
 					.defineInRange("summonCooldownTime", 2400, 1, Integer.MAX_VALUE);
 
+			despawn = builder
+					.comment(" Whether the mob despawns or is persistent.",
+							" true = depsawns. Default.")
+					.define("despawns", true);
+
 			builder.pop();
 		}
 	}
@@ -517,6 +529,7 @@ public final class Config extends AbstractConfig {
 		public IntValue minSummonSpawns;
 		public IntValue maxSummonSpawns;
 		public IntValue summonDaemonCooldownTime;
+		public BooleanValue despawn;
 
 		public DeathTyrantConfig(ForgeConfigSpec.Builder builder) {
 			builder.comment(CATEGORY_DIV, " Death Tyrant properties.", CATEGORY_DIV).push(Registration.DEATH_TYRANT);
@@ -552,6 +565,11 @@ public final class Config extends AbstractConfig {
 			summonDaemonCooldownTime = builder
 					.comment(" The cooldown time of a summon daemon spell (measured in ticks).")
 					.defineInRange("summonCooldownTime", 2400, 1, Integer.MAX_VALUE);
+
+			despawn = builder
+					.comment(" Whether the mob despawns or is persistent.",
+							" true = depsawns. Default.")
+					.define("despawns", true);
 
 			builder.pop();
 		}
@@ -650,6 +668,7 @@ public final class Config extends AbstractConfig {
 		public DoubleValue poisonProbability;
 		public IntValue poisonDuration;
 		public IntValue blindnessDuration;
+		public BooleanValue despawn;
 
 		public ShadowlordConfig(ForgeConfigSpec.Builder builder) {
 			builder.comment(CATEGORY_DIV, " Shadowlord properties.", CATEGORY_DIV).push(Registration.SHADOWLORD);				
@@ -699,6 +718,10 @@ public final class Config extends AbstractConfig {
 					.comment(" The length of time blindness from Aura of Blindess lasts (measured in ticks).")
 					.defineInRange("blindnessDuration", 40, 1, Integer.MAX_VALUE);
 
+			despawn = builder
+					.comment(" Whether the mob despawns or is persistent.",
+							" true = depsawns. Default.")
+					.define("despawns", true);
 
 			builder.pop();
 		}
@@ -712,6 +735,7 @@ public final class Config extends AbstractConfig {
 		public IntValue firespoutCooldownTime;
 		public IntValue firespoutMaxDistance;
 		public IntValue summonedLifespan;
+		public BooleanValue despawn;
 
 
 		public DaemonConfig(ForgeConfigSpec.Builder builder) {
@@ -734,6 +758,12 @@ public final class Config extends AbstractConfig {
 					.comment(" The duration in ticks that a summoned daemon can remain before returning to whence it came.")
 					.defineInRange("summonedLifespan", 1200
 							, 600, Integer.MAX_VALUE);
+
+			despawn = builder
+					.comment(" Whether the mob despawns or is persistent.",
+							" true = depsawns. Default.")
+							.define("despawns", true);
+
 			builder.pop();
 		}
 	}

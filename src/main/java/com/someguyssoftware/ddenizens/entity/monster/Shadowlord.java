@@ -100,7 +100,6 @@ public class Shadowlord extends DenizensMonster {
 	 */
 	public Shadowlord(EntityType<? extends Monster> entityType, Level level) {
 		super(entityType, level, MonsterSize.LARGE);
-//		setPersistenceRequired();
 		this.xpReward = 8;
 	}
 
@@ -152,6 +151,11 @@ public class Shadowlord extends DenizensMonster {
 				.add(Attributes.KNOCKBACK_RESISTANCE, 0.8)
 				.add(Attributes.MOVEMENT_SPEED, 0.2F)
 				.add(Attributes.FOLLOW_RANGE, 80D);
+	}
+
+	@Override
+	public boolean requiresCustomPersistence() {
+		return !Config.Mobs.SHADOWLORD.despawn.get();
 	}
 
 	@Override

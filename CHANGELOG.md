@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2024-12-14
+
+### Changed
+
+- Removed Patchouli book added to inventory on first join. It is still available in the Creative DD tab.
+- Mobs that didn't despawn now despawn by default but can be set with config option.
+
+### Added
+
+- Config options for despawning for Daemon, Beholder, Death Tyrant, Shadowlord, Boulder. Default = true.
+
 ## [1.4.2] - 2024-09-12
 
 ### Changed

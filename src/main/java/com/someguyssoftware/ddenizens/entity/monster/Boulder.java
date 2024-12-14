@@ -128,13 +128,8 @@ public class Boulder extends DenizensMonster implements IDenizensMonster {
 	}
 
 	@Override
-	public void checkDespawn() {
-		// does NOT despawn
-	}
-
-	@Override
-	public boolean removeWhenFarAway(double distance) {
-		return false;
+	public boolean requiresCustomPersistence() {
+		return !Config.Mobs.BOULDER.despawn.get();
 	}
 
 	@Override
