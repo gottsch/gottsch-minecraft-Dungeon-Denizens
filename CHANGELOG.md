@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2025-07-16
+
+### Changed
+- Tweaked Orc attributes - Attack = 3.25 (zombie = 3), added slight Knockback = 0.2, added Armor =2 (zombie = 2), lowered health = 25 (zombie = 20)
+
+
 ## [1.5.0] - 2024-12-14
 
 ### Changed

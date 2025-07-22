@@ -29,6 +29,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
@@ -146,6 +147,17 @@ public abstract class DenizensMonster extends Monster implements IDenizensMonste
 				owner = (LivingEntity)((ServerLevel)this.level()).getEntity(uuid);
 			}
 			this.setSummonedOwner(owner);
+		}
+	}
+
+	public void faceTarget(LivingEntity target) {
+		if (target != null) {
+			if (target.distanceToSqr(this) < 4096.0D) {
+				double deltaX = target.getX() - getX();
+				double deltaY = target.getZ() - getZ();
+				setYRot(-((float) Mth.atan2(deltaX, deltaY)) * (180F / (float)Math.PI));
+				yBodyRot = getYRot();
+			}
 		}
 	}
 

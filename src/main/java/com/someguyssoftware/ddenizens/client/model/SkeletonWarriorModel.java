@@ -41,13 +41,13 @@ public class SkeletonWarriorModel<T extends Mob> extends HumanoidModel<T> {
 
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(DD.MODID, "skeleton_warrior_model"), "main");
 
-    protected Rotations rightArmRots;
-    protected Rotations leftArmRots;
+    protected Rotation rightArmRots;
+    protected Rotation leftArmRots;
 
     public SkeletonWarriorModel(ModelPart root) {
         super(root);
-        rightArmRots = new Rotations(this.rightArm);
-        leftArmRots = new Rotations(this.leftArm);
+        rightArmRots = new Rotation(this.rightArm);
+        leftArmRots = new Rotation(this.leftArm);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -90,7 +90,7 @@ public class SkeletonWarriorModel<T extends Mob> extends HumanoidModel<T> {
         setupAttackAnimation(entity, ageInTicks);
     }
 
-    public void resetRotations(ModelPart part, Rotations rotations) {
+    public void resetRotations(ModelPart part, Rotation rotations) {
 //        part.xRot = rotations.x();
         part.yRot = rotations.y();
         part.zRot = rotations.z();

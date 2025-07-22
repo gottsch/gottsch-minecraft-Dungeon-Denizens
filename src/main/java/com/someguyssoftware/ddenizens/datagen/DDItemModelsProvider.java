@@ -20,6 +20,7 @@
 package com.someguyssoftware.ddenizens.datagen;
 
 import com.someguyssoftware.ddenizens.DD;
+import com.someguyssoftware.ddenizens.item.ModItems;
 import com.someguyssoftware.ddenizens.setup.Registration;
 
 import net.minecraft.data.PackOutput;
@@ -102,6 +103,7 @@ public class DDItemModelsProvider extends ItemModelProvider {
         withExistingParent(Registration.FOSSILIZED_SKELETON_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(Registration.IRON_SKELETON_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(Registration.MAGMA_SKELETON_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.GARGOYLE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
     }
 }

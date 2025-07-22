@@ -35,7 +35,6 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 
 /**
@@ -50,11 +49,11 @@ public class ShadowModel<T extends Mob> extends HumanoidModel<T> {
 
 	public ModelPart leftHip;
 	public ModelPart rightHip;
-	protected Rotations rightArmRots;
-	protected Rotations leftArmRots;
+	protected Rotation rightArmRots;
+	protected Rotation leftArmRots;
 
-	protected Rotations rightHipRots;
-	protected Rotations leftHipRots;
+	protected Rotation rightHipRots;
+	protected Rotation leftHipRots;
 	
 	/**
 	 * 
@@ -66,10 +65,10 @@ public class ShadowModel<T extends Mob> extends HumanoidModel<T> {
 		this.leftHip = leftLeg.getChild("leftHip");
 		this.rightHip = rightLeg.getChild("rightHip");
 
-		rightArmRots = new Rotations(this.rightArm);
-		leftArmRots = new Rotations(this.leftArm);
-		rightHipRots = new Rotations(this.rightHip);
-		leftHipRots = new Rotations(this.leftHip);
+		rightArmRots = new Rotation(this.rightArm);
+		leftArmRots = new Rotation(this.leftArm);
+		rightHipRots = new Rotation(this.rightHip);
+		leftHipRots = new Rotation(this.leftHip);
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -119,7 +118,7 @@ public class ShadowModel<T extends Mob> extends HumanoidModel<T> {
 		setupAttackAnimation(entity, ageInTicks);
 	}
 
-	public void resetArm(ModelPart part, Rotations rotations) {
+	public void resetArm(ModelPart part, Rotation rotations) {
 		part.xRot = rotations.x();
 		part.yRot = rotations.y();
 		part.zRot = rotations.z();

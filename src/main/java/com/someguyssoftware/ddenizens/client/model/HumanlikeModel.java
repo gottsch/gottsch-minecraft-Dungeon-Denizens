@@ -34,27 +34,18 @@ import net.minecraft.world.entity.Entity;
  *
  * @param <T>
  */
-public abstract class DDModel<T extends Entity> extends EntityModel<T> implements IHumanlikeModel {
+public abstract class HumanlikeModel<T extends Entity> extends EntityModel<T> implements IHumanoidModel {
 
 	public abstract void resetSwing(T entity, ModelPart body, ModelPart rightArm, ModelPart leftArm);
 
-	public DDModel() {
+	public HumanlikeModel() {
 		super();
 	}
 
-	public DDModel(Function<ResourceLocation, RenderType> renderType) {
+	public HumanlikeModel(Function<ResourceLocation, RenderType> renderType) {
 		super(renderType);
 	}
 
-	@Override
-	public abstract ModelPart getHead();
-	@Override
-	public abstract ModelPart getBody();
-	@Override
-	public abstract ModelPart getRightArm();
-	@Override
-	public abstract ModelPart getLeftArm();
-	
 	/**
 	 * 
 	 * @return

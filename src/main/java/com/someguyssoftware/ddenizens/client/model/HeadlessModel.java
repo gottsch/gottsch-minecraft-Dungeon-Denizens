@@ -23,7 +23,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.someguyssoftware.ddenizens.DD;
 
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -42,7 +41,7 @@ import net.minecraft.world.entity.Entity;
  *
  * @param <T>
  */
-public class HeadlessModel<T extends Entity> extends DDModel<T> {
+public class HeadlessModel<T extends Entity> extends HumanlikeModel<T> {
 	public static final String MODEL_NAME = "headless_model";
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(DD.MODID, MODEL_NAME), "main");
 
@@ -251,5 +250,15 @@ public class HeadlessModel<T extends Entity> extends DDModel<T> {
 	
 	public ModelPart getLeftArm() {
 		return leftArm;
+	}
+
+	@Override
+	public ModelPart getRightLeg() {
+		return this.rightLeg;
+	}
+
+	@Override
+	public ModelPart getLeftLeg() {
+		return this.leftLeg;
 	}
 }

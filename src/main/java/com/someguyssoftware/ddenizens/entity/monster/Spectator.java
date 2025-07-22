@@ -169,6 +169,7 @@ public class Spectator extends Beholderkin {
 			return false;
 		}
 
+		// initialize goal
 		public void start() {
 			LivingEntity livingentity = this.mob.getTarget();
 			if (livingentity != null) {
@@ -180,6 +181,7 @@ public class Spectator extends Beholderkin {
 			this.mob.playSound(SoundEvents.VEX_CHARGE, 1.0F, 1.0F);
 		}
 
+		// clean up when goal is complete
 		public void stop() {
 			this.setIsCharging(false);
 		}
@@ -189,6 +191,7 @@ public class Spectator extends Beholderkin {
 			return true;
 		}
 
+		// execute while goal is running
 		public void tick() {
 			LivingEntity livingentity = Spectator.this.getTarget();
 			if (livingentity != null) {

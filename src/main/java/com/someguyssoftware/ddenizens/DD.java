@@ -19,6 +19,8 @@
  */
 package com.someguyssoftware.ddenizens;
 
+import com.someguyssoftware.ddenizens.entity.ModEntities;
+import com.someguyssoftware.ddenizens.item.ModItems;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,6 +47,8 @@ public class DD {
 
 	public DD() {
         // register the deferred registries
+        ModItems.init();
+        ModEntities.init();
         Registration.init();
         Config.register();
 

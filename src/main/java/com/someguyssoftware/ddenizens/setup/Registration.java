@@ -17,18 +17,14 @@
  */
 package com.someguyssoftware.ddenizens.setup;
 
-import java.awt.*;
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import com.someguyssoftware.ddenizens.DD;
-import com.someguyssoftware.ddenizens.capability.GhoulCapability;
+import com.someguyssoftware.ddenizens.entity.ModEntities;
 import com.someguyssoftware.ddenizens.entity.monster.*;
 import com.someguyssoftware.ddenizens.entity.monster.skeleton.FossilizedSkeleton;
 import com.someguyssoftware.ddenizens.entity.monster.skeleton.IronSkeleton;
 import com.someguyssoftware.ddenizens.entity.monster.skeleton.MagmaSkeleton;
 import com.someguyssoftware.ddenizens.entity.projectile.*;
-
 import com.someguyssoftware.ddenizens.item.*;
 import com.someguyssoftware.ddenizens.util.LangUtil;
 import net.minecraft.core.particles.ParticleType;
@@ -40,13 +36,14 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeSpawnEggItem;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 /**
  * Setup deferred registries. Original developer defined all block, items, entities etc here.
@@ -326,6 +323,7 @@ public class Registration {
 	public static final RegistryObject<SoundEvent> WINGED_SKELETON_FLAP = registerSoundEvent("winged_skeleton_flap");
 
 	// NOTE must add mob to ALL_MOBS collection in order to register them to the biomes - see CommonSetup.onBiomeLoading
+	// NOTE 7/3/2025 - this doesn't apply to 1.20.1+ as Biomes are handled in data files.
 	static {
 		ALL_MOBS.add(HEADLESS_ENTITY_TYPE);
 		ALL_MOBS.add(GHOUL_ENTITY_TYPE);
@@ -341,6 +339,9 @@ public class Registration {
 		ALL_MOBS.add(SKELETON_WARRIOR_TYPE);
 		ALL_MOBS.add(WINGED_SKELETON_TYPE);
 		ALL_MOBS.add(FOSSILIZED_SKELETON_TYPE);
+		ALL_MOBS.add(MAGMA_SKELETON_TYPE);
+		ALL_MOBS.add(IRON_SKELETON_TYPE);
+		ALL_MOBS.add(ModEntities.GARGOYLE_TYPE);
 	}
 	
 	/**

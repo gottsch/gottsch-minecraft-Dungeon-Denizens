@@ -28,7 +28,6 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.network.protocol.game.ClientboundMoveEntityPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -48,18 +47,18 @@ public class MagmaSkeletonModel<T extends Mob> extends SkeletonWarriorModel<T> {
     public ModelPart rightArm2;
     public ModelPart leftArm2;
 
-    public Rotations rightArmRots;
-    public Rotations rightArmRots2;
-    public Rotations leftArmRots;
-    public Rotations leftArmRots2;
-    public Positions headPos;
-    public Positions bodyPos;
-    public Positions rightArmPos;
-    public Positions rightArmPos2;
-    public Positions leftArmPos;
-    public Positions leftArmPos2;
-    public Positions rightLegPos;
-    public Positions leftLegPos;
+    public Rotation rightArmRots;
+    public Rotation rightArmRots2;
+    public Rotation leftArmRots;
+    public Rotation leftArmRots2;
+    public Position headPos;
+    public Position bodyPos;
+    public Position rightArmPos;
+    public Position rightArmPos2;
+    public Position leftArmPos;
+    public Position leftArmPos2;
+    public Position rightLegPos;
+    public Position leftLegPos;
 
     public MagmaSkeletonModel(ModelPart root) {
         super(root);
@@ -70,18 +69,18 @@ public class MagmaSkeletonModel<T extends Mob> extends SkeletonWarriorModel<T> {
         rightArm2 = root.getChild("right_arm2");
         leftArm2 = root.getChild("left_arm2");
 
-        rightArmRots = new Rotations(this.rightArm);
-        leftArmRots = new Rotations(this.leftArm);
+        rightArmRots = new Rotation(this.rightArm);
+        leftArmRots = new Rotation(this.leftArm);
 
-        rightArmRots2 = new Rotations(this.rightArm2);
-        leftArmRots2 = new Rotations(this.leftArm2);
+        rightArmRots2 = new Rotation(this.rightArm2);
+        leftArmRots2 = new Rotation(this.leftArm2);
 
         // save all the original positions
-        bodyPos = new Positions(this.body);
-        rightArmPos = new Positions(rightArm);
-        rightArmPos2 = new Positions(rightArm2);
-        leftArmPos = new Positions(leftArm);
-        leftArmPos2 = new Positions(leftArm2);
+        bodyPos = new Position(this.body);
+        rightArmPos = new Position(rightArm);
+        rightArmPos2 = new Position(rightArm2);
+        leftArmPos = new Position(leftArm);
+        leftArmPos2 = new Position(leftArm2);
      }
 
     public static LayerDefinition createBodyLayer() {

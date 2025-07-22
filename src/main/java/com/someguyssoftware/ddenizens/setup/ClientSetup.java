@@ -24,6 +24,7 @@ import com.someguyssoftware.ddenizens.DD;
 import com.someguyssoftware.ddenizens.client.model.*;
 import com.someguyssoftware.ddenizens.client.renderer.entity.*;
 
+import com.someguyssoftware.ddenizens.entity.ModEntities;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -66,6 +67,8 @@ public class ClientSetup {
 		event.registerLayerDefinition(IronSkeletonModel.LAYER_LOCATION, IronSkeletonModel::createBodyLayer);
 		event.registerLayerDefinition(MagmaSkeletonModel.LAYER_LOCATION, MagmaSkeletonModel::createBodyLayer);
 
+		event.registerLayerDefinition(GargoyleModel.LAYER_LOCATION, GargoyleModel::createBodyLayer);
+
 	}
 
 	/**
@@ -90,6 +93,9 @@ public class ClientSetup {
 		event.registerEntityRenderer(Registration.FOSSILIZED_SKELETON_TYPE.get(), FossilizedSkeletonRenderer::new);
 		event.registerEntityRenderer(Registration.IRON_SKELETON_TYPE.get(), IronSkeletonRenderer::new);
 		event.registerEntityRenderer(Registration.MAGMA_SKELETON_TYPE.get(), MagmaSkeletonRenderer::new);
+
+		event.registerEntityRenderer(ModEntities.GARGOYLE_TYPE.get(), GargoyleRenderer::new);
+
 
 		event.registerEntityRenderer(Registration.PARALYSIS_SPELL_ENTITY_TYPE.get(), (provider) -> {
             // 1.0 = scale, true = full bright

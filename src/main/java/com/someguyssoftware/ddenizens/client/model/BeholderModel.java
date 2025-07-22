@@ -22,7 +22,6 @@ package com.someguyssoftware.ddenizens.client.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.someguyssoftware.ddenizens.DD;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -31,7 +30,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -67,7 +65,7 @@ public class BeholderModel<T extends Entity> extends BeholderkinModel<T> {
 	private float headY;
 
 	private ModelPart[] eyeStalks = new ModelPart[6];
-	private Rotations[] eyeStalkRotations = new Rotations[6];
+	private Rotation[] eyeStalkRotations = new Rotation[6];
 	private int[] eyeStalkOffsets = new int[6];
 	private float[] eyeStalkSpeeds = new float[6];
 	private float[] directions = new float[6];
@@ -99,7 +97,7 @@ public class BeholderModel<T extends Entity> extends BeholderkinModel<T> {
 
 		Random random = new Random();
 		for (int i = 0; i < 6; i++) {
-			eyeStalkRotations[i] = new Rotations(eyeStalks[i].xRot, eyeStalks[i].yRot, eyeStalks[i].zRot);
+			eyeStalkRotations[i] = new Rotation(eyeStalks[i].xRot, eyeStalks[i].yRot, eyeStalks[i].zRot);
 			eyeStalkOffsets[i] = random.nextInt(0, 180);
 			eyeStalkSpeeds[i] = random.nextFloat(0.02F, 0.05F);
 			directions[i] = random.nextInt() % 2 == 0 ? 1F: -1F;

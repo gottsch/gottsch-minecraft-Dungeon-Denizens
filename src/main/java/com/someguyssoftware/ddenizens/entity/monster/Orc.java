@@ -114,9 +114,10 @@ public class Orc extends DenizensMonster {
 	 */
 	public static AttributeSupplier.Builder createAttributes() {
 		return Monster.createMonsterAttributes()
-				.add(Attributes.ATTACK_DAMAGE, 3D)
-				.add(Attributes.ATTACK_KNOCKBACK)
-				.add(Attributes.MAX_HEALTH, 30.0)
+				.add(Attributes.ATTACK_DAMAGE, 3.25D)
+				.add(Attributes.ATTACK_KNOCKBACK, 0.2D)
+				.add(Attributes.ARMOR, (double)2.0F)
+				.add(Attributes.MAX_HEALTH, 25.0)
 				.add(Attributes.FOLLOW_RANGE, 20.0)
 				.add(Attributes.MOVEMENT_SPEED, 0.25F);                
 	}
