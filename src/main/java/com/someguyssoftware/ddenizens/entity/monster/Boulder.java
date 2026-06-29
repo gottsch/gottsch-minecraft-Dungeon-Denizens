@@ -316,7 +316,7 @@ public class Boulder extends DenizensMonster implements IDenizensMonster {
 			this.setAmount(tag.getFloat("amount"));
 		}
 		if (tag.contains("bodyAmount")) {
-			this.setAmount(tag.getFloat("bodyAmount"));
+			this.setBodyAmount(tag.getFloat("bodyAmount"));
 		}
 	}
 
