@@ -20,8 +20,10 @@
 package com.someguyssoftware.ddenizens.entity.monster;
 
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.Random;
 
+import com.someguyssoftware.ddenizens.config.Config;
 import com.someguyssoftware.ddenizens.entity.projectile.Rock;
 import com.someguyssoftware.ddenizens.setup.Registration;
 
@@ -88,7 +90,7 @@ public class Orc extends DenizensMonster {
 	public Orc(EntityType<? extends Monster> entityType, Level level) {
 		super(entityType, level, MonsterSize.MEDIUM);
 		Arrays.fill(this.handDropChances, 0.25F);
-//		this.reassessWeaponGoal();
+		this.reassessWeaponGoal();
 	}
 
 	protected void registerGoals() {
@@ -98,7 +100,7 @@ public class Orc extends DenizensMonster {
 			}
 			return false;
 		}));
-		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0D, false));
+		// the priority-4 attack goal (melee or rock-throwing) is added by reassessWeaponGoal() based on isRanged()
 		this.goalSelector.addGoal(5, new MoveThroughVillageGoal(this, 1.0D, true, 4, () -> true));
 		this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 		this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
@@ -150,7 +152,13 @@ public class Orc extends DenizensMonster {
 
 		// arm the orc
 		this.populateDefaultEquipmentSlots(level.getRandom(), difficulty);
-//		this.reassessWeaponGoal();
+
+		// chance to be a ranged rock-thrower instead of a melee fighter
+		if (this.random.nextDouble() < Config.Mobs.ORC.rangedProbability.get()) {
+			this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+			this.setRanged(true);
+		}
+		this.reassessWeaponGoal();
 
 		Random random = new Random();
 		byte data = 0;
@@ -178,8 +186,7 @@ public class Orc extends DenizensMonster {
 		if (this.level() != null && !this.level().isClientSide) {
 			this.goalSelector.removeGoal(this.meleeGoal);
 			this.goalSelector.removeGoal(this.rockGoal);
-			ItemStack itemStack = this.getMainHandItem();
-			if (itemStack == ItemStack.EMPTY) {
+			if (this.isRanged()) {
 				this.goalSelector.addGoal(4, this.rockGoal);
 			} else {
 				this.goalSelector.addGoal(4, this.meleeGoal);
@@ -243,7 +250,7 @@ public class Orc extends DenizensMonster {
 		if (tag.contains(IS_RANGED_TAG)) {
 			this.setRanged(tag.getBoolean(IS_RANGED_TAG));
 		}
-//		DD.LOGGER.debug("isRanged -> {}", this.isRanged());
+		this.reassessWeaponGoal();
 	}
 
 
@@ -253,15 +260,17 @@ public class Orc extends DenizensMonster {
 	static class OrcThrowRockGoal extends Goal {
 		private static final int DEFAULT_CHARGE_TIME = 40;
 		private static final float DEFAULT_ATTACK_RADIUS = 16F;
+		private static final int MELEE_COOLDOWN_TIME = 20;
+		private static final float RETREAT_RANGE_FACTOR = 0.45F;
 		private Orc orc;
 		private final double speedModifier;
 		private int maxChargeTime;
 		private int chargeTime;
+		private int meleeCooldown;
+		private int stuckTicks;
+		private double prevDistSqr;
 
 		private float attackRadiusSqr;
-		private boolean strafingClockwise;
-		private boolean strafingBackwards;
-		private int strafingTime = -1;
 
 		/*
 		 * 
@@ -275,6 +284,7 @@ public class Orc extends DenizensMonster {
 			this.speedModifier = speedModifier;
 			this.maxChargeTime = maxChargeTime;
 			this.attackRadiusSqr = attackRadius * attackRadius;
+			this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
 		}
 
 		@Override
@@ -311,70 +321,87 @@ public class Orc extends DenizensMonster {
 			if (target != null) {
 				double d0 = orc.distanceToSqr(target.getX(), target.getY(), target.getZ());
 				boolean canSee = orc.getSensing().hasLineOfSight(target);
-				boolean isCharging = this.chargeTime > 0;
-				if (canSee != isCharging) {
-					this.chargeTime = 0;
-				}
 
-				if (canSee) {
-					++chargeTime;
+				boolean inMeleeRange = d0 <= this.getAttackReachSqr(target);
+
+				// is the player in the band where the orc would rather back away?
+				boolean inRetreatBand = !inMeleeRange && canSee
+						&& d0 <= (double)this.attackRadiusSqr
+						&& d0 < (double)(this.attackRadiusSqr * RETREAT_RANGE_FACTOR);
+
+				// "can't escape" = in the retreat band but not actually gaining distance (cornered,
+				// or the target is keeping pace). Judge by distance gained — the pathfinder hands
+				// back a path even when boxed in, and a wall-shuffle keeps a little velocity.
+				if (inRetreatBand && d0 <= this.prevDistSqr + 0.05D) {
+					this.stuckTicks++;
 				} else {
-					--chargeTime;
+					this.stuckTicks = 0;
 				}
+				this.prevDistSqr = d0;
+				boolean cantEscape = this.stuckTicks >= 8;
 
-				// check if within the attack radius. if so, start strafing, else move closer to target
-				if (!(d0 > (double)this.attackRadiusSqr) && this.chargeTime >= 20) {
+				// movement tiers: point-blank -> stand and fight; too far / no sight -> approach;
+				// retreat band and able to escape -> back away; else -> hold ground and throw.
+				boolean throwing = false;
+				if (inMeleeRange) {
 					orc.getNavigation().stop();
-					++this.strafingTime;
-				} else {
+					orc.faceTarget(target);
+				} else if (d0 > (double)this.attackRadiusSqr || !canSee) {
 					orc.getNavigation().moveTo(target, this.speedModifier);
-					this.strafingTime = -1;
-				}
-
-				// if strafing for over a 1 sec, change directions
-				if (this.strafingTime >= 20) {
-					if ((double)orc.getRandom().nextFloat() < 0.3D) {
-						this.strafingClockwise = !this.strafingClockwise;
+				} else if (inRetreatBand && !cantEscape) {
+					Vec3 away = new Vec3(orc.getX() - target.getX(), 0.0D, orc.getZ() - target.getZ());
+					if (away.lengthSqr() > 1.0E-4D) {
+						Vec3 dest = orc.position().add(away.normalize().scale(5.0D));
+						orc.getNavigation().moveTo(dest.x, dest.y, dest.z, this.speedModifier);
 					}
-
-					if ((double)orc.getRandom().nextFloat() < 0.3D) {
-						this.strafingBackwards = !this.strafingBackwards;
-					}
-
-					this.strafingTime = 0;
-				}
-
-				// if not strafing
-				if (this.strafingTime > -1) {
-					if (d0 > (double)(this.attackRadiusSqr * 0.75F)) {
-						this.strafingBackwards = false;
-					} else if (d0 < (double)(this.attackRadiusSqr * 0.25F)) {
-						this.strafingBackwards = true;
-					}
-
-					orc.getMoveControl().strafe(this.strafingBackwards ? -0.5F : 0.5F, this.strafingClockwise ? 0.5F : -0.5F);
-					orc.lookAt(target, 30.0F, 30.0F);
 				} else {
-					orc.getLookControl().setLookAt(target, 30.0F, 30.0F);
+					// in throwing range (or cornered with no escape): stand, face, and throw
+					orc.getNavigation().stop();
+					orc.faceTarget(target);
+					throwing = true;
+				}
+				orc.getLookControl().setLookAt(target, 30.0F, 30.0F);
+
+				// point-blank: it can't keep its distance, so it defends with fists on a cooldown.
+				if (this.meleeCooldown > 0) {
+					this.meleeCooldown--;
+				}
+				if (inMeleeRange && this.meleeCooldown <= 0) {
+					orc.swing(InteractionHand.MAIN_HAND);
+					orc.doHurtTarget(target);
+					this.meleeCooldown = MELEE_COOLDOWN_TIME;
 				}
 
-				// TODO add test for x time and add weapon to hand.
-				// ie. if chargeTime > 0 and hand is empty then add rock item to hand
-				
-				if (chargeTime >= maxChargeTime) {
+				// throw only while holding ground (in range or cornered, facing the target) and
+				// not in melee — never mid-retreat with its back turned.
+				if (!throwing || !canSee || inMeleeRange) {
+					this.chargeTime = 0;
+				} else if (++this.chargeTime >= this.maxChargeTime) {
 					orc.swing(InteractionHand.MAIN_HAND);
-					
-					// TODO remove rock item from hand
-					
-					// view vector
-					Vec3 vec3 = orc.getViewVector(1.0F);
-					double x = target.getX() - (this.orc.getX() + vec3.x * 1.0D);
-					double y = target.getY(0.5D) - (this.orc.getY(0.5D));
-					double z = target.getZ() - (this.orc.getZ() + vec3.z * 1.0D);
+
+					// spawn at the orc's throwing (right) hand — forward, off to the side, and
+					// around shoulder height — so it reads as a throw rather than a spit.
+					Vec3 view = orc.getViewVector(1.0F);
+					double fx = view.x;
+					double fz = view.z;
+					double fLen = Math.sqrt(fx * fx + fz * fz);
+					if (fLen < 1.0E-4D) {
+						fLen = 1.0D;
+					}
+					fx /= fLen;
+					fz /= fLen;
+					// orc's right-hand side (perpendicular to facing, on the ground plane)
+					double rightX = -fz;
+					double rightZ = fx;
+					final double FORWARD_OFFSET = 0.3D;
+					final double SIDE_OFFSET = 0.45D;
+					double spawnX = orc.getX() + fx * FORWARD_OFFSET + rightX * SIDE_OFFSET;
+					double spawnY = orc.getEyeY() - 0.3D;
+					double spawnZ = orc.getZ() + fz * FORWARD_OFFSET + rightZ * SIDE_OFFSET;
 					Rock rock = new Rock(Registration.ROCK_ENTITY_TYPE.get(), orc.level());
-					rock.init(this.orc, x, y, z);
-					rock.setPos(this.orc.getX() + vec3.x * 1.0D, this.orc.getY(0.5D), rock.getZ() + vec3.z * 1.0);
-					orc.level().addFreshEntity(rock);					
+					rock.setPos(spawnX, spawnY, spawnZ);
+					rock.lobTo(this.orc, target.getX(), target.getY(0.5D), target.getZ(), 0.8D);
+					orc.level().addFreshEntity(rock);
 					chargeTime = 0;
 				}
 

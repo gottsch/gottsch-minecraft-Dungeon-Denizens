@@ -374,10 +374,17 @@ public final class Config extends AbstractConfig {
 	 *
 	 */
 	public static class OrcConfig extends MobConfig {
+		public DoubleValue rangedProbability;
+
 		public OrcConfig(ForgeConfigSpec.Builder builder) {
 			builder.comment(CATEGORY_DIV, " Orc properties.", CATEGORY_DIV).push(Registration.ORC);
 			spawnConfig = new CommonSpawnConfig(builder, true, 35, 1, 2, MIN_HEIGHT, MAX_HEIGHT);//,
 //					new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), Arrays.asList(BiomeCategory.NETHER.getName(), BiomeCategory.THEEND.getName()));
+
+			rangedProbability = builder
+					.comment(" The chance (0.0 - 1.0) that an Orc spawns as a ranged rock-thrower instead of a melee fighter.")
+					.defineInRange("rangedProbability", 0.15, 0.0, 1.0);
+
 			builder.pop();
 		}
 	}

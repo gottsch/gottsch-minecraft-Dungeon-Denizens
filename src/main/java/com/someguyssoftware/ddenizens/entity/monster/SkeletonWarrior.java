@@ -140,14 +140,17 @@ public class SkeletonWarrior extends DenizensMonster {
         } else {
             this.handDropChances[slot.getIndex()] = 0.75F;
         }
-        this.setItemSlot(slot, new ItemStack(selectRandomEquipment(slot)));
+        this.setItemSlot(slot, selectRandomEquipment(slot));
     }
 
-    protected Item selectRandomEquipment(EquipmentSlot slot) {
+    protected ItemStack selectRandomEquipment(EquipmentSlot slot) {
         Item equipment = EQUIPMENT_MAP.get(slot).get(random.nextInt(EQUIPMENT_MAP.get(slot).size()));
         ItemStack equipmentStack = new ItemStack(equipment, 1);
-        equipmentStack.setDamageValue(this.random.nextInt(equipmentStack.getMaxDamage() - (int)(equipmentStack.getMaxDamage() * 0.1)));
-        return equipment;
+        // spawn with worn (randomly damaged) gear
+        if (equipmentStack.isDamageableItem()) {
+            equipmentStack.setDamageValue(this.random.nextInt(equipmentStack.getMaxDamage() - (int)(equipmentStack.getMaxDamage() * 0.1)));
+        }
+        return equipmentStack;
     }
 
     @Nullable
