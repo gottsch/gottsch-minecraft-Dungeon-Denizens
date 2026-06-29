@@ -24,8 +24,6 @@ import com.someguyssoftware.ddenizens.entity.ai.goal.volant.VolantLandGoal;
 import com.someguyssoftware.ddenizens.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -40,31 +38,31 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * A winged humanoid that walks on the ground and launches into flight to close
- * on distant targets, then lands to melee. Flight behaviour lives in the
- * {@link WingedHumanoid} base + the volant goal package.
  *
- * @author Mark Gottschling on July 3, 2025
+ * @author Mark Gottschling on July 26, 2025
+ *
  */
-public class Gargoyle extends WingedHumanoid {
+public class Margoyle extends WingedHumanoid {
     private MonsterSize size;
-    // abstract out to WingedHumanoid ?? will all winged humanoids flee on hit?
     public boolean shouldFlee = false;
 
-    public Gargoyle(EntityType<? extends Monster> entityType, Level level) {
+    /*
+     *
+     */
+    public Margoyle(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level, MonsterSize.MEDIUM);
     }
 
     protected void registerGoals() {
         super.registerGoals();
 
-        // combat owns the launch -> fly -> land -> melee cycle; land goal covers the
-        // targetless descent at a lower priority.
+        // shares the volant combat cycle; its low getMaxFlyHeight() keeps it skimming.
         this.goalSelector.addGoal(2, new VolantCombatGoal(this, 2.5D, 6.0D, 1.0D, 1.2D));
         this.goalSelector.addGoal(3, new VolantLandGoal(this, 0.8D));
-        // wandering / looking goals at lower priorities
+
+        // add other goals like wandering, looking at the player, etc. with lower priorities
         this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
@@ -73,26 +71,24 @@ public class Gargoyle extends WingedHumanoid {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.ATTACK_DAMAGE, 4)
-                .add(Attributes.ARMOR, 4.0D)
-                .add(Attributes.KNOCKBACK_RESISTANCE, 0.1)
-                .add(Attributes.MAX_HEALTH, 25.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.24D)
-                .add(Attributes.FLYING_SPEED, 0.24D)
-                .add(Attributes.FOLLOW_RANGE, 50D);
+                .add(Attributes.ATTACK_DAMAGE, 4.5)
+                .add(Attributes.ARMOR, 5.0D)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.15)
+                .add(Attributes.MAX_HEALTH, 30.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.245D)
+                .add(Attributes.FLYING_SPEED, 0.245D)
+                .add(Attributes.FOLLOW_RANGE, 35D);
+
     }
 
+    /**
+     * Subterranean relative of the Gargoyle: it cannot really fly, only hover about
+     * a foot off the ground, so it skims toward its target instead of launching
+     * skyward. Kept low so it fits under tight sewer/dungeon ceilings.
+     */
     @Override
-    public boolean canBeAffected(MobEffectInstance effectInstance) {
-        // immune to Poison
-        if (effectInstance.getEffect() == MobEffects.POISON) {
-            return false;
-        }
-        // immune to strong Slowness (closest thing to "Petrified")
-        if (effectInstance.getEffect() == MobEffects.MOVEMENT_SLOWDOWN && effectInstance.getAmplifier() >= 2) {
-            return false;
-        }
-        return super.canBeAffected(effectInstance);
+    public double getMaxFlyHeight() {
+        return 1.0D;
     }
 
     @Override
@@ -117,6 +113,14 @@ public class Gargoyle extends WingedHumanoid {
     protected SoundEvent getAmbientSound() {
         return Registration.WINGED_SKELETON_FLAP.get();
     }
+//
+//    protected SoundEvent getHurtSound(DamageSource p_33579_) {
+//        return SoundEvents.SKELETON_HURT;
+//    }
+//
+//    protected SoundEvent getDeathSound() {
+//        return SoundEvents.SKELETON_DEATH;
+//    }
 
     protected SoundEvent getStepSound() {
         return null;
@@ -127,7 +131,26 @@ public class Gargoyle extends WingedHumanoid {
         return MobType.UNDEFINED;
     }
 
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
+
+//    @Override
+//    public void aiStep() {
+//        // NOTE need these 2 lines because FlyingMob doesn't call them.
+//        this.updateSwingTime();
+//        this.updateNoActionTime();
+//        super.aiStep();
+//    }
+
+    // TODO this needs to be abstracted
+//    protected void updateNoActionTime() {
+//        float f = this.getLightLevelDependentMagicValue();
+//        if (f > 0.5F) {
+//            this.noActionTime += 2;
+//        }
+//    }
+
+    protected float getStandingEyeHeight(Pose pose, EntityDimensions entityDimensions) {
         return 1.74F;
     }
+
+
 }

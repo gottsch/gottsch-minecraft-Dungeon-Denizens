@@ -20,6 +20,8 @@
 package com.someguyssoftware.ddenizens.datagen;
 
 import com.someguyssoftware.ddenizens.DD;
+import com.someguyssoftware.ddenizens.entity.ModEntities;
+import com.someguyssoftware.ddenizens.item.ModItems;
 import com.someguyssoftware.ddenizens.setup.Registration;
 
 import com.someguyssoftware.ddenizens.util.LangUtil;
@@ -86,6 +88,12 @@ DDLanguageProvider extends LanguageProvider {
 
         add(Registration.MAGMA_SKELETON_TYPE.get(), "Magma Skeleton");
         add(Registration.MAGMA_SKELETON_EGG.get(), "Magma Skeleton Spawn Egg");
+
+        add(ModEntities.GARGOYLE_TYPE.get(), "Gargoyle");
+        add(ModItems.GARGOYLE_EGG.get(), "Gargoyle Spawn Egg");
+
+        add(ModEntities.MARGOYLE_TYPE.get(), "Margoyle");
+        add(ModItems.MARGOYLE_EGG.get(), "Margoyle Spawn Egg");
 
         add(Registration.PARALYSIS_SPELL_ITEM.get(), "Slow Spell");
         add(Registration.HARM_SPELL_ITEM.get(), "Harm Spell");

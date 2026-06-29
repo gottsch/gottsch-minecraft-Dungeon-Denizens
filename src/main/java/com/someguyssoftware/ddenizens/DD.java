@@ -21,6 +21,7 @@ package com.someguyssoftware.ddenizens;
 
 import com.someguyssoftware.ddenizens.entity.ModEntities;
 import com.someguyssoftware.ddenizens.item.ModItems;
+import com.someguyssoftware.ddenizens.serializer.data.ModDataSerializers;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

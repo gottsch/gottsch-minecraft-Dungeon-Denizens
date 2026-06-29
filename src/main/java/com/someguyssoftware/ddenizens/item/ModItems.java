@@ -7,6 +7,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.RegistryObject;
 
 import static com.someguyssoftware.ddenizens.entity.ModEntities.GARGOYLE_TYPE;
+import static com.someguyssoftware.ddenizens.entity.ModEntities.MARGOYLE_TYPE;
 
 /**
  * @author by Mark Gottschling on 7/3/2025
@@ -14,6 +15,7 @@ import static com.someguyssoftware.ddenizens.entity.ModEntities.GARGOYLE_TYPE;
 public class ModItems {
 
     public static final RegistryObject<Item> GARGOYLE_EGG = Registration.ITEMS.register(ModEntities.GARGOYLE + "_egg", () -> new GargoyleEggItem(GARGOYLE_TYPE, 0xf5f6d2, 0xcdc3bb, new Item.Properties()));
+    public static final RegistryObject<Item> MARGOYLE_EGG = Registration.ITEMS.register(ModEntities.MARGOYLE + "_egg", () -> new MargoyleEggItem(MARGOYLE_TYPE, 0xf5f6d2, 0xcdc3bb, new Item.Properties()));
 
     public static void init() {
         // no op to force load
