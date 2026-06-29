@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed a crash that could happen when you hit a **Shadow** or **Shadowlord** with a gold sword, Shadow Blade, or Shadow Falchion while you had the Weakness effect. Those weapons now also correctly ignore Weakness against these foes, so they land their full damage as intended.
 - **Skeleton Warriors** now turn up carrying worn, battle-used weapons and armor, the way they were always meant to, instead of perfectly fresh gear.
 - Fixed several **settings that were quietly being ignored**: the Magma Skeleton's options were tangled up with the Iron Skeleton's, and the Firespout spell's maximum height — along with the Beholder's and Death Tyrant's daemon-summoning timers — weren't using the values you set.
 
