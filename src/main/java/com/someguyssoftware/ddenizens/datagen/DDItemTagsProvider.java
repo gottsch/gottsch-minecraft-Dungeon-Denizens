@@ -3,6 +3,7 @@ package com.someguyssoftware.ddenizens.datagen;
 import com.someguyssoftware.ddenizens.DD;
 import com.someguyssoftware.ddenizens.setup.Registration;
 import com.someguyssoftware.ddenizens.tags.DDTags;
+import mod.gottsch.forge.gmm.core.tag.GMMTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -35,5 +36,16 @@ public class DDItemTagsProvider extends ItemTagsProvider {
         tag(DDTags.Items.SKELETON_WARRIOR_WEAPONS).add(Items.IRON_AXE);
         tag(DDTags.Items.SKELETON_WARRIOR_WEAPONS).add(Items.STONE_SWORD);
         tag(DDTags.Items.SKELETON_WARRIOR_WEAPONS).add(Items.STONE_AXE);
+
+        // gmm SkeletonWarrior equipment pools (consumed by gmm's tag-driven equipment selection)
+        tag(GMMTags.Items.SKELETON_WARRIOR_WEAPONS)
+                .add(Items.STONE_SWORD, Items.STONE_AXE, Items.GOLDEN_SWORD, Items.GOLDEN_AXE, Items.IRON_SWORD, Items.IRON_AXE)
+                .add(Registration.RUSTY_IRON_AXE1.get(), Registration.RUSTY_IRON_AXE2.get(),
+                     Registration.RUSTY_IRON_SWORD1.get(), Registration.RUSTY_IRON_SWORD2.get(),
+                     Registration.RUSTY_IRON_SWORD3.get(), Registration.RUSTY_IRON_SWORD4.get());
+        tag(GMMTags.Items.SKELETON_WARRIOR_HELMETS).add(Items.LEATHER_HELMET, Items.CHAINMAIL_HELMET, Items.GOLDEN_HELMET);
+        tag(GMMTags.Items.SKELETON_WARRIOR_CHESTPLATES).add(Items.LEATHER_CHESTPLATE, Items.CHAINMAIL_CHESTPLATE);
+        tag(GMMTags.Items.SKELETON_WARRIOR_LEGGINGS).add(Items.LEATHER_LEGGINGS, Items.CHAINMAIL_LEGGINGS);
+        tag(GMMTags.Items.SKELETON_WARRIOR_BOOTS).add(Items.LEATHER_BOOTS, Items.CHAINMAIL_BOOTS);
     }
 }

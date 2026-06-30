@@ -23,6 +23,10 @@ import com.someguyssoftware.ddenizens.DD;
 import com.someguyssoftware.ddenizens.config.Config;
 import com.someguyssoftware.ddenizens.entity.ModEntities;
 import com.someguyssoftware.ddenizens.entity.monster.*;
+// v2.0: these mobs now sourced from gottsch's Monster Manual (gmm) shared library
+import mod.gottsch.forge.gmm.core.entity.monster.ghoul.Ghoul;
+import mod.gottsch.forge.gmm.core.entity.monster.Headless;
+import mod.gottsch.forge.gmm.core.entity.monster.SkeletonWarrior;
 
 import com.someguyssoftware.ddenizens.entity.monster.skeleton.FossilizedSkeleton;
 import com.someguyssoftware.ddenizens.entity.monster.skeleton.IronSkeleton;
@@ -169,6 +173,13 @@ public class CommonSetup {
 		public static void addGoals(final EntityJoinLevelEvent event) {
 			if (event.getEntity() instanceof Zombie) {
 				((Zombie)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((Zombie)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));
+			}
+			// v2.0: gmm mobs don't reference DD's Boulder; inject Boulder-avoidance consumer-side
+			else if (event.getEntity() instanceof SkeletonWarrior) {
+				((SkeletonWarrior)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((SkeletonWarrior)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));
+			}
+			else if (event.getEntity() instanceof Ghoul) {
+				((Ghoul)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((Ghoul)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));
 			}
 			else if (event.getEntity() instanceof Skeleton) {
 				((Skeleton)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((Skeleton)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));

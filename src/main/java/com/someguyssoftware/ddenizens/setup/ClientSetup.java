@@ -23,6 +23,13 @@ package com.someguyssoftware.ddenizens.setup;
 import com.someguyssoftware.ddenizens.DD;
 import com.someguyssoftware.ddenizens.client.model.*;
 import com.someguyssoftware.ddenizens.client.renderer.entity.*;
+// v2.0: these models + renderers now sourced from gottsch's Monster Manual (gmm) shared library
+import mod.gottsch.forge.gmm.core.client.model.GhoulModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.GhoulRenderer;
+import mod.gottsch.forge.gmm.core.client.model.HeadlessModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.HeadlessRenderer;
+import mod.gottsch.forge.gmm.core.client.model.SkeletonWarriorModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.SkeletonWarriorRenderer;
 
 import com.someguyssoftware.ddenizens.entity.ModEntities;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;

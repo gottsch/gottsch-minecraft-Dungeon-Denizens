@@ -21,6 +21,10 @@ import com.google.common.collect.Lists;
 import com.someguyssoftware.ddenizens.DD;
 import com.someguyssoftware.ddenizens.entity.ModEntities;
 import com.someguyssoftware.ddenizens.entity.monster.*;
+// v2.0: these mobs now sourced from gottsch's Monster Manual (gmm) shared library
+import mod.gottsch.forge.gmm.core.entity.monster.ghoul.Ghoul;
+import mod.gottsch.forge.gmm.core.entity.monster.Headless;
+import mod.gottsch.forge.gmm.core.entity.monster.SkeletonWarrior;
 import com.someguyssoftware.ddenizens.entity.monster.skeleton.FossilizedSkeleton;
 import com.someguyssoftware.ddenizens.entity.monster.skeleton.IronSkeleton;
 import com.someguyssoftware.ddenizens.entity.monster.skeleton.MagmaSkeleton;
