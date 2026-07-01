@@ -3,5 +3,8 @@
 		"enabled": true,
 		"minHeight": -64,
 		"maxHeight": 64
+	},
+	"properties": {
+		"landProximity": 2.0
 	}
 }
