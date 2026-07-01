@@ -98,7 +98,7 @@ DDLanguageProvider extends LanguageProvider {
         add(Registration.PARALYSIS_SPELL_ITEM.get(), "Slow Spell");
         add(Registration.HARM_SPELL_ITEM.get(), "Harm Spell");
         add(Registration.DISINTEGRATE_SPELL_ITEM.get(), "Disintegrate Spell");
-        //add(Registration.DISARM_SPELL_ITEM.get(), "Disarm Spell");
+        add(Registration.DISARM_SPELL_ITEM.get(), "Disarm Spell");
 
         add(Registration.ROCK_ITEM.get(), "Rock");
         
