@@ -20,8 +20,7 @@ package com.someguyssoftware.ddenizens.setup;
 import com.google.common.collect.Lists;
 import com.someguyssoftware.ddenizens.DD;
 import com.someguyssoftware.ddenizens.entity.ModEntities;
-import com.someguyssoftware.ddenizens.entity.monster.*;
-// v2.0: these mobs now sourced from gottsch's Monster Manual (gmm) shared library
+// v2.0: every DD mob now lives in gottsch's Monster Manual (gmm); the DD entity.monster package is empty
 import mod.gottsch.forge.gmm.core.entity.monster.ghoul.Ghoul;
 import mod.gottsch.forge.gmm.core.entity.monster.Headless;
 import mod.gottsch.forge.gmm.core.entity.monster.Orc;
@@ -34,6 +33,9 @@ import mod.gottsch.forge.gmm.core.entity.monster.Beholder;
 import mod.gottsch.forge.gmm.core.entity.monster.DeathTyrant;
 import mod.gottsch.forge.gmm.core.entity.monster.Gazer;
 import mod.gottsch.forge.gmm.core.entity.monster.Spectator;
+import mod.gottsch.forge.gmm.core.entity.monster.Boulder;
+import mod.gottsch.forge.gmm.core.entity.monster.Daemon;
+import mod.gottsch.forge.gmm.core.entity.monster.Shadowlord;
 import com.someguyssoftware.ddenizens.entity.projectile.*;
 import com.someguyssoftware.ddenizens.item.*;
 import com.someguyssoftware.ddenizens.util.LangUtil;

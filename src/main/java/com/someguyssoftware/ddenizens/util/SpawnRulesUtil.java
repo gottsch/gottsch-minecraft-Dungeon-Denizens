@@ -1,0 +1,150 @@
+/*
+ * This file is part of  Dungeon Denizens.
+ * Copyright (c) 2026 Mark Gottschling (gottsch)
+ *
+ * All rights reserved.
+ *
+ * Dungeon Denizens is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Dungeon Denizens is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Dungeon Denizens.  If not, see <http://www.gnu.org/licenses/lgpl>.
+ */
+package com.someguyssoftware.ddenizens.util;
+
+import com.someguyssoftware.ddenizens.config.Config;
+import com.someguyssoftware.ddenizens.config.Config.CommonSpawnConfig;
+import com.someguyssoftware.ddenizens.config.Config.IMobConfig;
+import com.someguyssoftware.ddenizens.config.Config.INetherMobConfig;
+
+import mod.gottsch.forge.gmm.core.config.MobConfig;
+import mod.gottsch.forge.gmm.core.config.MobConfigHelper;
+import mod.gottsch.forge.gmm.core.config.SkyVisibility;
+import mod.gottsch.forge.gmm.core.entity.monster.Boulder;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BiomeTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+
+import java.util.Optional;
+import java.util.function.Predicate;
+
+/**
+ * DD-side spawn-rule utility: the "Config fallback bridge" for spawn-gating predicates, used by
+ * {@code CommonSetup} spawn-placement registrations. GMM's mob classes stay spawn-agnostic; the
+ * consumer (DD) owns the predicates.
+ * <p>
+ * All standard mobs share the single data-driven {@link #checkSpawnRules} predicate — the sky and
+ * darkness requirements that used to be encoded in <em>which method</em> was registered are now
+ * {@code gmm:mob_config} codec fields ({@code skyVisibility} / {@code requiresDarkness}). Only the
+ * two mobs with genuinely bespoke gates keep their own composers ({@link #checkBoulderSpawnRules},
+ * {@link #checkMagmaSkeletonSpawnRules}).
+ * <p>
+ * Formerly the {@code DenizensMonster} / {@code IDenizensMonster} static bridges (both were reduced
+ * to pure statics once every DD mob migrated to gmm; consolidated + renamed here).
+ *
+ * @author Mark Gottschling on July 1, 2026
+ */
+public final class SpawnRulesUtil {
+
+	private SpawnRulesUtil() {}
+
+	/** Shared by DD's {@code EntityJoinLevelEvent} goal injections: avoid/target an active Boulder. */
+	public static final Predicate<LivingEntity> avoidBoulder = (entity) -> {
+		if (entity instanceof Boulder) {
+			return ((Boulder) entity).isActive();
+		}
+		return false;
+	};
+
+	/**
+	 * The single data-driven natural-spawn predicate for all standard mobs. Dispatches on biome
+	 * (nether vs overworld settings; falls back to overworld when a mob defines no {@code netherSpawn},
+	 * so behavior is identical to the old overworld-only path for those mobs), then applies the
+	 * codec-driven gates: enabled, difficulty, height band, sky-visibility, and darkness.
+	 */
+	public static boolean checkSpawnRules(EntityType<? extends Mob> mob, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+		boolean nether = level.getBiome(pos).is(BiomeTags.IS_NETHER);
+		MobConfig.SpawnSettings spawn = spawnSettings(level, mob, nether);
+		if (!spawn.enabled() || level.getDifficulty() == Difficulty.PEACEFUL || !isValidHeight(pos, spawn)) {
+			return false;
+		}
+		if (spawn.skyVisibility() == SkyVisibility.MUST_SEE && !level.canSeeSky(pos)) {
+			return false;
+		}
+		if (spawn.skyVisibility() == SkyVisibility.MUST_NOT_SEE && level.canSeeSky(pos)) {
+			return false;
+		}
+		if (spawn.requiresDarkness() && !Monster.isDarkEnoughToSpawn(level, pos, random)) {
+			return false;
+		}
+		return Monster.checkMobSpawnRules(mob, level, spawnType, pos, random);
+	}
+
+	/**
+	 * Resolves a mob's spawn-gating settings: prefers the {@code gmm:mob_config} datapack entry
+	 * (keyed by EntityType id), falling back to the legacy Forge {@link Config} for mobs without a
+	 * codec entry. The fallback yields standard {@code ANY} sky + darkness-required (legacy Config
+	 * never carried sky/dark data), which is the correct default for a plain monster.
+	 */
+	public static MobConfig.SpawnSettings spawnSettings(LevelAccessor level, EntityType<? extends Mob> mob, boolean nether) {
+		ResourceLocation id = EntityType.getKey(mob);
+		Optional<MobConfig> entry = MobConfigHelper.find(level, id);
+		if (entry.isPresent()) {
+			return entry.get().spawnFor(nether);
+		}
+		// legacy fallback: adapt the Forge Config value into SpawnSettings (standard sky/dark defaults)
+		IMobConfig mobConfig = Config.Mobs.MOBS.get(id);
+		CommonSpawnConfig config = nether ? ((INetherMobConfig) mobConfig).getNetherSpawn() : mobConfig.getSpawnConfig();
+		return new MobConfig.SpawnSettings(config.enabled.get(), config.minHeight.get(), config.maxHeight.get());
+	}
+
+	public static boolean isValidHeight(BlockPos pos, MobConfig.SpawnSettings spawn) {
+		return pos.getY() > spawn.minHeight() && pos.getY() < spawn.maxHeight();
+	}
+
+	/**
+	 * Bespoke gate for gmm's MagmaSkeleton (reads DD's spawn bridge). Nether: enabled + not-peaceful
+	 * + valid height only (deliberately skips darkness + base mob rules). Overworld: the standard
+	 * predicate plus lava nearby.
+	 */
+	public static boolean checkMagmaSkeletonSpawnRules(EntityType<? extends Mob> mob, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+		if (level.getBiome(pos).is(BiomeTags.IS_NETHER)) {
+			MobConfig.SpawnSettings spawn = spawnSettings(level, mob, true);
+			return spawn.enabled()
+					&& level.getDifficulty() != Difficulty.PEACEFUL
+					&& isValidHeight(pos, spawn);
+		} else {
+			boolean isLavaNear = !level.getBlockStates(mob.getAABB(pos.getX(), pos.getY(), pos.getZ()).inflate(10D, 2D, 10D))
+					.filter(bs -> bs.is(Blocks.LAVA)).toList().isEmpty();
+			return checkSpawnRules(mob, level, spawnType, pos, random) && isLavaNear;
+		}
+	}
+
+	/**
+	 * Bespoke gate for gmm's Boulder (reads DD's spawn bridge). Valid height OR mountain biome, plus
+	 * vanilla's any-light check. NOTE: intentionally does not check {@code enabled} (preserved from
+	 * the original — Boulder's natural spawning is governed by its {@code add_spawns} biome modifiers).
+	 */
+	public static boolean checkBoulderSpawnRules(EntityType<? extends Monster> mob, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+		MobConfig.SpawnSettings spawn = spawnSettings(level, mob, false);
+		return ((pos.getY() > spawn.minHeight() && pos.getY() < spawn.maxHeight()) || level.getBiome(pos).is(BiomeTags.IS_MOUNTAIN))
+				&& Monster.checkAnyLightMonsterSpawnRules(mob, level, spawnType, pos, random);
+	}
+}

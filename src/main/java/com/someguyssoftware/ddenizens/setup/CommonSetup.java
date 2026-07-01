@@ -22,8 +22,7 @@ package com.someguyssoftware.ddenizens.setup;
 import com.someguyssoftware.ddenizens.DD;
 import com.someguyssoftware.ddenizens.config.Config;
 import com.someguyssoftware.ddenizens.entity.ModEntities;
-import com.someguyssoftware.ddenizens.entity.monster.*;
-// v2.0: these mobs now sourced from gottsch's Monster Manual (gmm) shared library
+// v2.0: every DD mob now lives in gottsch's Monster Manual (gmm); the DD entity.monster package is empty
 import mod.gottsch.forge.gmm.core.entity.monster.ghoul.Ghoul;
 import mod.gottsch.forge.gmm.core.entity.monster.Headless;
 import mod.gottsch.forge.gmm.core.entity.monster.Orc;
@@ -45,10 +44,15 @@ import mod.gottsch.forge.gmm.core.entity.monster.Beholder;
 import mod.gottsch.forge.gmm.core.entity.monster.DeathTyrant;
 import mod.gottsch.forge.gmm.core.entity.monster.Gazer;
 import mod.gottsch.forge.gmm.core.entity.monster.Spectator;
+import mod.gottsch.forge.gmm.core.entity.monster.Boulder;
+import mod.gottsch.forge.gmm.core.entity.monster.Daemon;
+import mod.gottsch.forge.gmm.core.entity.monster.Shadowlord;
+import com.someguyssoftware.ddenizens.entity.projectile.FireSpoutSpell;
 import mod.gottsch.forge.gmm.core.entity.ai.goal.CastSpellGoal;
 import mod.gottsch.forge.gottschcore.random.WeightedCollection;
 import com.someguyssoftware.ddenizens.integrations.Integrations;
 import com.someguyssoftware.ddenizens.item.ModItems;
+import com.someguyssoftware.ddenizens.util.SpawnRulesUtil;
 import mod.gottsch.forge.gottschcore.world.WorldInfo;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -179,6 +183,27 @@ public class CommonSetup {
 		DeathTyrant.ambientSound = Registration.AMBIENT_DEATH_TYRANT;
 		Gazer.ambientSound = Registration.AMBIENT_GAZER;
 		Spectator.ambientSound = Registration.AMBIENT_SPECTATOR;
+
+		// gmm's Daemon owns no firespout projectile; supply DD's FireSpoutSpell consumer-side.
+		Daemon.fireSpoutLauncher = (daemon, x, y, z, x2, y2, z2) -> {
+			FireSpoutSpell spell = new FireSpoutSpell(Registration.FIRESPOUT_SPELL_ENTITY_TYPE.get(), daemon.level());
+			spell.init(daemon, x, y, z, x2, y2, z2);
+			daemon.level().addFreshEntity(spell);
+		};
+		Daemon.ambientSound = Registration.AMBIENT_DAEMON;
+
+		// gmm's Shadowlord shares Shadow's Harm spell + summon lists + sounds/weapon.
+		Shadowlord.spellCaster = harmSpell;
+
+		WeightedCollection<Double, EntityType<? extends Mob>> shadowlordMobs = new WeightedCollection<>();
+		shadowlordMobs.add(70D, Registration.SHADOW_ENTITY_TYPE.get());
+		shadowlordMobs.add(30D, Registration.GHOUL_ENTITY_TYPE.get());
+		Shadowlord.summonMobs = shadowlordMobs;
+		Shadowlord.summonDaemon = Registration.DAEMON_ENTITY_TYPE.get();
+
+		Shadowlord.ambientSound = Registration.AMBIENT_SHADOWLORD;
+		Shadowlord.stepSound = Registration.SHADOWLORD_STEP;
+		Shadowlord.weapon = Registration.SHADOW_BLADE;
 	}
 
 	/**
@@ -210,25 +235,25 @@ public class CommonSetup {
 
 	@SubscribeEvent
 	public static void registerEntitySpawn(SpawnPlacementRegisterEvent event) {
-		event.register(Registration.HEADLESS_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterCanSeeSkySpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.ORC_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterCanSeeSkySpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.GHOUL_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.BOULDER_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE, Boulder::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(Registration.HEADLESS_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(Registration.ORC_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(Registration.GHOUL_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(Registration.BOULDER_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE, SpawnRulesUtil::checkBoulderSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
-		event.register(Registration.SHADOW_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkIsNetherSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.SHADOWLORD_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkIsNetherSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.BEHOLDER_ENTITY_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkIsNetherSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.DEATH_TYRANT_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkIsNetherSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.GAZER_ENTITY_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkIsNetherSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.SPECTATOR_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkIsNetherSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.DAEMON_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkIsNetherSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.SKELETON_WARRIOR_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.WINGED_SKELETON_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.IRON_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.MAGMA_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkMagmaSkeletonSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(Registration.SHADOW_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(Registration.SHADOWLORD_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(Registration.BEHOLDER_ENTITY_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(Registration.DEATH_TYRANT_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(Registration.GAZER_ENTITY_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(Registration.SPECTATOR_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(Registration.DAEMON_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(Registration.SKELETON_WARRIOR_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(Registration.WINGED_SKELETON_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(Registration.IRON_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(Registration.MAGMA_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkMagmaSkeletonSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
-		event.register(ModEntities.GARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(ModEntities.MARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterUndergroundSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.GARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.MARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
 	}
 
@@ -275,29 +300,29 @@ public class CommonSetup {
 		@SubscribeEvent
 		public static void addGoals(final EntityJoinLevelEvent event) {
 			if (event.getEntity() instanceof Zombie) {
-				((Zombie)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((Zombie)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));
+				((Zombie)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((Zombie)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, SpawnRulesUtil.avoidBoulder));
 			}
 			// v2.0: gmm mobs don't reference DD's Boulder; inject Boulder-avoidance consumer-side
 			else if (event.getEntity() instanceof SkeletonWarrior) {
-				((SkeletonWarrior)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((SkeletonWarrior)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));
+				((SkeletonWarrior)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((SkeletonWarrior)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, SpawnRulesUtil.avoidBoulder));
 			}
 			else if (event.getEntity() instanceof Ghoul) {
-				((Ghoul)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((Ghoul)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));
+				((Ghoul)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((Ghoul)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, SpawnRulesUtil.avoidBoulder));
 			}
 			else if (event.getEntity() instanceof Orc) {
-				((Orc)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((Orc)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));
+				((Orc)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((Orc)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, SpawnRulesUtil.avoidBoulder));
 			}
 			else if (event.getEntity() instanceof Shadow) {
-				((Shadow)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((Shadow)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));
+				((Shadow)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((Shadow)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, SpawnRulesUtil.avoidBoulder));
 			}
 			else if (event.getEntity() instanceof BowSkeleton) {
-				((BowSkeleton)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((BowSkeleton)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));
+				((BowSkeleton)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((BowSkeleton)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, SpawnRulesUtil.avoidBoulder));
 			}
 			else if (event.getEntity() instanceof Skeleton) {
-				((Skeleton)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((Skeleton)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));
+				((Skeleton)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((Skeleton)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, SpawnRulesUtil.avoidBoulder));
 			}
 			else if (event.getEntity() instanceof ZombieVillager) {
-				((ZombieVillager)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((ZombieVillager)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));
+				((ZombieVillager)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((ZombieVillager)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, SpawnRulesUtil.avoidBoulder));
 			}
 			// gmm's Gazer/Spectator don't reference DD's Boulder; inject Boulder-targeting (as prey,
 			// not avoidance) consumer-side, same mechanism as the avoidance branches above.
@@ -306,6 +331,21 @@ public class CommonSetup {
 			}
 			else if (event.getEntity() instanceof Spectator) {
 				((Spectator)event.getEntity()).targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(((Spectator)event.getEntity()), Boulder.class, true, (entity) -> entity instanceof Boulder boulder && boulder.isActive()));
+			}
+			else if (event.getEntity() instanceof Daemon) {
+				Daemon daemon = (Daemon) event.getEntity();
+				daemon.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(daemon, Boulder.class, true, (entity) -> {
+					if (entity instanceof Boulder boulder) {
+						if (daemon.getSummonedOwner() != null && daemon.getSummonedOwner() instanceof Player) {
+							return false;
+						}
+						return boulder.isActive();
+					}
+					return false;
+				}));
+			}
+			else if (event.getEntity() instanceof Shadowlord) {
+				((Shadowlord)event.getEntity()).targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(((Shadowlord)event.getEntity()), Boulder.class, true, SpawnRulesUtil.avoidBoulder));
 			}
 		}
 

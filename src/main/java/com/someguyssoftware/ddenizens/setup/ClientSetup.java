@@ -22,8 +22,8 @@ package com.someguyssoftware.ddenizens.setup;
 
 import com.someguyssoftware.ddenizens.DD;
 import com.someguyssoftware.ddenizens.client.model.*;
-import com.someguyssoftware.ddenizens.client.renderer.entity.*;
 // v2.0: these models + renderers now sourced from gottsch's Monster Manual (gmm) shared library
+// (DD's own client.renderer.entity package is now empty -- every renderer has migrated to gmm)
 import mod.gottsch.forge.gmm.core.client.model.GhoulModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.GhoulRenderer;
 import mod.gottsch.forge.gmm.core.client.model.HeadlessModel;
@@ -52,6 +52,12 @@ import mod.gottsch.forge.gmm.core.client.renderer.entity.BeholderRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.DeathTyrantRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.GazerRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.SpectatorRenderer;
+import mod.gottsch.forge.gmm.core.client.model.BoulderModel;
+import mod.gottsch.forge.gmm.core.client.model.DaemonModel;
+import mod.gottsch.forge.gmm.core.client.model.ShadowlordModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.BoulderRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.DaemonRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.ShadowlordRenderer;
 
 import com.someguyssoftware.ddenizens.entity.ModEntities;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
