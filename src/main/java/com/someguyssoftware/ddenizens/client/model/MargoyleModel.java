@@ -151,12 +151,12 @@ public class MargoyleModel<T extends WingedHumanoid> extends DemonlikeModel<T> {
 		PartDefinition rightHorn2 = head.addOrReplaceChild("rightHorn2", CubeListBuilder.create().texOffs(0, 48).mirror().addBox(-1.0F, -0.5F, -5.0F, 2.0F, 2.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(-2.5F, -5.0F, -3.0F, -0.7854F, 0.0F, 0.0F));
 
 		PartDefinition torso = body.addOrReplaceChild("torso", CubeListBuilder.create().texOffs(0, 26).addBox(-3.0F, -9.0F, -2.0F, 8.0F, 9.0F, 4.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 63).addBox(-3.0F, -4.0F, -2.75F, 8.0F, 2.0F, 5.0F, new CubeDeformation(0.1F)), PartPose.offset(-2.0F, 6.0F, 0.0F));
+				.texOffs(14, 62).addBox(-3.0F, -4.0F, -2.75F, 8.0F, 2.0F, 5.0F, new CubeDeformation(0.1F)), PartPose.offset(-2.0F, 6.0F, 0.0F));
 
-		PartDefinition loincloth_r1 = torso.addOrReplaceChild("loincloth_r1", CubeListBuilder.create().texOffs(54, 26).addBox(-3.0F, 0.0F, -0.1F, 5.0F, 7.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.5F, -3.0F, -2.0F, -0.2618F, 0.0F, 0.0F));
+		PartDefinition loincloth_r1 = torso.addOrReplaceChild("loincloth_r1", CubeListBuilder.create().texOffs(41, 62).addBox(-3.0F, 0.0F, -0.1F, 5.0F, 7.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.5F, -3.0F, -2.0F, -0.2618F, 0.0F, 0.0F));
 
 		PartDefinition rightAbs_r1 = torso.addOrReplaceChild("rightAbs_r1", CubeListBuilder.create().texOffs(56, 16).mirror().addBox(-0.15F, -5.0F, -0.0303F, 2.0F, 5.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false)
-		.texOffs(56, 16).addBox(2.35F, -5.0F, -0.0303F, 2.0F, 5.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.1F, -3.0F, -2.25F, 0.1745F, 0.0F, 0.0F));
+				.texOffs(56, 16).addBox(2.35F, -5.0F, -0.0303F, 2.0F, 5.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.1F, -3.0F, -2.25F, 0.1745F, 0.0F, 0.0F));
 
 		PartDefinition hump1_r1 = torso.addOrReplaceChild("hump1_r1", CubeListBuilder.create().texOffs(0, 40).addBox(-2.0F, -3.0F, -1.5F, 6.0F, 4.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -14.0F, -1.5F, 0.7418F, 0.0F, 0.0F));
 
