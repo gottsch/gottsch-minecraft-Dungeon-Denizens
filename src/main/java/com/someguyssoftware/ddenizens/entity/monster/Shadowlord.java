@@ -23,11 +23,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.someguyssoftware.ddenizens.DD;
-import com.someguyssoftware.ddenizens.config.Config;
 import com.someguyssoftware.ddenizens.entity.ai.goal.CastHarmGoal;
 import com.someguyssoftware.ddenizens.entity.ai.goal.WeightedChanceSummonGoal;
 import com.someguyssoftware.ddenizens.setup.Registration;
 
+import mod.gottsch.forge.gmm.core.config.MobConfig;
+import mod.gottsch.forge.gmm.core.config.MobConfigHelper;
 import mod.gottsch.forge.gottschcore.random.RandomHelper;
 import mod.gottsch.forge.gottschcore.random.WeightedCollection;
 import mod.gottsch.forge.gottschcore.world.WorldInfo;
@@ -101,19 +102,20 @@ public class Shadowlord extends DenizensMonster {
 	 * 
 	 */
 	protected void registerGoals() {
+		MobConfig config = MobConfigHelper.get(this);
 		this.goalSelector.addGoal(2, new RestrictSunGoal(this));
 		this.goalSelector.addGoal(3, new FleeSunGoal(this, 1.1D));
-		this.goalSelector.addGoal(4, new CastHarmGoal(this, Config.Mobs.SHADOWLORD.harmChargeTime.get(), SHOOT_DISTANCE_SQUARED, MELEE_DISTANCE_SQUARED));
+		this.goalSelector.addGoal(4, new CastHarmGoal(this, (int) config.number("harmChargeTime", 50), SHOOT_DISTANCE_SQUARED, MELEE_DISTANCE_SQUARED));
 
 		// TODO change to the new WeightedSummonGoal
 		WeightedCollection<Double, EntityType<? extends Mob>> mobs = new WeightedCollection<>();
 		mobs.add(70D, Registration.SHADOW_ENTITY_TYPE.get());
 		mobs.add(30D, Registration.GHOUL_ENTITY_TYPE.get());
-		this.goalSelector.addGoal(7, new WeightedChanceSummonGoal(this, Config.Mobs.SHADOWLORD.summonCooldownTime.get(), 100, mobs, Config.Mobs.SHADOWLORD.minSummonSpawns.get(), Config.Mobs.SHADOWLORD.maxSummonSpawns.get()));
+		this.goalSelector.addGoal(7, new WeightedChanceSummonGoal(this, (int) config.number("summonCooldownTime", 1200), 100, mobs, (int) config.number("minSummonSpawns", 1), (int) config.number("maxSummonSpawns", 2)));
 
 		this.goalSelector.addGoal(7, new WeightedChanceSummonGoal(this,
-				Config.Mobs.SHADOWLORD.summonDaemonCooldownTime.get(),
-				Config.Mobs.SHADOWLORD.summonDaemonProbability.get(),
+				(int) config.number("summonDaemonCooldownTime", 2400),
+				config.number("summonDaemonProbability", 25.0),
 				Registration.DAEMON_ENTITY_TYPE.get(), 1, 1));
 
 		this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.1D, false));
@@ -145,7 +147,7 @@ public class Shadowlord extends DenizensMonster {
 
 	@Override
 	public boolean requiresCustomPersistence() {
-		return !Config.Mobs.SHADOWLORD.despawn.get();
+		return !MobConfigHelper.get(this).flag("despawn", true);
 	}
 
 	@Override
@@ -189,7 +191,7 @@ public class Shadowlord extends DenizensMonster {
 		if (drainCooldownTime > 0) {
 			return;
 		}
-		drainCooldownTime = Config.Mobs.SHADOWLORD.drainCooldownTime.get();
+		drainCooldownTime = (int) MobConfigHelper.get(this).number("drainCooldownTime", 400);
 
 		// add damage to Shadowlord's health
 		DD.LOGGER.debug("draining {} hp from player", amount);
@@ -239,7 +241,7 @@ public class Shadowlord extends DenizensMonster {
 			ItemStack helmetStack = target.getItemBySlot(EquipmentSlot.HEAD);
 			if (helmetStack.isEmpty() || helmetStack.getItem() != Items.GOLDEN_HELMET) {
 				// inflict blindness for 1 second
-				target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, Config.Mobs.SHADOWLORD.blindnessDuration.get(), 0), this);
+				target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, (int) MobConfigHelper.get(this).number("blindnessDuration", 40), 0), this);
 			}
 		}
 
@@ -261,8 +263,8 @@ public class Shadowlord extends DenizensMonster {
 		if (super.doHurtTarget(target)) {
 			if (target instanceof Player) {
 				// inflict poison
-				if (RandomHelper.checkProbability(this.random, Config.Mobs.SHADOWLORD.poisonProbability.get())) {
-					((LivingEntity) target).addEffect(new MobEffectInstance(MobEffects.POISON, Config.Mobs.SHADOWLORD.poisonDuration.get(), 0), this);
+				if (RandomHelper.checkProbability(this.random, MobConfigHelper.get(this).number("poisonProbability", 25.0))) {
+					((LivingEntity) target).addEffect(new MobEffectInstance(MobEffects.POISON, (int) MobConfigHelper.get(this).number("poisonDuration", 200), 0), this);
 				}
 			}
 			return true;

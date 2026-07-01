@@ -26,9 +26,13 @@ import com.someguyssoftware.ddenizens.entity.monster.*;
 // v2.0: these mobs now sourced from gottsch's Monster Manual (gmm) shared library
 import mod.gottsch.forge.gmm.core.entity.monster.ghoul.Ghoul;
 import mod.gottsch.forge.gmm.core.entity.monster.Headless;
+import mod.gottsch.forge.gmm.core.entity.monster.Orc;
+import mod.gottsch.forge.gmm.core.entity.monster.Shadow;
 import mod.gottsch.forge.gmm.core.entity.monster.SkeletonWarrior;
+import mod.gottsch.forge.gmm.core.entity.monster.Gargoyle;
+import mod.gottsch.forge.gmm.core.entity.monster.Margoyle;
 
-import com.someguyssoftware.ddenizens.entity.monster.skeleton.FossilizedSkeleton;
+import com.someguyssoftware.ddenizens.entity.projectile.Rock;
 import com.someguyssoftware.ddenizens.entity.monster.skeleton.IronSkeleton;
 import com.someguyssoftware.ddenizens.entity.monster.skeleton.MagmaSkeleton;
 import com.someguyssoftware.ddenizens.integrations.Integrations;
@@ -73,6 +77,22 @@ public class CommonSetup {
 		Config.instance.addRollingFileAppender(DD.MODID);
 		DD.LOGGER.debug("starting Dungeon Denizens");
 		Integrations.registerTreasure2Integration();
+
+		// gmm's Orc owns no projectile; supply DD's Rock as its thrown projectile. The throw goal
+		// computes the spawn point (the orc's right hand); we create + ballistically lob the Rock.
+		Orc.projectileLauncher = (shooter, target, x, y, z) -> {
+			Rock rock = new Rock(Registration.ROCK_ENTITY_TYPE.get(), shooter.level());
+			rock.setPos(x, y, z);
+			rock.lobTo(shooter, target.getX(), target.getY(0.5D), target.getZ(), 0.8D);
+			shooter.level().addFreshEntity(rock);
+		};
+
+		// gmm's Shadow ships no sound events; supply DD's ambient shadow sound consumer-side.
+		Shadow.ambientSound = Registration.AMBIENT_SHADOW;
+
+		// gmm's Gargoyle/Margoyle ship no sound events; supply DD's wing-flap ambient sound.
+		Gargoyle.ambientSound = Registration.WINGED_SKELETON_FLAP;
+		Margoyle.ambientSound = Registration.WINGED_SKELETON_FLAP;
 	}
 
 	/**
@@ -94,7 +114,6 @@ public class CommonSetup {
 		event.put(Registration.DAEMON_ENTITY_TYPE.get(), Daemon.createAttributes().build());
 		event.put(Registration.SKELETON_WARRIOR_TYPE.get(), SkeletonWarrior.createAttributes().build());
 		event.put(Registration.WINGED_SKELETON_TYPE.get(), WingedSkeleton.createAttributes().build());
-		event.put(Registration.FOSSILIZED_SKELETON_TYPE.get(), FossilizedSkeleton.createAttributes().build());
 		event.put(Registration.IRON_SKELETON_TYPE.get(), IronSkeleton.createAttributes().build());
 		event.put(Registration.MAGMA_SKELETON_TYPE.get(), MagmaSkeleton.createAttributes().build());
 
@@ -119,7 +138,6 @@ public class CommonSetup {
 		event.register(Registration.DAEMON_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkIsNetherSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(Registration.SKELETON_WARRIOR_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(Registration.WINGED_SKELETON_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.FOSSILIZED_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(Registration.IRON_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(Registration.MAGMA_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, MagmaSkeleton::checkMagmaSkeletonSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
@@ -145,7 +163,6 @@ public class CommonSetup {
 			event.accept(Registration.DAEMON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(Registration.SKELETON_WARRIOR_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(Registration.WINGED_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.FOSSILIZED_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(Registration.IRON_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(Registration.MAGMA_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 
@@ -180,6 +197,12 @@ public class CommonSetup {
 			}
 			else if (event.getEntity() instanceof Ghoul) {
 				((Ghoul)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((Ghoul)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));
+			}
+			else if (event.getEntity() instanceof Orc) {
+				((Orc)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((Orc)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));
+			}
+			else if (event.getEntity() instanceof Shadow) {
+				((Shadow)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((Shadow)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));
 			}
 			else if (event.getEntity() instanceof Skeleton) {
 				((Skeleton)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((Skeleton)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));

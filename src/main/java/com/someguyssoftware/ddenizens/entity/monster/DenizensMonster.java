@@ -25,7 +25,10 @@ import com.someguyssoftware.ddenizens.config.Config.IMobConfig;
 import com.someguyssoftware.ddenizens.config.Config.INetherMobConfig;
 import com.someguyssoftware.ddenizens.config.Config.NetherSpawnConfig;
 
+import mod.gottsch.forge.gmm.core.config.MobConfig;
+import mod.gottsch.forge.gmm.core.config.MobConfigHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
@@ -39,8 +42,10 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
 
@@ -68,11 +73,10 @@ public abstract class DenizensMonster extends Monster implements IDenizensMonste
 	}
 
 	public static boolean checkDDMonsterSpawnRules(EntityType<? extends Mob> mob, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-		IMobConfig mobConfig = Config.Mobs.MOBS.get(EntityType.getKey(mob));		
-		CommonSpawnConfig config = mobConfig.getSpawnConfig();
-		return config.enabled.get()
+		MobConfig.SpawnSettings spawn = spawnSettings(level, mob, false);
+		return spawn.enabled()
 				&& level.getDifficulty() != Difficulty.PEACEFUL
-				&& isValidHeight(pos, config)
+				&& isValidHeight(pos, spawn)
 				&& isDarkEnoughToSpawn(level, pos, random)
 				&& checkMobSpawnRules(mob, level, spawnType, pos, random);
 	}
@@ -83,36 +87,55 @@ public abstract class DenizensMonster extends Monster implements IDenizensMonste
 	 * appears in caves / sewers / dungeons rather than on the dark surface.
 	 */
 	public static boolean checkDDMonsterUndergroundSpawnRules(EntityType<? extends Mob> mob, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-		IMobConfig mobConfig = Config.Mobs.MOBS.get(EntityType.getKey(mob));
-		CommonSpawnConfig config = mobConfig.getSpawnConfig();
-		return config.enabled.get()
+		MobConfig.SpawnSettings spawn = spawnSettings(level, mob, false);
+		return spawn.enabled()
 				&& level.getDifficulty() != Difficulty.PEACEFUL
-				&& isValidHeight(pos, config)
+				&& isValidHeight(pos, spawn)
 				&& !level.canSeeSky(pos)
 				&& isDarkEnoughToSpawn(level, pos, random)
 				&& checkMobSpawnRules(mob, level, spawnType, pos, random);
 	}
 
 	public static boolean checkDDMonsterCanSeeSkySpawnRules(EntityType<? extends Mob> mob, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-		Config.IMobConfig mobConfig = Config.Mobs.MOBS.get(EntityType.getKey(mob));
-		Config.CommonSpawnConfig config = mobConfig.getSpawnConfig();
-		return config.enabled.get()
+		MobConfig.SpawnSettings spawn = spawnSettings(level, mob, false);
+		return spawn.enabled()
 				&& level.getDifficulty() != Difficulty.PEACEFUL
-				&& isValidHeight(pos, config)
+				&& isValidHeight(pos, spawn)
 				&& level.canSeeSky(pos)
 				&& checkMobSpawnRules(mob, level, spawnType, pos, random);
+	}
+
+	/**
+	 * Resolves a mob's spawn-gating settings: prefers the {@code gmm:mob_config} datapack entry
+	 * (keyed by EntityType id), falling back to the legacy Forge {@link Config} for mobs not yet
+	 * migrated to the codec. This bridge lets migrated and non-migrated mobs coexist.
+	 * Visible to subclasses/siblings with bespoke spawn predicates (e.g. Boulder, MagmaSkeleton).
+	 */
+	protected static MobConfig.SpawnSettings spawnSettings(LevelAccessor level, EntityType<? extends Mob> mob, boolean nether) {
+		ResourceLocation id = EntityType.getKey(mob);
+		Optional<MobConfig> entry = MobConfigHelper.find(level, id);
+		if (entry.isPresent()) {
+			return entry.get().spawnFor(nether);
+		}
+		// legacy fallback: adapt the Forge Config value into SpawnSettings
+		IMobConfig mobConfig = Config.Mobs.MOBS.get(id);
+		CommonSpawnConfig config = nether ? ((INetherMobConfig) mobConfig).getNetherSpawn() : mobConfig.getSpawnConfig();
+		return new MobConfig.SpawnSettings(config.enabled.get(), config.minHeight.get(), config.maxHeight.get());
 	}
 
 	public static boolean isValidHeight(BlockPos pos, CommonSpawnConfig config) {
 		return pos.getY() > config.minHeight.get() && pos.getY() < config.maxHeight.get();
 	}
-	
+
+	public static boolean isValidHeight(BlockPos pos, MobConfig.SpawnSettings spawn) {
+		return pos.getY() > spawn.minHeight() && pos.getY() < spawn.maxHeight();
+	}
+
 	public static boolean checkDDMonsterNetherSpawnRules(EntityType<? extends Mob> mob, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-		IMobConfig mobConfig = Config.Mobs.MOBS.get(EntityType.getKey(mob));
-		NetherSpawnConfig config = ((INetherMobConfig)mobConfig).getNetherSpawn();
-		return config.enabled.get()
+		MobConfig.SpawnSettings spawn = spawnSettings(level, mob, true);
+		return spawn.enabled()
 				&& level.getDifficulty() != Difficulty.PEACEFUL
-				&& isValidHeight(pos, config)
+				&& isValidHeight(pos, spawn)
 				&& isDarkEnoughToSpawn(level, pos, random)
 				&& checkMobSpawnRules(mob, level, spawnType, pos, random);
 	}

@@ -19,10 +19,10 @@
  */
 package com.someguyssoftware.ddenizens.entity.monster;
 
-import com.someguyssoftware.ddenizens.config.Config;
 import com.someguyssoftware.ddenizens.entity.ai.goal.target.SummonedOwnerTargetGoal;
 import com.someguyssoftware.ddenizens.entity.projectile.FireSpoutSpell;
 import com.someguyssoftware.ddenizens.setup.Registration;
+import mod.gottsch.forge.gmm.core.config.MobConfigHelper;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -79,7 +79,7 @@ public class Daemon extends DenizensMonster {
 
 	protected void registerGoals() {
 		this.goalSelector.addGoal(1, new FloatGoal(this));
-		this.goalSelector.addGoal(4, new DaemonShootSpellsGoal(this, Config.Mobs.DAEMON.firespoutCooldownTime.get()));
+		this.goalSelector.addGoal(4, new DaemonShootSpellsGoal(this, (int) MobConfigHelper.get(this).number("firespoutCooldownTime", 200)));
 		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.3D, false));
 		this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 		this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 10.0F, 0.2F));
@@ -121,7 +121,7 @@ public class Daemon extends DenizensMonster {
 
 	@Override
 	public boolean requiresCustomPersistence() {
-		return !Config.Mobs.DAEMON.despawn.get();
+		return !MobConfigHelper.get(this).flag("despawn", true);
 	}
 
 	/**
@@ -225,7 +225,7 @@ public class Daemon extends DenizensMonster {
 
 	@Override
 	public int getSummonedLifespan() {
-		return Config.Mobs.DAEMON.summonedLifespan.get();
+		return (int) MobConfigHelper.get(this).number("summonedLifespan", 1200);
 	}
 
 	/**
@@ -253,7 +253,7 @@ public class Daemon extends DenizensMonster {
 		public DaemonShootSpellsGoal(Daemon mob, int maxCooldownTime) {
 			this.daemon = mob;
 			this.maxCooldownTime = maxCooldownTime;
-			this.maxFireSpouts = Config.Mobs.DAEMON.firespoutMaxDistance.get();
+			this.maxFireSpouts = (int) MobConfigHelper.get(mob).number("firespoutMaxDistance", 10);
 		}
 
 		@Override

@@ -3,7 +3,6 @@
  */
 package com.someguyssoftware.ddenizens.entity.monster;
 
-import com.someguyssoftware.ddenizens.config.Config;
 import com.someguyssoftware.ddenizens.entity.ai.goal.WeightedCastProjectileGoal;
 import com.someguyssoftware.ddenizens.entity.ai.goal.WeightedChanceSummonGoal;
 import com.someguyssoftware.ddenizens.entity.projectile.AbstractDDHurtingProjectile;
@@ -11,6 +10,8 @@ import com.someguyssoftware.ddenizens.entity.projectile.HarmSpell;
 import com.someguyssoftware.ddenizens.entity.projectile.ParalysisSpell;
 import com.someguyssoftware.ddenizens.setup.Registration;
 
+import mod.gottsch.forge.gmm.core.config.MobConfig;
+import mod.gottsch.forge.gmm.core.config.MobConfigHelper;
 import mod.gottsch.forge.gottschcore.random.WeightedCollection;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
@@ -42,21 +43,22 @@ public class Gazer extends Beholderkin {
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(4, new BeholderkinBiteGoal(this, Config.Mobs.GAZER.biteCooldownTime.get()));
-		this.goalSelector.addGoal(5, new BeholderkinRandomFloatAroundGoal(this, Config.Mobs.GAZER.maxFloatHeight.get()));
+		MobConfig config = MobConfigHelper.get(this);
+		this.goalSelector.addGoal(4, new BeholderkinBiteGoal(this, (int) config.number("biteCooldownTime", 20)));
+		this.goalSelector.addGoal(5, new BeholderkinRandomFloatAroundGoal(this, (int) config.number("maxFloatHeight", 5)));
 		this.goalSelector.addGoal(7, new BeholderkinLookGoal(this));
 
 		WeightedCollection<Integer, AbstractDDHurtingProjectile> spells = new WeightedCollection<>();
 		spells.add(3, new ParalysisSpell(Registration.PARALYSIS_SPELL_ENTITY_TYPE.get(), level()));
 		spells.add(1, new HarmSpell(Registration.HARM_SPELL_ENTITY_TYPE.get(), level()));
-		this.goalSelector.addGoal(6, new WeightedCastProjectileGoal(this, Config.Mobs.GAZER.spellChargeTime.get(), spells));
+		this.goalSelector.addGoal(6, new WeightedCastProjectileGoal(this, (int) config.number("spellChargeTime", 80), spells));
 
 		WeightedCollection<Double, EntityType<? extends Mob>> mobs = new WeightedCollection<>();
 		mobs.add(33D, Registration.HEADLESS_ENTITY_TYPE.get());
 		mobs.add(33D, Registration.ORC_ENTITY_TYPE.get());
 		mobs.add(34D, EntityType.ZOMBIE);
 		mobs.add(20D, EntityType.VEX);
-		this.goalSelector.addGoal(6, new WeightedChanceSummonGoal(this, Config.Mobs.GAZER.summonCooldownTime.get(), 100, mobs, Config.Mobs.GAZER.minSummonSpawns.get(), Config.Mobs.GAZER.maxSummonSpawns.get()));
+		this.goalSelector.addGoal(6, new WeightedChanceSummonGoal(this, (int) config.number("summonCooldownTime", 2400), 100, mobs, (int) config.number("minSummonSpawns", 1), (int) config.number("maxSummonSpawns", 1)));
 
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Boulder.class, true, (entity) -> {
 			if (entity instanceof Boulder) {

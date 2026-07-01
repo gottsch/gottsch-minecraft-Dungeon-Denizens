@@ -47,5 +47,15 @@ public class DDItemTagsProvider extends ItemTagsProvider {
         tag(GMMTags.Items.SKELETON_WARRIOR_CHESTPLATES).add(Items.LEATHER_CHESTPLATE, Items.CHAINMAIL_CHESTPLATE);
         tag(GMMTags.Items.SKELETON_WARRIOR_LEGGINGS).add(Items.LEATHER_LEGGINGS, Items.CHAINMAIL_LEGGINGS);
         tag(GMMTags.Items.SKELETON_WARRIOR_BOOTS).add(Items.LEATHER_BOOTS, Items.CHAINMAIL_BOOTS);
+
+        // gmm Orc weapon pool (consumed by gmm's tag-driven equipment selection)
+        tag(GMMTags.Items.ORC_WEAPONS)
+                .add(Items.IRON_SWORD, Items.IRON_AXE)
+                .add(Registration.CLUB.get(), Registration.SPIKED_CLUB.get());
+
+        // gmm Shadow: spawn weapon + shadow-bane weapons (gold is handled intrinsically in gmm)
+        tag(GMMTags.Items.SHADOW_WEAPONS).add(Registration.SHADOW_FALCHION.get());
+        tag(GMMTags.Items.SHADOW_BANE).add(Registration.SHADOW_BLADE.get());
+        tag(GMMTags.Items.SHADOW_MINOR_BANE).add(Registration.SHADOW_FALCHION.get());
     }
 }

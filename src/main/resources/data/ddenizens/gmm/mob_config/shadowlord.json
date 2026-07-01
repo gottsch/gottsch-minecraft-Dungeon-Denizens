@@ -1,0 +1,27 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 20
+	},
+	"netherSpawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319
+	},
+	"properties": {
+		"harmChargeTime": 50,
+		"drainCooldownTime": 400,
+		"summonCooldownTime": 1200,
+		"minSummonSpawns": 1,
+		"maxSummonSpawns": 2,
+		"summonDaemonCooldownTime": 2400,
+		"summonDaemonProbability": 25.0,
+		"poisonProbability": 25.0,
+		"poisonDuration": 200,
+		"blindnessDuration": 40
+	},
+	"flags": {
+		"despawn": true
+	}
+}

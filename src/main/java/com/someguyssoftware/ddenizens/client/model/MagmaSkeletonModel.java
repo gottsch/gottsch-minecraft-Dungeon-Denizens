@@ -42,7 +42,7 @@ import net.minecraft.world.item.Items;
  *
  */
 public class MagmaSkeletonModel<T extends Mob> extends SkeletonWarriorModel<T> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(DD.MODID, "fossilized_skeleton_model"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(DD.MODID, "magma_skeleton_model"), "main");
 
     public ModelPart rightArm2;
     public ModelPart leftArm2;

@@ -80,9 +80,6 @@ DDLanguageProvider extends LanguageProvider {
         add(Registration.WINGED_SKELETON_TYPE.get(), "Winged Skeleton");
         add(Registration.WINGED_SKELETON_EGG.get(), "Winged Skeleton Spawn Egg");
 
-        add(Registration.FOSSILIZED_SKELETON_TYPE.get(), "Fossilized Skeleton");
-        add(Registration.FOSSILIZED_SKELETON_EGG.get(), "Fossilized Skeleton Spawn Egg");
-
         add(Registration.IRON_SKELETON_TYPE.get(), "Iron Skeleton");
         add(Registration.IRON_SKELETON_EGG.get(), "Iron Skeleton Spawn Egg");
 

@@ -30,6 +30,14 @@ import mod.gottsch.forge.gmm.core.client.model.HeadlessModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.HeadlessRenderer;
 import mod.gottsch.forge.gmm.core.client.model.SkeletonWarriorModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.SkeletonWarriorRenderer;
+import mod.gottsch.forge.gmm.core.client.model.OrcModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.OrcRenderer;
+import mod.gottsch.forge.gmm.core.client.model.ShadowModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.ShadowRenderer;
+import mod.gottsch.forge.gmm.core.client.model.GargoyleModel;
+import mod.gottsch.forge.gmm.core.client.model.MargoyleModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.GargoyleRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.MargoyleRenderer;
 
 import com.someguyssoftware.ddenizens.entity.ModEntities;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -70,7 +78,6 @@ public class ClientSetup {
 		event.registerLayerDefinition(DaemonModel.LAYER_LOCATION, DaemonModel::createBodyLayer);
 		event.registerLayerDefinition(SkeletonWarriorModel.LAYER_LOCATION, SkeletonWarriorModel::createBodyLayer);
 		event.registerLayerDefinition(WingedSkeletonModel.LAYER_LOCATION, WingedSkeletonModel::createBodyLayer);
-		event.registerLayerDefinition(FossilizedSkeletonModel.LAYER_LOCATION, FossilizedSkeletonModel::createBodyLayer);
 		event.registerLayerDefinition(IronSkeletonModel.LAYER_LOCATION, IronSkeletonModel::createBodyLayer);
 		event.registerLayerDefinition(MagmaSkeletonModel.LAYER_LOCATION, MagmaSkeletonModel::createBodyLayer);
 
@@ -98,7 +105,6 @@ public class ClientSetup {
         event.registerEntityRenderer(Registration.DAEMON_ENTITY_TYPE.get(), DaemonRenderer::new);
 		event.registerEntityRenderer(Registration.SKELETON_WARRIOR_TYPE.get(), SkeletonWarriorRenderer::new);
 		event.registerEntityRenderer(Registration.WINGED_SKELETON_TYPE.get(), WingedSkeletonRenderer::new);
-		event.registerEntityRenderer(Registration.FOSSILIZED_SKELETON_TYPE.get(), FossilizedSkeletonRenderer::new);
 		event.registerEntityRenderer(Registration.IRON_SKELETON_TYPE.get(), IronSkeletonRenderer::new);
 		event.registerEntityRenderer(Registration.MAGMA_SKELETON_TYPE.get(), MagmaSkeletonRenderer::new);
 

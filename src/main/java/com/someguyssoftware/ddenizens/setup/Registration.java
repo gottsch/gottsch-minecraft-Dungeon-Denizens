@@ -24,13 +24,13 @@ import com.someguyssoftware.ddenizens.entity.monster.*;
 // v2.0: these mobs now sourced from gottsch's Monster Manual (gmm) shared library
 import mod.gottsch.forge.gmm.core.entity.monster.ghoul.Ghoul;
 import mod.gottsch.forge.gmm.core.entity.monster.Headless;
+import mod.gottsch.forge.gmm.core.entity.monster.Orc;
+import mod.gottsch.forge.gmm.core.entity.monster.Shadow;
 import mod.gottsch.forge.gmm.core.entity.monster.SkeletonWarrior;
-import com.someguyssoftware.ddenizens.entity.monster.skeleton.FossilizedSkeleton;
 import com.someguyssoftware.ddenizens.entity.monster.skeleton.IronSkeleton;
 import com.someguyssoftware.ddenizens.entity.monster.skeleton.MagmaSkeleton;
 import com.someguyssoftware.ddenizens.entity.projectile.*;
 import com.someguyssoftware.ddenizens.item.*;
-import com.someguyssoftware.ddenizens.serializer.data.ModDataSerializers;
 import com.someguyssoftware.ddenizens.util.LangUtil;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.chat.Component;
@@ -69,7 +69,6 @@ public class Registration {
 	public static final String ORC = "orc";
 	public static final String SKELETON_WARRIOR = "skeleton_warrior";
 	public static final String WINGED_SKELETON = "winged_skeleton";
-	public static final String FOSSILIZED_SKELETON = "fossilized_skeleton";
 	public static final String IRON_SKELETON = "iron_skeleton";
 	public static final String MAGMA_SKELETON = "magma_skeleton";
 	public static final String SKELETON_CHAMPION = "skeleton_champion";
@@ -186,12 +185,6 @@ public class Registration {
 			.setShouldReceiveVelocityUpdates(false)
 			.build(WINGED_SKELETON));
 
-	public static final RegistryObject<EntityType<FossilizedSkeleton>> FOSSILIZED_SKELETON_TYPE = Registration.ENTITIES.register(FOSSILIZED_SKELETON, () -> EntityType.Builder.of(FossilizedSkeleton::new, MobCategory.MONSTER)
-			.sized(0.6F, 1.95F)
-			.clientTrackingRange(12)
-			.setShouldReceiveVelocityUpdates(false)
-			.build(FOSSILIZED_SKELETON));
-
 	public static final RegistryObject<EntityType<IronSkeleton>> IRON_SKELETON_TYPE = Registration.ENTITIES.register(IRON_SKELETON, () -> EntityType.Builder.of(IronSkeleton::new, MobCategory.MONSTER)
 			.sized(0.63F, 2.1F)
 			.clientTrackingRange(15)
@@ -271,7 +264,6 @@ public class Registration {
 	public static final RegistryObject<Item> SKELETON_WARRIOR_EGG = Registration.ITEMS.register(SKELETON_WARRIOR + "_egg", () -> new SkeletonWarriorEggItem(SKELETON_WARRIOR_TYPE, 0xf5f6d2, 0xcdc3bb, new Item.Properties()));
 	public static final RegistryObject<Item> WINGED_SKELETON_EGG = Registration.ITEMS.register(WINGED_SKELETON + "_egg", () -> new WingedSkeletonEggItem(WINGED_SKELETON_TYPE, 0xf5f6d2, 0xcdc3bb, new Item.Properties()));
 
-	public static final RegistryObject<Item> FOSSILIZED_SKELETON_EGG = Registration.ITEMS.register(FOSSILIZED_SKELETON + "_egg", () -> new FossilizedSkeletonEggItem(FOSSILIZED_SKELETON_TYPE, 0xf5f6d2, 0xcdc3bb, new Item.Properties()));
 	public static final RegistryObject<Item> IRON_SKELETON_EGG = Registration.ITEMS.register(IRON_SKELETON + "_egg", () -> new IronSkeletonEggItem(IRON_SKELETON_TYPE, 0xf5f6d2, 0xcdc3bb, new Item.Properties()));
 	public static final RegistryObject<Item> MAGMA_SKELETON_EGG = Registration.ITEMS.register(MAGMA_SKELETON + "_egg", () -> new MagmaSkeletonEggItem(MAGMA_SKELETON_TYPE, 0x4b0000, 0xff7900, new Item.Properties()));
 
@@ -343,7 +335,6 @@ public class Registration {
 		ALL_MOBS.add(ORC_ENTITY_TYPE);
 		ALL_MOBS.add(SKELETON_WARRIOR_TYPE);
 		ALL_MOBS.add(WINGED_SKELETON_TYPE);
-		ALL_MOBS.add(FOSSILIZED_SKELETON_TYPE);
 		ALL_MOBS.add(MAGMA_SKELETON_TYPE);
 		ALL_MOBS.add(IRON_SKELETON_TYPE);
 		ALL_MOBS.add(ModEntities.GARGOYLE_TYPE);
@@ -358,7 +349,6 @@ public class Registration {
 		ENTITIES.register(eventBus);		
 		PARTICLES.register(eventBus);
 		SOUNDS.register(eventBus);
-		ModDataSerializers.register(eventBus);
 	}
 
 	private static RegistryObject<SoundEvent> registerSoundEvent(String name) {

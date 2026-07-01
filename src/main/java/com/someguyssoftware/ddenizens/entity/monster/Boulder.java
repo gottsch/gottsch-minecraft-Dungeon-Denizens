@@ -25,10 +25,9 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.someguyssoftware.ddenizens.DD;
-import com.someguyssoftware.ddenizens.config.Config;
-import com.someguyssoftware.ddenizens.config.Config.CommonSpawnConfig;
-import com.someguyssoftware.ddenizens.config.Config.IMobConfig;
 
+import mod.gottsch.forge.gmm.core.config.MobConfig;
+import mod.gottsch.forge.gmm.core.config.MobConfigHelper;
 import mod.gottsch.forge.gottschcore.world.WorldInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -101,9 +100,8 @@ public class Boulder extends DenizensMonster implements IDenizensMonster {
 	 */
 	public static boolean checkSpawnRules(EntityType<? extends Monster> mob, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
 		//		return (level().getHeight() < 60 || level().getBiome(pos).getBiomeCategory() == BiomeCategory.MOUNTAIN) && checkMobSpawnRules(mob, level, spawnType, pos, random);
-		IMobConfig mobConfig = Config.Mobs.MOBS.get(EntityType.getKey(mob));	
-		CommonSpawnConfig config = mobConfig.getSpawnConfig();
-		return ((pos.getY() > config.minHeight.get() && pos.getY() < config.maxHeight.get()) || level.getBiome(pos).is(BiomeTags.IS_MOUNTAIN) )
+		MobConfig.SpawnSettings spawn = spawnSettings(level, mob, false);
+		return ((pos.getY() > spawn.minHeight() && pos.getY() < spawn.maxHeight()) || level.getBiome(pos).is(BiomeTags.IS_MOUNTAIN) )
 				&& checkAnyLightMonsterSpawnRules(mob, level, spawnType, pos, random);
 	}
 
@@ -129,7 +127,7 @@ public class Boulder extends DenizensMonster implements IDenizensMonster {
 
 	@Override
 	public boolean requiresCustomPersistence() {
-		return !Config.Mobs.BOULDER.despawn.get();
+		return !MobConfigHelper.get(this).flag("despawn", true);
 	}
 
 	@Override

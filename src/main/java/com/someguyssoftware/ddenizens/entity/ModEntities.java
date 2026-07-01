@@ -1,7 +1,7 @@
 package com.someguyssoftware.ddenizens.entity;
 
-import com.someguyssoftware.ddenizens.entity.monster.Gargoyle;
-import com.someguyssoftware.ddenizens.entity.monster.Margoyle;
+import mod.gottsch.forge.gmm.core.entity.monster.Gargoyle;
+import mod.gottsch.forge.gmm.core.entity.monster.Margoyle;
 import com.someguyssoftware.ddenizens.entity.monster.WingedSkeleton;
 import com.someguyssoftware.ddenizens.setup.Registration;
 import net.minecraft.world.entity.EntityType;

@@ -21,15 +21,8 @@ package com.someguyssoftware.ddenizens.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.someguyssoftware.ddenizens.DD;
-import com.someguyssoftware.ddenizens.client.model.FossilizedSkeletonModel;
-import com.someguyssoftware.ddenizens.client.model.GazerModel;
 import com.someguyssoftware.ddenizens.client.model.MagmaSkeletonModel;
-import com.someguyssoftware.ddenizens.client.renderer.entity.layer.GazerEyeLayer;
-import com.someguyssoftware.ddenizens.entity.monster.Gazer;
-import com.someguyssoftware.ddenizens.entity.monster.skeleton.FossilizedSkeleton;
 import com.someguyssoftware.ddenizens.entity.monster.skeleton.MagmaSkeleton;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;

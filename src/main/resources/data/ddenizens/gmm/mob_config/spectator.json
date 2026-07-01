@@ -1,0 +1,17 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 60
+	},
+	"netherSpawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319
+	},
+	"properties": {
+		"maxFloatHeight": 3,
+		"biteCooldownTime": 20,
+		"spellChargeTime": 80
+	}
+}

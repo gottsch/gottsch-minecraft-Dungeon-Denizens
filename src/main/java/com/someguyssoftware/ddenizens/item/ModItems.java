@@ -14,8 +14,8 @@ import static com.someguyssoftware.ddenizens.entity.ModEntities.MARGOYLE_TYPE;
  */
 public class ModItems {
 
-    public static final RegistryObject<Item> GARGOYLE_EGG = Registration.ITEMS.register(ModEntities.GARGOYLE + "_egg", () -> new GargoyleEggItem(GARGOYLE_TYPE, 0xf5f6d2, 0xcdc3bb, new Item.Properties()));
-    public static final RegistryObject<Item> MARGOYLE_EGG = Registration.ITEMS.register(ModEntities.MARGOYLE + "_egg", () -> new MargoyleEggItem(MARGOYLE_TYPE, 0xf5f6d2, 0xcdc3bb, new Item.Properties()));
+    public static final RegistryObject<Item> GARGOYLE_EGG = Registration.ITEMS.register(ModEntities.GARGOYLE + "_egg", () -> new GargoyleEggItem(GARGOYLE_TYPE, 0x6d6d81, 0x373b41, new Item.Properties()));
+    public static final RegistryObject<Item> MARGOYLE_EGG = Registration.ITEMS.register(ModEntities.MARGOYLE + "_egg", () -> new MargoyleEggItem(MARGOYLE_TYPE, 0x7f7f7f, 0x5a6d41, new Item.Properties()));
 
     public static void init() {
         // no op to force load

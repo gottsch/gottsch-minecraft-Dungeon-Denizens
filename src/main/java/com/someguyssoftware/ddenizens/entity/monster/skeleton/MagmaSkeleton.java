@@ -20,9 +20,9 @@
  */
 package com.someguyssoftware.ddenizens.entity.monster.skeleton;
 
-import com.someguyssoftware.ddenizens.config.Config;
 import com.someguyssoftware.ddenizens.entity.ai.goal.PassiveMeleeAttackGoal;
 import com.someguyssoftware.ddenizens.entity.monster.DenizensMonster;
+import mod.gottsch.forge.gmm.core.config.MobConfig;
 import mod.gottsch.forge.gottschcore.random.RandomHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -153,11 +153,10 @@ public class MagmaSkeleton extends DenizensSkeleton {
                 .filter(bs -> bs.is(Blocks.LAVA)).toList().isEmpty();
 
         if (level.getBiome(pos).is(BiomeTags.IS_NETHER) ) {
-            Config.IMobConfig mobConfig = Config.Mobs.MOBS.get(EntityType.getKey(mob));
-            Config.NetherSpawnConfig config = ((Config.INetherMobConfig)mobConfig).getNetherSpawn();
-            return config.enabled.get()
+            MobConfig.SpawnSettings spawn = spawnSettings(level, mob, true);
+            return spawn.enabled()
                     && level.getDifficulty() != Difficulty.PEACEFUL
-                    && isValidHeight(pos, config);
+                    && isValidHeight(pos, spawn);
 //                    && isLavaNear;
 
         }

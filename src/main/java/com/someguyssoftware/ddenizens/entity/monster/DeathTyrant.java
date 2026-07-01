@@ -19,10 +19,11 @@
  */
 package com.someguyssoftware.ddenizens.entity.monster;
 
-import com.someguyssoftware.ddenizens.config.Config;
 import com.someguyssoftware.ddenizens.entity.ai.goal.CastParalysisGoal;
 import com.someguyssoftware.ddenizens.entity.ai.goal.WeightedChanceSummonGoal;
 import com.someguyssoftware.ddenizens.setup.Registration;
+import mod.gottsch.forge.gmm.core.config.MobConfig;
+import mod.gottsch.forge.gmm.core.config.MobConfigHelper;
 import mod.gottsch.forge.gottschcore.random.WeightedCollection;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
@@ -57,19 +58,20 @@ public class DeathTyrant extends Beholderkin {
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(4, new BeholderkinBiteGoal(this, Config.Mobs.DEATH_TYRANT.biteCooldownTime.get()));
-		this.goalSelector.addGoal(5, new BeholderkinRandomFloatAroundGoal(this, Config.Mobs.DEATH_TYRANT.maxFloatHeight.get()));
+		MobConfig config = MobConfigHelper.get(this);
+		this.goalSelector.addGoal(4, new BeholderkinBiteGoal(this, (int) config.number("biteCooldownTime", 40)));
+		this.goalSelector.addGoal(5, new BeholderkinRandomFloatAroundGoal(this, (int) config.number("maxFloatHeight", 8)));
 		this.goalSelector.addGoal(7, new BeholderkinLookGoal(this));
 
-		this.goalSelector.addGoal(6, new CastParalysisGoal(this, Config.Mobs.DEATH_TYRANT.spellChargeTime.get()));
+		this.goalSelector.addGoal(6, new CastParalysisGoal(this, (int) config.number("spellChargeTime", 80)));
 
 		WeightedCollection<Double, EntityType<? extends Mob>> mobs = new WeightedCollection<>();
 		mobs.add(20D, EntityType.ZOMBIE);
 		mobs.add(20D, EntityType.HUSK);
 		mobs.add(20D, EntityType.SKELETON);
 		mobs.add(60D, Registration.SKELETON_WARRIOR_TYPE.get());
-		this.goalSelector.addGoal(6, new WeightedChanceSummonGoal(this, Config.Mobs.DEATH_TYRANT.summonCooldownTime.get(), 100, mobs, Config.Mobs.DEATH_TYRANT.minSummonSpawns.get(), Config.Mobs.DEATH_TYRANT.maxSummonSpawns.get()));
-		this.goalSelector.addGoal(6, new WeightedChanceSummonGoal(this, Config.Mobs.DEATH_TYRANT.summonDaemonCooldownTime.get(), 40, Registration.DAEMON_ENTITY_TYPE.get(), 1, 1));
+		this.goalSelector.addGoal(6, new WeightedChanceSummonGoal(this, (int) config.number("summonCooldownTime", 1200), 100, mobs, (int) config.number("minSummonSpawns", 2), (int) config.number("maxSummonSpawns", 5)));
+		this.goalSelector.addGoal(6, new WeightedChanceSummonGoal(this, (int) config.number("summonDaemonCooldownTime", 2400), 40, Registration.DAEMON_ENTITY_TYPE.get(), 1, 1));
 		// NOTE unaffected by Boulders
 		// TODO need custom hurtbyTarget like headless
 		// TODO headless hurtby needs to be become a stand alone class that any mob can use
@@ -94,7 +96,7 @@ public class DeathTyrant extends Beholderkin {
 
 	@Override
 	public boolean requiresCustomPersistence() {
-		return !Config.Mobs.DEATH_TYRANT.despawn.get();
+		return !MobConfigHelper.get(this).flag("despawn", true);
 	}
 
 	@Override

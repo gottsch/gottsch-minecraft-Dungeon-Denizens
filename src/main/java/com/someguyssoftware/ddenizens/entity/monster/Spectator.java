@@ -19,10 +19,11 @@
  */
 package com.someguyssoftware.ddenizens.entity.monster;
 
-import com.someguyssoftware.ddenizens.config.Config;
 import com.someguyssoftware.ddenizens.entity.ai.goal.CastParalysisGoal;
 import com.someguyssoftware.ddenizens.entity.ai.goal.target.SummonedOwnerTargetGoal;
 import com.someguyssoftware.ddenizens.setup.Registration;
+import mod.gottsch.forge.gmm.core.config.MobConfig;
+import mod.gottsch.forge.gmm.core.config.MobConfigHelper;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
@@ -64,11 +65,12 @@ public class Spectator extends Beholderkin {
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(0, new BeholderkinBiteGoal(this, Config.Mobs.SPECTATOR.biteCooldownTime.get()));
+		MobConfig config = MobConfigHelper.get(this);
+		this.goalSelector.addGoal(0, new BeholderkinBiteGoal(this, (int) config.number("biteCooldownTime", 20)));
 		this.goalSelector.addGoal(1, new Spectator.SpectatorChargeAttackGoal( this, 2D));
-		this.goalSelector.addGoal(5, new BeholderkinRandomFloatAroundGoal(this, Config.Mobs.SPECTATOR.maxFloatHeight.get()));
+		this.goalSelector.addGoal(5, new BeholderkinRandomFloatAroundGoal(this, (int) config.number("maxFloatHeight", 3)));
 		this.goalSelector.addGoal(7, new BeholderkinLookGoal(this));
-		this.goalSelector.addGoal(6, new CastParalysisGoal(this, Config.Mobs.SPECTATOR.spellChargeTime.get()));
+		this.goalSelector.addGoal(6, new CastParalysisGoal(this, (int) config.number("spellChargeTime", 80)));
 		// TODO in future if player can summon, then it should follow the player
 		//this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
 

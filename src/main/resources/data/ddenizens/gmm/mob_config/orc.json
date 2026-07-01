@@ -1,0 +1,10 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319
+	},
+	"properties": {
+		"rangedProbability": 0.15
+	}
+}
