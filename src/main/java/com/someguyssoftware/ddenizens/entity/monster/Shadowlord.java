@@ -24,7 +24,7 @@ import java.util.List;
 
 import com.someguyssoftware.ddenizens.DD;
 import com.someguyssoftware.ddenizens.entity.ai.goal.CastHarmGoal;
-import com.someguyssoftware.ddenizens.entity.ai.goal.WeightedChanceSummonGoal;
+import mod.gottsch.forge.gmm.core.entity.ai.goal.WeightedChanceSummonGoal;
 import com.someguyssoftware.ddenizens.setup.Registration;
 
 import mod.gottsch.forge.gmm.core.config.MobConfig;

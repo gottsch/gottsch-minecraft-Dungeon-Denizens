@@ -33,16 +33,31 @@ import mod.gottsch.forge.gmm.core.entity.monster.Gargoyle;
 import mod.gottsch.forge.gmm.core.entity.monster.Margoyle;
 
 import com.someguyssoftware.ddenizens.entity.projectile.Rock;
-import com.someguyssoftware.ddenizens.entity.monster.skeleton.IronSkeleton;
-import com.someguyssoftware.ddenizens.entity.monster.skeleton.MagmaSkeleton;
+import com.someguyssoftware.ddenizens.entity.projectile.ParalysisSpell;
+import com.someguyssoftware.ddenizens.entity.projectile.HarmSpell;
+import com.someguyssoftware.ddenizens.entity.projectile.DisintegrateSpell;
+import com.someguyssoftware.ddenizens.entity.projectile.DisarmSpell;
+import mod.gottsch.forge.gmm.core.entity.monster.BowSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.IronSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.MagmaSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.WingedSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.Beholder;
+import mod.gottsch.forge.gmm.core.entity.monster.DeathTyrant;
+import mod.gottsch.forge.gmm.core.entity.monster.Gazer;
+import mod.gottsch.forge.gmm.core.entity.monster.Spectator;
+import mod.gottsch.forge.gmm.core.entity.ai.goal.CastSpellGoal;
+import mod.gottsch.forge.gottschcore.random.WeightedCollection;
 import com.someguyssoftware.ddenizens.integrations.Integrations;
 import com.someguyssoftware.ddenizens.item.ModItems;
 import mod.gottsch.forge.gottschcore.world.WorldInfo;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.monster.ZombieVillager;
@@ -93,6 +108,77 @@ public class CommonSetup {
 		// gmm's Gargoyle/Margoyle ship no sound events; supply DD's wing-flap ambient sound.
 		Gargoyle.ambientSound = Registration.WINGED_SKELETON_FLAP;
 		Margoyle.ambientSound = Registration.WINGED_SKELETON_FLAP;
+		WingedSkeleton.ambientSound = Registration.WINGED_SKELETON_FLAP;
+
+		// gmm's Beholderkin family owns no concrete spell/summon-target/sound; supply DD's via the
+		// same static-hook pattern as Orc.projectileLauncher / Shadow.ambientSound.
+		CastSpellGoal.SpellLauncher paralysisSpell = (caster, target, x, y, z) -> {
+			ParalysisSpell spell = new ParalysisSpell(Registration.PARALYSIS_SPELL_ENTITY_TYPE.get(), caster.level());
+			spell.init(caster, target.getX() - x, target.getY(0.5D) - y, target.getZ() - z);
+			spell.setPos(x, y, z);
+			caster.level().addFreshEntity(spell);
+		};
+		CastSpellGoal.SpellLauncher harmSpell = (caster, target, x, y, z) -> {
+			HarmSpell spell = new HarmSpell(Registration.HARM_SPELL_ENTITY_TYPE.get(), caster.level());
+			spell.init(caster, target.getX() - x, target.getY(0.5D) - y, target.getZ() - z);
+			spell.setPos(x, y, z);
+			caster.level().addFreshEntity(spell);
+		};
+		CastSpellGoal.SpellLauncher disintegrateSpell = (caster, target, x, y, z) -> {
+			DisintegrateSpell spell = new DisintegrateSpell(Registration.DISINTEGRATE_SPELL_ENTITY_TYPE.get(), caster.level());
+			spell.init(caster, target.getX() - x, target.getY(0.5D) - y, target.getZ() - z);
+			spell.setPos(x, y, z);
+			caster.level().addFreshEntity(spell);
+		};
+		CastSpellGoal.SpellLauncher disarmSpell = (caster, target, x, y, z) -> {
+			DisarmSpell spell = new DisarmSpell(Registration.DISARM_SPELL_ENTITY_TYPE.get(), caster.level());
+			spell.init(caster, target.getX() - x, target.getY(0.5D) - y, target.getZ() - z);
+			spell.setPos(x, y, z);
+			caster.level().addFreshEntity(spell);
+		};
+
+		WeightedCollection<Integer, CastSpellGoal.SpellLauncher> beholderSpells = new WeightedCollection<>();
+		beholderSpells.add(3, paralysisSpell);
+		beholderSpells.add(2, harmSpell);
+		beholderSpells.add(1, disintegrateSpell);
+		beholderSpells.add(1, disarmSpell);
+		Beholder.spellCaster = beholderSpells;
+
+		WeightedCollection<Integer, CastSpellGoal.SpellLauncher> gazerSpells = new WeightedCollection<>();
+		gazerSpells.add(3, paralysisSpell);
+		gazerSpells.add(1, harmSpell);
+		Gazer.spellCaster = gazerSpells;
+
+		DeathTyrant.spellCaster = paralysisSpell;
+		Spectator.spellCaster = paralysisSpell;
+
+		WeightedCollection<Double, EntityType<? extends Mob>> beholderMobs = new WeightedCollection<>();
+		beholderMobs.add(60D, Registration.HEADLESS_ENTITY_TYPE.get());
+		beholderMobs.add(40D, Registration.ORC_ENTITY_TYPE.get());
+		beholderMobs.add(20D, Registration.SPECTATOR_TYPE.get());
+		beholderMobs.add(20D, EntityType.BLAZE);
+		Beholder.summonMobs = beholderMobs;
+		Beholder.summonDaemon = Registration.DAEMON_ENTITY_TYPE.get();
+
+		WeightedCollection<Double, EntityType<? extends Mob>> gazerMobs = new WeightedCollection<>();
+		gazerMobs.add(33D, Registration.HEADLESS_ENTITY_TYPE.get());
+		gazerMobs.add(33D, Registration.ORC_ENTITY_TYPE.get());
+		gazerMobs.add(34D, EntityType.ZOMBIE);
+		gazerMobs.add(20D, EntityType.VEX);
+		Gazer.summonMobs = gazerMobs;
+
+		WeightedCollection<Double, EntityType<? extends Mob>> deathTyrantMobs = new WeightedCollection<>();
+		deathTyrantMobs.add(20D, EntityType.ZOMBIE);
+		deathTyrantMobs.add(20D, EntityType.HUSK);
+		deathTyrantMobs.add(20D, EntityType.SKELETON);
+		deathTyrantMobs.add(60D, Registration.SKELETON_WARRIOR_TYPE.get());
+		DeathTyrant.summonMobs = deathTyrantMobs;
+		DeathTyrant.summonDaemon = Registration.DAEMON_ENTITY_TYPE.get();
+
+		Beholder.ambientSound = Registration.AMBIENT_BEHOLDER;
+		DeathTyrant.ambientSound = Registration.AMBIENT_DEATH_TYRANT;
+		Gazer.ambientSound = Registration.AMBIENT_GAZER;
+		Spectator.ambientSound = Registration.AMBIENT_SPECTATOR;
 	}
 
 	/**
@@ -139,7 +225,7 @@ public class CommonSetup {
 		event.register(Registration.SKELETON_WARRIOR_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(Registration.WINGED_SKELETON_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(Registration.IRON_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.MAGMA_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, MagmaSkeleton::checkMagmaSkeletonSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(Registration.MAGMA_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkMagmaSkeletonSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
 		event.register(ModEntities.GARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.MARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterUndergroundSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
@@ -204,11 +290,22 @@ public class CommonSetup {
 			else if (event.getEntity() instanceof Shadow) {
 				((Shadow)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((Shadow)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));
 			}
+			else if (event.getEntity() instanceof BowSkeleton) {
+				((BowSkeleton)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((BowSkeleton)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));
+			}
 			else if (event.getEntity() instanceof Skeleton) {
 				((Skeleton)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((Skeleton)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));
 			}
 			else if (event.getEntity() instanceof ZombieVillager) {
 				((ZombieVillager)event.getEntity()).goalSelector.addGoal(3, new AvoidEntityGoal<>(((ZombieVillager)event.getEntity()), Boulder.class, 6.0F, 1.0D, 1.2D, IDenizensMonster.avoidBoulder));
+			}
+			// gmm's Gazer/Spectator don't reference DD's Boulder; inject Boulder-targeting (as prey,
+			// not avoidance) consumer-side, same mechanism as the avoidance branches above.
+			else if (event.getEntity() instanceof Gazer) {
+				((Gazer)event.getEntity()).targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(((Gazer)event.getEntity()), Boulder.class, true, (entity) -> entity instanceof Boulder boulder && boulder.isActive()));
+			}
+			else if (event.getEntity() instanceof Spectator) {
+				((Spectator)event.getEntity()).targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(((Spectator)event.getEntity()), Boulder.class, true, (entity) -> entity instanceof Boulder boulder && boulder.isActive()));
 			}
 		}
 

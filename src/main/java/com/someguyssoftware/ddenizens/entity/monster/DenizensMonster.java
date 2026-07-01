@@ -44,6 +44,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -155,6 +156,26 @@ public abstract class DenizensMonster extends Monster implements IDenizensMonste
 		}
 		else {
 			return DenizensMonster.checkDDMonsterSpawnRules(mob, level, spawnType, pos, random);
+		}
+	}
+
+	/**
+	 * Bespoke spawn rule for gmm's MagmaSkeleton (lives consumer-side because it reads DD's spawn
+	 * bridge + Config fallback). Nether: standard gating. Overworld: standard gating + lava nearby.
+	 */
+	public static boolean checkMagmaSkeletonSpawnRules(EntityType<? extends Mob> mob, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+		boolean isLavaNear = !level.getBlockStates(mob.getAABB(pos.getX(), pos.getY(), pos.getZ()).inflate(10D, 2D, 10D))
+				.filter(bs -> bs.is(Blocks.LAVA)).toList().isEmpty();
+
+		if (level.getBiome(pos).is(BiomeTags.IS_NETHER)) {
+			MobConfig.SpawnSettings spawn = spawnSettings(level, mob, true);
+			return spawn.enabled()
+					&& level.getDifficulty() != Difficulty.PEACEFUL
+					&& isValidHeight(pos, spawn);
+		}
+		else {
+			return DenizensMonster.checkDDMonsterSpawnRules(mob, level, spawnType, pos, random)
+					&& isLavaNear;
 		}
 	}
 

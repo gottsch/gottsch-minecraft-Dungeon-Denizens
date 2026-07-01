@@ -42,7 +42,7 @@ DDLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-//        add("itemGroup." + TAB_NAME, "Tutorial");
+        add("itemGroup.ddenizens.dungeon_denizens", "Dungeon Denizens");
     	add(Registration.HEADLESS_ENTITY_TYPE.get(), "Headless");
         add(Registration.HEADLESS_EGG.get(), "Headless Spawn Egg");
     	add(Registration.ORC_ENTITY_TYPE.get(), "Orc");
@@ -95,7 +95,7 @@ DDLanguageProvider extends LanguageProvider {
         add(Registration.PARALYSIS_SPELL_ITEM.get(), "Slow Spell");
         add(Registration.HARM_SPELL_ITEM.get(), "Harm Spell");
         add(Registration.DISINTEGRATE_SPELL_ITEM.get(), "Disintegrate Spell");
-        //add(Registration.DISARM_SPELL_ITEM.get(), "Disarm Spell");
+        add(Registration.DISARM_SPELL_ITEM.get(), "Disarm Spell");
 
         add(Registration.ROCK_ITEM.get(), "Rock");
         

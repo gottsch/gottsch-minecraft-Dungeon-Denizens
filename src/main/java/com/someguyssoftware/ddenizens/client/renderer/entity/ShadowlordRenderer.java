@@ -7,7 +7,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.someguyssoftware.ddenizens.DD;
 import com.someguyssoftware.ddenizens.client.model.ShadowlordModel;
 import com.someguyssoftware.ddenizens.client.renderer.entity.layer.ShadowlordEyeLayer;
-import com.someguyssoftware.ddenizens.entity.monster.Beholder;
 import com.someguyssoftware.ddenizens.entity.monster.Shadowlord;
 
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

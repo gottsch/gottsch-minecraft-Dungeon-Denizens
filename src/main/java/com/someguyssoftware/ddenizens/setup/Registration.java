@@ -27,12 +27,18 @@ import mod.gottsch.forge.gmm.core.entity.monster.Headless;
 import mod.gottsch.forge.gmm.core.entity.monster.Orc;
 import mod.gottsch.forge.gmm.core.entity.monster.Shadow;
 import mod.gottsch.forge.gmm.core.entity.monster.SkeletonWarrior;
-import com.someguyssoftware.ddenizens.entity.monster.skeleton.IronSkeleton;
-import com.someguyssoftware.ddenizens.entity.monster.skeleton.MagmaSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.IronSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.MagmaSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.WingedSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.Beholder;
+import mod.gottsch.forge.gmm.core.entity.monster.DeathTyrant;
+import mod.gottsch.forge.gmm.core.entity.monster.Gazer;
+import mod.gottsch.forge.gmm.core.entity.monster.Spectator;
 import com.someguyssoftware.ddenizens.entity.projectile.*;
 import com.someguyssoftware.ddenizens.item.*;
 import com.someguyssoftware.ddenizens.util.LangUtil;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -90,6 +96,7 @@ public class Registration {
 	public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, DD.MODID);
 	public static final DeferredRegister<ParticleType<?>> PARTICLES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, DD.MODID);
 	public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, DD.MODID);
+	public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, DD.MODID);
 
 	// mob collections
 	public static final List<RegistryObject<?>> ALL_MOBS = Lists.newArrayList();
@@ -319,6 +326,52 @@ public class Registration {
 	public static final RegistryObject<SoundEvent> SHADOWLORD_STEP = registerSoundEvent("shadowlord_step");
 	public static final RegistryObject<SoundEvent> WINGED_SKELETON_FLAP = registerSoundEvent("winged_skeleton_flap");
 
+	/*
+	 * a single creative tab holding all Dungeon Denizens content (spawn eggs, weapons, projectile items),
+	 * so everything is available in one place (handy for testing all mobs).
+	 */
+	public static final RegistryObject<CreativeModeTab> DD_TAB = CREATIVE_MODE_TABS.register("dungeon_denizens", () -> CreativeModeTab.builder()
+			.title(Component.translatable("itemGroup.ddenizens.dungeon_denizens"))
+			.icon(() -> new ItemStack(BEHOLDER_EGG.get()))
+			.displayItems((params, output) -> {
+				// spawn eggs
+				output.accept(HEADLESS_EGG.get());
+				output.accept(ORC_EGG.get());
+				output.accept(GHOUL_EGG.get());
+				output.accept(BOULDER_EGG.get());
+				output.accept(SHADOW_EGG.get());
+				output.accept(SHADOWLORD_EGG.get());
+				output.accept(BEHOLDER_EGG.get());
+				output.accept(DEATH_TYRANT_EGG.get());
+				output.accept(GAZER_EGG.get());
+				output.accept(SPECTATOR_EGG.get());
+				output.accept(DAEMON_EGG.get());
+				output.accept(SKELETON_WARRIOR_EGG.get());
+				output.accept(WINGED_SKELETON_EGG.get());
+				output.accept(IRON_SKELETON_EGG.get());
+				output.accept(MAGMA_SKELETON_EGG.get());
+				output.accept(ModItems.GARGOYLE_EGG.get());
+				output.accept(ModItems.MARGOYLE_EGG.get());
+				// weapons
+				output.accept(CLUB.get());
+				output.accept(SPIKED_CLUB.get());
+				output.accept(RUSTY_IRON_SWORD1.get());
+				output.accept(RUSTY_IRON_SWORD2.get());
+				output.accept(RUSTY_IRON_SWORD3.get());
+				output.accept(RUSTY_IRON_SWORD4.get());
+				output.accept(RUSTY_IRON_AXE1.get());
+				output.accept(RUSTY_IRON_AXE2.get());
+				output.accept(SHADOW_BLADE.get());
+				output.accept(SHADOW_FALCHION.get());
+				// projectile / misc items
+				output.accept(ROCK_ITEM.get());
+				output.accept(PARALYSIS_SPELL_ITEM.get());
+				output.accept(HARM_SPELL_ITEM.get());
+				output.accept(DISINTEGRATE_SPELL_ITEM.get());
+				output.accept(DISARM_SPELL_ITEM.get());
+			})
+			.build());
+
 	// NOTE must add mob to ALL_MOBS collection in order to register them to the biomes - see CommonSetup.onBiomeLoading
 	// NOTE 7/3/2025 - this doesn't apply to 1.20.1+ as Biomes are handled in data files.
 	static {
@@ -345,10 +398,11 @@ public class Registration {
 	 */
 	public static void init() {
 		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-		ITEMS.register(eventBus);	
-		ENTITIES.register(eventBus);		
+		ITEMS.register(eventBus);
+		ENTITIES.register(eventBus);
 		PARTICLES.register(eventBus);
 		SOUNDS.register(eventBus);
+		CREATIVE_MODE_TABS.register(eventBus);
 	}
 
 	private static RegistryObject<SoundEvent> registerSoundEvent(String name) {

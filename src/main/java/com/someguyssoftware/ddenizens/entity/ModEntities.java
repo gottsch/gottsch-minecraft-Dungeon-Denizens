@@ -2,7 +2,6 @@ package com.someguyssoftware.ddenizens.entity;
 
 import mod.gottsch.forge.gmm.core.entity.monster.Gargoyle;
 import mod.gottsch.forge.gmm.core.entity.monster.Margoyle;
-import com.someguyssoftware.ddenizens.entity.monster.WingedSkeleton;
 import com.someguyssoftware.ddenizens.setup.Registration;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
