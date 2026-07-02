@@ -2,7 +2,12 @@ package com.someguyssoftware.ddenizens.entity;
 
 import com.google.common.collect.Lists;
 import com.someguyssoftware.ddenizens.DD;
-import com.someguyssoftware.ddenizens.entity.projectile.*;
+import mod.gottsch.forge.gmm.core.entity.projectile.ParalysisSpell;
+import mod.gottsch.forge.gmm.core.entity.projectile.HarmSpell;
+import mod.gottsch.forge.gmm.core.entity.projectile.DisintegrateSpell;
+import mod.gottsch.forge.gmm.core.entity.projectile.DisarmSpell;
+import mod.gottsch.forge.gmm.core.entity.projectile.FireSpoutSpell;
+import mod.gottsch.forge.gmm.core.entity.projectile.Rock;
 import mod.gottsch.forge.gmm.core.entity.monster.Boulder;
 import mod.gottsch.forge.gmm.core.entity.monster.Daemon;
 import mod.gottsch.forge.gmm.core.entity.monster.beholderkin.DeathTyrant;
@@ -16,6 +21,8 @@ import mod.gottsch.forge.gmm.core.entity.monster.beholderkin.Beholder;
 import mod.gottsch.forge.gmm.core.entity.monster.Headless;
 import mod.gottsch.forge.gmm.core.entity.monster.Orc;
 import mod.gottsch.forge.gmm.core.entity.monster.ghoul.Ghoul;
+import mod.gottsch.forge.gmm.core.entity.monster.ghoul.SewerGhoul;
+import mod.gottsch.forge.gmm.core.entity.monster.Rat;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.SkeletonWarrior;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.WingedSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.IronSkeleton;
@@ -40,6 +47,8 @@ public class ModEntities {
 
 	public static final String HEADLESS = "headless";
 	public static final String GHOUL = "ghoul";
+	public static final String SEWER_GHOUL = "sewer_ghoul";
+	public static final String RAT = "rat";
 	public static final String SHADOW = "shadow";
 	public static final String SHADOWLORD = "shadowlord";
 	public static final String BEHOLDER = "beholder";
@@ -97,6 +106,20 @@ public class ModEntities {
 			.setShouldReceiveVelocityUpdates(false)
 			.setTrackingRange(20)
 			.build(GHOUL));
+
+	public static final RegistryObject<EntityType<SewerGhoul>> SEWER_GHOUL_ENTITY_TYPE = ENTITIES.register(SEWER_GHOUL, () -> EntityType.Builder.of(SewerGhoul::new, MobCategory.MONSTER)
+			.sized(0.6F, 1.68F)
+			.clientTrackingRange(8)
+			.setShouldReceiveVelocityUpdates(false)
+			.setTrackingRange(20)
+			.build(SEWER_GHOUL));
+
+	public static final RegistryObject<EntityType<Rat>> RAT_ENTITY_TYPE = ENTITIES.register(RAT, () -> EntityType.Builder.of(Rat::new, MobCategory.MONSTER)
+			.sized(0.8F, 0.25F)
+			.clientTrackingRange(8)
+			.setShouldReceiveVelocityUpdates(false)
+			.setTrackingRange(20)
+			.build(RAT));
 
 	public static final RegistryObject<EntityType<Beholder>> BEHOLDER_ENTITY_TYPE = ENTITIES.register(BEHOLDER, () -> EntityType.Builder.of(Beholder::new, MobCategory.MONSTER)
 			.sized(2.25F, 3.5F)
@@ -234,6 +257,8 @@ public class ModEntities {
 	static {
 		ALL_MOBS.add(HEADLESS_ENTITY_TYPE);
 		ALL_MOBS.add(GHOUL_ENTITY_TYPE);
+		ALL_MOBS.add(SEWER_GHOUL_ENTITY_TYPE);
+		ALL_MOBS.add(RAT_ENTITY_TYPE);
 		ALL_MOBS.add(BOULDER_ENTITY_TYPE);
 		ALL_MOBS.add(SHADOW_ENTITY_TYPE);
 		ALL_MOBS.add(BEHOLDER_ENTITY_TYPE);

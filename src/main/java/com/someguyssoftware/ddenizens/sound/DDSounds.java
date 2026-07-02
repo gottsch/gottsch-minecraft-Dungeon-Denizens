@@ -21,7 +21,7 @@ public class DDSounds {
 	public static final RegistryObject<SoundEvent> AMBIENT_GAZER = registerSoundEvent("ambient_gazer");
 	public static final RegistryObject<SoundEvent> AMBIENT_SPECTATOR = registerSoundEvent("ambient_spectator");
 	public static final RegistryObject<SoundEvent> AMBIENT_SHADOWLORD = registerSoundEvent("ambient_shadowlord");
-	public static final RegistryObject<SoundEvent> AMBIENT_SHADOW = registerSoundEvent("ambient_shadow");
+	// NOTE ambient_shadow migrated to gmm (GMMSounds.SHADOW_AMBIENT) — Shadow now defaults to gmm's own sound.
 	public static final RegistryObject<SoundEvent> SHADOWLORD_STEP = registerSoundEvent("shadowlord_step");
 	public static final RegistryObject<SoundEvent> WINGED_SKELETON_FLAP = registerSoundEvent("winged_skeleton_flap");
 

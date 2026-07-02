@@ -1,0 +1,7 @@
+{
+	"properties": {
+		"explosionRadius": 1.0,
+		"damage": 6.0,
+		"maxHeight": 5.0
+	}
+}

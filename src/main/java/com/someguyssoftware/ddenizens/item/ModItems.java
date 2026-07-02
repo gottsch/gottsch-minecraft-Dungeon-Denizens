@@ -33,6 +33,8 @@ public class ModItems {
 	public static final RegistryObject<Item> HEADLESS_EGG = ITEMS.register(HEADLESS + "_egg", () -> new ForgeSpawnEggItem(ModEntities.HEADLESS_ENTITY_TYPE, 0xc8b486, 0x6f5e48, new Item.Properties()));
 	public static final RegistryObject<Item> ORC_EGG = ITEMS.register(ORC + "_egg", () -> new ForgeSpawnEggItem(ModEntities.ORC_ENTITY_TYPE, 0xc8b486, 0x6f5e48, new Item.Properties()));
 	public static final RegistryObject<Item> GHOUL_EGG = ITEMS.register(GHOUL + "_egg", () -> new ForgeSpawnEggItem(ModEntities.GHOUL_ENTITY_TYPE, 0x93aba3, 0x869e96, new Item.Properties()));
+	public static final RegistryObject<Item> SEWER_GHOUL_EGG = ITEMS.register(SEWER_GHOUL + "_egg", () -> new ForgeSpawnEggItem(ModEntities.SEWER_GHOUL_ENTITY_TYPE, 0x5a6650, 0x3d4636, new Item.Properties()));
+	public static final RegistryObject<Item> RAT_EGG = ITEMS.register(RAT + "_egg", () -> new ForgeSpawnEggItem(ModEntities.RAT_ENTITY_TYPE, 0x6e6459, 0x413a30, new Item.Properties()));
 
 	public static final RegistryObject<Item> BEHOLDER_EGG = ITEMS.register(BEHOLDER + "_egg", () -> new BeholderEggItem(ModEntities.BEHOLDER_ENTITY_TYPE, 0x871e00, 0xc15227, new Item.Properties()));
 	public static final RegistryObject<Item> DEATH_TYRANT_EGG = ITEMS.register(DEATH_TYRANT + "_egg", () -> new DeathTyrantEggItem(ModEntities.DEATH_TYRANT_TYPE, 0x86765a, 0xcdc3bb, new Item.Properties()));
@@ -107,6 +109,8 @@ public class ModItems {
 				output.accept(HEADLESS_EGG.get());
 				output.accept(ORC_EGG.get());
 				output.accept(GHOUL_EGG.get());
+				output.accept(SEWER_GHOUL_EGG.get());
+				output.accept(RAT_EGG.get());
 				output.accept(BOULDER_EGG.get());
 				output.accept(SHADOW_EGG.get());
 				output.accept(SHADOWLORD_EGG.get());

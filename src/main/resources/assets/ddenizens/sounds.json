@@ -19,10 +19,6 @@
     "subtitle" : "sounds.ddenizens.ambient_spectator",
     "sounds" : [ "ddenizens:ambient_spectator", "ddenizens:ambient_beholderkin1", "ddenizens:ambient_beholderkin2" ]
   },
-  "ambient_shadow" : {
-    "subtitle" : "sounds.ddenizens.ambient_shadow",
-    "sounds" : [ "ddenizens:ambient_shadow" ]
-  },
   "ambient_shadowlord" : {
     "subtitle" : "sounds.ddenizens.ambient_shadowlord",
     "sounds" : [ "ddenizens:ambient_shadowlord1", "ddenizens:ambient_shadowlord2" ]

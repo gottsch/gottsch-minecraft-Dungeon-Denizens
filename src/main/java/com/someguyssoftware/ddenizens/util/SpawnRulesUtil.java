@@ -19,11 +19,6 @@
  */
 package com.someguyssoftware.ddenizens.util;
 
-import com.someguyssoftware.ddenizens.config.Config;
-import com.someguyssoftware.ddenizens.config.Config.CommonSpawnConfig;
-import com.someguyssoftware.ddenizens.config.Config.IMobConfig;
-import com.someguyssoftware.ddenizens.config.Config.INetherMobConfig;
-
 import mod.gottsch.forge.gmm.core.config.MobConfig;
 import mod.gottsch.forge.gmm.core.config.MobConfigHelper;
 import mod.gottsch.forge.gmm.core.config.SkyVisibility;
@@ -42,7 +37,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 
-import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -98,21 +92,14 @@ public final class SpawnRulesUtil {
 	}
 
 	/**
-	 * Resolves a mob's spawn-gating settings: prefers the {@code gmm:mob_config} datapack entry
-	 * (keyed by EntityType id), falling back to the legacy Forge {@link Config} for mobs without a
-	 * codec entry. The fallback yields standard {@code ANY} sky + darkness-required (legacy Config
-	 * never carried sky/dark data), which is the correct default for a plain monster.
+	 * Resolves a mob's spawn-gating settings from the {@code gmm:mob_config} datapack entry (keyed by
+	 * EntityType id). Every DD mob ships a JSON, so the entry is normally present; a mob without one
+	 * falls back to {@link MobConfig#DEFAULT} (enabled, full height band, {@code ANY} sky,
+	 * darkness-required) — the correct default for a plain monster.
 	 */
 	public static MobConfig.SpawnSettings spawnSettings(LevelAccessor level, EntityType<? extends Mob> mob, boolean nether) {
 		ResourceLocation id = EntityType.getKey(mob);
-		Optional<MobConfig> entry = MobConfigHelper.find(level, id);
-		if (entry.isPresent()) {
-			return entry.get().spawnFor(nether);
-		}
-		// legacy fallback: adapt the Forge Config value into SpawnSettings (standard sky/dark defaults)
-		IMobConfig mobConfig = Config.Mobs.MOBS.get(id);
-		CommonSpawnConfig config = nether ? ((INetherMobConfig) mobConfig).getNetherSpawn() : mobConfig.getSpawnConfig();
-		return new MobConfig.SpawnSettings(config.enabled.get(), config.minHeight.get(), config.maxHeight.get());
+		return MobConfigHelper.find(level, id).orElse(MobConfig.DEFAULT).spawnFor(nether);
 	}
 
 	public static boolean isValidHeight(BlockPos pos, MobConfig.SpawnSettings spawn) {

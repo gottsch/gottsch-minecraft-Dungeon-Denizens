@@ -55,7 +55,9 @@ description="A mod that adds a classical set of mobs to your Minecraft world. Th
     mandatory=true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
     versionRange="[2.1.0,]"
-    ordering="BEFORE"
+# DD builds on gottschcore, so gottschcore must load first -> DD loads AFTER it.
+# (was BEFORE, which formed a load-order cycle once the gmm dependency chained gottschcore -> gmm -> ddenizens)
+    ordering="AFTER"
     side="BOTH"
 [[dependencies.ddenizens]]
     modId="gmm"

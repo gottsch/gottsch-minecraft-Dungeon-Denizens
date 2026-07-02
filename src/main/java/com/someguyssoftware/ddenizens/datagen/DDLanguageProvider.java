@@ -48,6 +48,10 @@ DDLanguageProvider extends LanguageProvider {
         add(ModItems.ORC_EGG.get(), "Orc Spawn Egg");
         add(ModEntities.GHOUL_ENTITY_TYPE.get(), "Ghoul");
         add(ModItems.GHOUL_EGG.get(), "Ghoul Spawn Egg");
+        add(ModEntities.SEWER_GHOUL_ENTITY_TYPE.get(), "Sewer Ghoul");
+        add(ModItems.SEWER_GHOUL_EGG.get(), "Sewer Ghoul Spawn Egg");
+        add(ModEntities.RAT_ENTITY_TYPE.get(), "Rat");
+        add(ModItems.RAT_EGG.get(), "Rat Spawn Egg");
 
         add(ModEntities.BEHOLDER_ENTITY_TYPE.get(), "Beholder");
         add(ModItems.BEHOLDER_EGG.get(), "Beholder Spawn Egg");

@@ -25,7 +25,11 @@ import com.someguyssoftware.ddenizens.client.model.*;
 // v2.0: these models + renderers now sourced from gottsch's Monster Manual (gmm) shared library
 // (DD's own client.renderer.entity package is now empty -- every renderer has migrated to gmm)
 import mod.gottsch.forge.gmm.core.client.model.GhoulModel;
+import mod.gottsch.forge.gmm.core.client.model.SewerGhoulModel;
+import mod.gottsch.forge.gmm.core.client.model.RatModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.GhoulRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.SewerGhoulRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.RatRenderer;
 import mod.gottsch.forge.gmm.core.client.model.HeadlessModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.HeadlessRenderer;
 import mod.gottsch.forge.gmm.core.client.model.SkeletonWarriorModel;
@@ -87,6 +91,8 @@ public class ClientSetup {
 		event.registerLayerDefinition(HeadlessModel.LAYER_LOCATION, HeadlessModel::createBodyLayer);
 		event.registerLayerDefinition(OrcModel.LAYER_LOCATION, OrcModel::createBodyLayer);
 		event.registerLayerDefinition(GhoulModel.LAYER_LOCATION, GhoulModel::createBodyLayer);
+		event.registerLayerDefinition(SewerGhoulModel.LAYER_LOCATION, SewerGhoulModel::createBodyLayer);
+		event.registerLayerDefinition(RatModel.LAYER_LOCATION, RatModel::createBodyLayer);
 		event.registerLayerDefinition(EttinModel.LAYER_LOCATION, EttinModel::createBodyLayer);
 		event.registerLayerDefinition(BeholderModel.LAYER_LOCATION, BeholderModel::createBodyLayer);
 		event.registerLayerDefinition(DeathTyrantModel.LAYER_LOCATION, DeathTyrantModel::createBodyLayer);
@@ -115,6 +121,8 @@ public class ClientSetup {
         event.registerEntityRenderer(ModEntities.HEADLESS_ENTITY_TYPE.get(), HeadlessRenderer::new);
         event.registerEntityRenderer(ModEntities.ORC_ENTITY_TYPE.get(), OrcRenderer::new);
         event.registerEntityRenderer(ModEntities.GHOUL_ENTITY_TYPE.get(), GhoulRenderer::new);
+		event.registerEntityRenderer(ModEntities.SEWER_GHOUL_ENTITY_TYPE.get(), SewerGhoulRenderer::new);
+		event.registerEntityRenderer(ModEntities.RAT_ENTITY_TYPE.get(), RatRenderer::new);
 		event.registerEntityRenderer(ModEntities.BEHOLDER_ENTITY_TYPE.get(), BeholderRenderer::new);
 		event.registerEntityRenderer(ModEntities.DEATH_TYRANT_TYPE.get(), DeathTyrantRenderer::new);
         event.registerEntityRenderer(ModEntities.GAZER_ENTITY_TYPE.get(), GazerRenderer::new);
@@ -149,7 +157,8 @@ public class ClientSetup {
         	return new ThrownItemRenderer<>(provider, 1.5F, true);
          });
         event.registerEntityRenderer(ModEntities.ROCK_ENTITY_TYPE.get(), (provider) -> {
-        	return new ThrownItemRenderer<>(provider, 1.0F, true);
+        	// second arg is the render scale of the thrown item (lower = smaller rock)
+        	return new ThrownItemRenderer<>(provider, 0.5F, true);
          });
 	}
 }
