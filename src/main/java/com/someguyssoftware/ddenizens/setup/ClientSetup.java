@@ -116,7 +116,7 @@ public class ClientSetup {
         	return new ThrownItemRenderer<>(provider, 1.5F, true);
          });
         event.registerEntityRenderer(Registration.ROCK_ENTITY_TYPE.get(), (provider) -> {
-        	return new ThrownItemRenderer<>(provider, 1.0F, true);
+        	return new ThrownItemRenderer<>(provider, 0.5F, true);
          });
 	}
 }
