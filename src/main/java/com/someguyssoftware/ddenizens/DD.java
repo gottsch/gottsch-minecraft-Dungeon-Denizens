@@ -21,13 +21,13 @@ package com.someguyssoftware.ddenizens;
 
 import com.someguyssoftware.ddenizens.entity.ModEntities;
 import com.someguyssoftware.ddenizens.item.ModItems;
+import com.someguyssoftware.ddenizens.sound.DDSounds;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.someguyssoftware.ddenizens.config.Config;
 import com.someguyssoftware.ddenizens.setup.ClientSetup;
 import com.someguyssoftware.ddenizens.setup.CommonSetup;
-import com.someguyssoftware.ddenizens.setup.Registration;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -49,7 +49,7 @@ public class DD {
         // register the deferred registries
         ModItems.init();
         ModEntities.init();
-        Registration.init();
+        DDSounds.init();
         Config.register();
 
         // register the setup method for mod loading

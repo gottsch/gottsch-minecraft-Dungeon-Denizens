@@ -18,9 +18,9 @@
  * along with Dungeon Denizens.  If not, see <http://www.gnu.org/licenses/lgpl>.
  */
 package com.someguyssoftware.ddenizens.entity.ai.goal;
+import com.someguyssoftware.ddenizens.entity.ModEntities;
 
 import com.someguyssoftware.ddenizens.entity.projectile.DisintegrateSpell;
-import com.someguyssoftware.ddenizens.setup.Registration;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -79,7 +79,7 @@ public class CastDisintegrateGoal extends Goal {
                     double y = livingentity.getY(0.5D) - (this.mob.getY(0.5D));
                     double z = livingentity.getZ() - (this.mob.getZ() + vec3.z * 2.0D);
 
-                    DisintegrateSpell spell = new DisintegrateSpell(Registration.DISINTEGRATE_SPELL_ENTITY_TYPE.get(), level);
+                    DisintegrateSpell spell = new DisintegrateSpell(ModEntities.DISINTEGRATE_SPELL_ENTITY_TYPE.get(), level);
                     spell.init(this.mob, x, y, z);
                     spell.setPos(this.mob.getX() + vec3.x * 2.0D, this.mob.getY(0.5D), spell.getZ() + vec3.z * 2.0);
                     level.addFreshEntity(spell);

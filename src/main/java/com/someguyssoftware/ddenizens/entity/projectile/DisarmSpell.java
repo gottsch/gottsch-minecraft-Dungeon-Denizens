@@ -18,8 +18,9 @@
  * along with Dungeon Denizens.  If not, see <http://www.gnu.org/licenses/lgpl>.
  */
 package com.someguyssoftware.ddenizens.entity.projectile;
+import com.someguyssoftware.ddenizens.item.ModItems;
+import com.someguyssoftware.ddenizens.entity.ModEntities;
 
-import com.someguyssoftware.ddenizens.setup.Registration;
 import com.someguyssoftware.ddenizens.util.EquipmentUtil;
 import net.minecraft.Util;
 import net.minecraft.core.particles.ParticleOptions;
@@ -59,7 +60,7 @@ public class DisarmSpell extends AbstractDDHurtingProjectile implements ItemSupp
 	 * @return
 	 */
 	public DisarmSpell create(Level level) {
-		return new DisarmSpell(Registration.DISARM_SPELL_ENTITY_TYPE.get(), level);
+		return new DisarmSpell(ModEntities.DISARM_SPELL_ENTITY_TYPE.get(), level);
 	}
 
 	/**
@@ -150,7 +151,7 @@ public class DisarmSpell extends AbstractDDHurtingProjectile implements ItemSupp
 	}
 
 	public void setItem(ItemStack stack) {
-		if (!stack.is(Registration.DISARM_SPELL_ITEM.get()) || stack.hasTag()) {
+		if (!stack.is(ModItems.DISARM_SPELL_ITEM.get()) || stack.hasTag()) {
 			this.getEntityData().set(DATA_ITEM_STACK, Util.make(stack.copy(), (itemStack) -> {
 				itemStack.setCount(1);
 			}));
@@ -170,7 +171,7 @@ public class DisarmSpell extends AbstractDDHurtingProjectile implements ItemSupp
 	@Override
 	public ItemStack getItem() {
 		ItemStack stack = this.getItemRaw();
-		return stack.isEmpty() ? new ItemStack(Registration.DISARM_SPELL_ITEM.get()) : stack;
+		return stack.isEmpty() ? new ItemStack(ModItems.DISARM_SPELL_ITEM.get()) : stack;
 	}
 
 	@Override

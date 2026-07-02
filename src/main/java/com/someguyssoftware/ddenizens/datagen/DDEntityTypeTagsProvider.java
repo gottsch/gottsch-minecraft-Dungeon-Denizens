@@ -1,6 +1,6 @@
 package com.someguyssoftware.ddenizens.datagen;
+import com.someguyssoftware.ddenizens.entity.ModEntities;
 
-import com.someguyssoftware.ddenizens.setup.Registration;
 import mod.gottsch.forge.gmm.core.tag.GMMTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -26,12 +26,12 @@ public class DDEntityTypeTagsProvider extends EntityTypeTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         // a hurt Headless alerts other Headless, Gazers, and Beholders
         tag(GMMTags.EntityTypes.HEADLESS_HURT_ALLIES)
-                .add(Registration.HEADLESS_ENTITY_TYPE.get(),
-                     Registration.GAZER_ENTITY_TYPE.get(),
-                     Registration.BEHOLDER_ENTITY_TYPE.get());
+                .add(ModEntities.HEADLESS_ENTITY_TYPE.get(),
+                     ModEntities.GAZER_ENTITY_TYPE.get(),
+                     ModEntities.BEHOLDER_ENTITY_TYPE.get());
         // a Headless that acquires a target by sight alerts other Headless and Gazers
         tag(GMMTags.EntityTypes.HEADLESS_TARGET_ALLIES)
-                .add(Registration.HEADLESS_ENTITY_TYPE.get(),
-                     Registration.GAZER_ENTITY_TYPE.get());
+                .add(ModEntities.HEADLESS_ENTITY_TYPE.get(),
+                     ModEntities.GAZER_ENTITY_TYPE.get());
     }
 }

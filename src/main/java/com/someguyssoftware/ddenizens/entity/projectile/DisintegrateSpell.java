@@ -18,10 +18,11 @@
  * along with Dungeon Denizens.  If not, see <http://www.gnu.org/licenses/lgpl>.
  */
 package com.someguyssoftware.ddenizens.entity.projectile;
+import com.someguyssoftware.ddenizens.item.ModItems;
+import com.someguyssoftware.ddenizens.entity.ModEntities;
 
 import com.someguyssoftware.ddenizens.config.Config;
 import com.someguyssoftware.ddenizens.damagesource.ModDamageTypes;
-import com.someguyssoftware.ddenizens.setup.Registration;
 import mod.gottsch.forge.gottschcore.world.WorldInfo;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -73,7 +74,7 @@ public class DisintegrateSpell extends AbstractDDHurtingProjectile implements It
 	 * @return
 	 */
 	public DisintegrateSpell create(Level level) {
-		return new DisintegrateSpell(Registration.DISINTEGRATE_SPELL_ENTITY_TYPE.get(), level);
+		return new DisintegrateSpell(ModEntities.DISINTEGRATE_SPELL_ENTITY_TYPE.get(), level);
 	}
 
 	/**
@@ -177,7 +178,7 @@ public class DisintegrateSpell extends AbstractDDHurtingProjectile implements It
 	}
 
 	public void setItem(ItemStack stack) {
-		if (!stack.is(Registration.DISINTEGRATE_SPELL_ITEM.get()) || stack.hasTag()) {
+		if (!stack.is(ModItems.DISINTEGRATE_SPELL_ITEM.get()) || stack.hasTag()) {
 			this.getEntityData().set(DATA_ITEM_STACK, Util.make(stack.copy(), (itemStack) -> {
 				itemStack.setCount(1);
 			}));
@@ -197,7 +198,7 @@ public class DisintegrateSpell extends AbstractDDHurtingProjectile implements It
 	@Override
 	public ItemStack getItem() {
 		ItemStack stack = this.getItemRaw();
-		return stack.isEmpty() ? new ItemStack(Registration.DISINTEGRATE_SPELL_ITEM.get()) : stack;
+		return stack.isEmpty() ? new ItemStack(ModItems.DISINTEGRATE_SPELL_ITEM.get()) : stack;
 	}
 
 	@Override

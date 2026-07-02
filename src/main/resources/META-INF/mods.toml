@@ -58,6 +58,13 @@ description="A mod that adds a classical set of mobs to your Minecraft world. Th
     ordering="BEFORE"
     side="BOTH"
 [[dependencies.ddenizens]]
+    modId="gmm"
+    mandatory=true
+# gottsch's Monster Manual (gmm) - shared mob base-class/asset library; DD's mob classes now live here (v2.0 API refactor)
+    versionRange="[1.0.0,]"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.ddenizens]]
     modId="treasure2"
     mandatory=false
     # This version range declares a minimum of the current minecraft version up to but not including the next major version

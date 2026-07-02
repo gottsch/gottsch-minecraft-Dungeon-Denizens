@@ -112,43 +112,43 @@ public class ClientSetup {
 	 */
 	@SubscribeEvent
     public static void onRegisterRenderer(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(Registration.HEADLESS_ENTITY_TYPE.get(), HeadlessRenderer::new);
-        event.registerEntityRenderer(Registration.ORC_ENTITY_TYPE.get(), OrcRenderer::new);
-        event.registerEntityRenderer(Registration.GHOUL_ENTITY_TYPE.get(), GhoulRenderer::new);
-		event.registerEntityRenderer(Registration.BEHOLDER_ENTITY_TYPE.get(), BeholderRenderer::new);
-		event.registerEntityRenderer(Registration.DEATH_TYRANT_TYPE.get(), DeathTyrantRenderer::new);
-        event.registerEntityRenderer(Registration.GAZER_ENTITY_TYPE.get(), GazerRenderer::new);
-		event.registerEntityRenderer(Registration.SPECTATOR_TYPE.get(), SpectatorRenderer::new);
-		event.registerEntityRenderer(Registration.BOULDER_ENTITY_TYPE.get(), BoulderRenderer::new);
-        event.registerEntityRenderer(Registration.SHADOW_ENTITY_TYPE.get(), ShadowRenderer::new);
-        event.registerEntityRenderer(Registration.SHADOWLORD_ENTITY_TYPE.get(), ShadowlordRenderer::new);
-        event.registerEntityRenderer(Registration.DAEMON_ENTITY_TYPE.get(), DaemonRenderer::new);
-		event.registerEntityRenderer(Registration.SKELETON_WARRIOR_TYPE.get(), SkeletonWarriorRenderer::new);
-		event.registerEntityRenderer(Registration.WINGED_SKELETON_TYPE.get(), WingedSkeletonRenderer::new);
-		event.registerEntityRenderer(Registration.IRON_SKELETON_TYPE.get(), IronSkeletonRenderer::new);
-		event.registerEntityRenderer(Registration.MAGMA_SKELETON_TYPE.get(), MagmaSkeletonRenderer::new);
+        event.registerEntityRenderer(ModEntities.HEADLESS_ENTITY_TYPE.get(), HeadlessRenderer::new);
+        event.registerEntityRenderer(ModEntities.ORC_ENTITY_TYPE.get(), OrcRenderer::new);
+        event.registerEntityRenderer(ModEntities.GHOUL_ENTITY_TYPE.get(), GhoulRenderer::new);
+		event.registerEntityRenderer(ModEntities.BEHOLDER_ENTITY_TYPE.get(), BeholderRenderer::new);
+		event.registerEntityRenderer(ModEntities.DEATH_TYRANT_TYPE.get(), DeathTyrantRenderer::new);
+        event.registerEntityRenderer(ModEntities.GAZER_ENTITY_TYPE.get(), GazerRenderer::new);
+		event.registerEntityRenderer(ModEntities.SPECTATOR_TYPE.get(), SpectatorRenderer::new);
+		event.registerEntityRenderer(ModEntities.BOULDER_ENTITY_TYPE.get(), BoulderRenderer::new);
+        event.registerEntityRenderer(ModEntities.SHADOW_ENTITY_TYPE.get(), ShadowRenderer::new);
+        event.registerEntityRenderer(ModEntities.SHADOWLORD_ENTITY_TYPE.get(), ShadowlordRenderer::new);
+        event.registerEntityRenderer(ModEntities.DAEMON_ENTITY_TYPE.get(), DaemonRenderer::new);
+		event.registerEntityRenderer(ModEntities.SKELETON_WARRIOR_TYPE.get(), SkeletonWarriorRenderer::new);
+		event.registerEntityRenderer(ModEntities.WINGED_SKELETON_TYPE.get(), WingedSkeletonRenderer::new);
+		event.registerEntityRenderer(ModEntities.IRON_SKELETON_TYPE.get(), IronSkeletonRenderer::new);
+		event.registerEntityRenderer(ModEntities.MAGMA_SKELETON_TYPE.get(), MagmaSkeletonRenderer::new);
 
 		event.registerEntityRenderer(ModEntities.GARGOYLE_TYPE.get(), GargoyleRenderer::new);
 		event.registerEntityRenderer(ModEntities.MARGOYLE_TYPE.get(), MargoyleRenderer::new);
 
 
-		event.registerEntityRenderer(Registration.PARALYSIS_SPELL_ENTITY_TYPE.get(), (provider) -> {
+		event.registerEntityRenderer(ModEntities.PARALYSIS_SPELL_ENTITY_TYPE.get(), (provider) -> {
             // 1.0 = scale, true = full bright
         	return new ThrownItemRenderer<>(provider, 1.25F, true);
          });
-        event.registerEntityRenderer(Registration.HARM_SPELL_ENTITY_TYPE.get(), (provider) -> {
+        event.registerEntityRenderer(ModEntities.HARM_SPELL_ENTITY_TYPE.get(), (provider) -> {
         	return new ThrownItemRenderer<>(provider, 1.25F, true);
          });
-		event.registerEntityRenderer(Registration.DISINTEGRATE_SPELL_ENTITY_TYPE.get(), (provider) -> {
+		event.registerEntityRenderer(ModEntities.DISINTEGRATE_SPELL_ENTITY_TYPE.get(), (provider) -> {
 			return new ThrownItemRenderer<>(provider, 1.25F, true);
 		});
-		event.registerEntityRenderer(Registration.DISARM_SPELL_ENTITY_TYPE.get(), (provider) -> {
+		event.registerEntityRenderer(ModEntities.DISARM_SPELL_ENTITY_TYPE.get(), (provider) -> {
 			return new ThrownItemRenderer<>(provider, 1.25F, true);
 		});
-        event.registerEntityRenderer(Registration.FIRESPOUT_SPELL_ENTITY_TYPE.get(), (provider) -> {
+        event.registerEntityRenderer(ModEntities.FIRESPOUT_SPELL_ENTITY_TYPE.get(), (provider) -> {
         	return new ThrownItemRenderer<>(provider, 1.5F, true);
          });
-        event.registerEntityRenderer(Registration.ROCK_ENTITY_TYPE.get(), (provider) -> {
+        event.registerEntityRenderer(ModEntities.ROCK_ENTITY_TYPE.get(), (provider) -> {
         	return new ThrownItemRenderer<>(provider, 1.0F, true);
          });
 	}

@@ -22,7 +22,6 @@ package com.someguyssoftware.ddenizens.datagen;
 import com.someguyssoftware.ddenizens.DD;
 import com.someguyssoftware.ddenizens.entity.ModEntities;
 import com.someguyssoftware.ddenizens.item.ModItems;
-import com.someguyssoftware.ddenizens.setup.Registration;
 
 import com.someguyssoftware.ddenizens.util.LangUtil;
 import net.minecraft.data.PackOutput;
@@ -43,48 +42,48 @@ DDLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         add("itemGroup.ddenizens.dungeon_denizens", "Dungeon Denizens");
-    	add(Registration.HEADLESS_ENTITY_TYPE.get(), "Headless");
-        add(Registration.HEADLESS_EGG.get(), "Headless Spawn Egg");
-    	add(Registration.ORC_ENTITY_TYPE.get(), "Orc");
-        add(Registration.ORC_EGG.get(), "Orc Spawn Egg");
-        add(Registration.GHOUL_ENTITY_TYPE.get(), "Ghoul");
-        add(Registration.GHOUL_EGG.get(), "Ghoul Spawn Egg");
+    	add(ModEntities.HEADLESS_ENTITY_TYPE.get(), "Headless");
+        add(ModItems.HEADLESS_EGG.get(), "Headless Spawn Egg");
+    	add(ModEntities.ORC_ENTITY_TYPE.get(), "Orc");
+        add(ModItems.ORC_EGG.get(), "Orc Spawn Egg");
+        add(ModEntities.GHOUL_ENTITY_TYPE.get(), "Ghoul");
+        add(ModItems.GHOUL_EGG.get(), "Ghoul Spawn Egg");
 
-        add(Registration.BEHOLDER_ENTITY_TYPE.get(), "Beholder");
-        add(Registration.BEHOLDER_EGG.get(), "Beholder Spawn Egg");
+        add(ModEntities.BEHOLDER_ENTITY_TYPE.get(), "Beholder");
+        add(ModItems.BEHOLDER_EGG.get(), "Beholder Spawn Egg");
 
-        add(Registration.DEATH_TYRANT_TYPE.get(), "Death Tyrant");
-        add(Registration.DEATH_TYRANT_EGG.get(), "Death Tyrant Spawn Egg");
+        add(ModEntities.DEATH_TYRANT_TYPE.get(), "Death Tyrant");
+        add(ModItems.DEATH_TYRANT_EGG.get(), "Death Tyrant Spawn Egg");
 
-        add(Registration.GAZER_ENTITY_TYPE.get(), "Gazer");
-        add(Registration.GAZER_EGG.get(), "Gazer Spawn Egg");
+        add(ModEntities.GAZER_ENTITY_TYPE.get(), "Gazer");
+        add(ModItems.GAZER_EGG.get(), "Gazer Spawn Egg");
 
-        add(Registration.SPECTATOR_TYPE.get(), "Spectator");
-        add(Registration.SPECTATOR_EGG.get(), "Spectator Spawn Egg");
+        add(ModEntities.SPECTATOR_TYPE.get(), "Spectator");
+        add(ModItems.SPECTATOR_EGG.get(), "Spectator Spawn Egg");
         
-        add(Registration.BOULDER_ENTITY_TYPE.get(), "Boulder");
-        add(Registration.BOULDER_EGG.get(), "Boulder Spawn Egg");
+        add(ModEntities.BOULDER_ENTITY_TYPE.get(), "Boulder");
+        add(ModItems.BOULDER_EGG.get(), "Boulder Spawn Egg");
         
-        add(Registration.SHADOW_ENTITY_TYPE.get(), "Shadow");
-        add(Registration.SHADOW_EGG.get(), "Shadow Spawn Egg");
+        add(ModEntities.SHADOW_ENTITY_TYPE.get(), "Shadow");
+        add(ModItems.SHADOW_EGG.get(), "Shadow Spawn Egg");
         
-        add(Registration.SHADOWLORD_ENTITY_TYPE.get(), "Shadowlord");
-        add(Registration.SHADOWLORD_EGG.get(), "Shadowlord Spawn Egg");
+        add(ModEntities.SHADOWLORD_ENTITY_TYPE.get(), "Shadowlord");
+        add(ModItems.SHADOWLORD_EGG.get(), "Shadowlord Spawn Egg");
         
-        add(Registration.DAEMON_ENTITY_TYPE.get(), "Daemon");
-        add(Registration.DAEMON_EGG.get(), "Daemon Spawn Egg");
+        add(ModEntities.DAEMON_ENTITY_TYPE.get(), "Daemon");
+        add(ModItems.DAEMON_EGG.get(), "Daemon Spawn Egg");
 
-        add(Registration.SKELETON_WARRIOR_TYPE.get(), "Skeleton Warrior");
-        add(Registration.SKELETON_WARRIOR_EGG.get(), "Skeleton Warrior Spawn Egg");
+        add(ModEntities.SKELETON_WARRIOR_TYPE.get(), "Skeleton Warrior");
+        add(ModItems.SKELETON_WARRIOR_EGG.get(), "Skeleton Warrior Spawn Egg");
 
-        add(Registration.WINGED_SKELETON_TYPE.get(), "Winged Skeleton");
-        add(Registration.WINGED_SKELETON_EGG.get(), "Winged Skeleton Spawn Egg");
+        add(ModEntities.WINGED_SKELETON_TYPE.get(), "Winged Skeleton");
+        add(ModItems.WINGED_SKELETON_EGG.get(), "Winged Skeleton Spawn Egg");
 
-        add(Registration.IRON_SKELETON_TYPE.get(), "Iron Skeleton");
-        add(Registration.IRON_SKELETON_EGG.get(), "Iron Skeleton Spawn Egg");
+        add(ModEntities.IRON_SKELETON_TYPE.get(), "Iron Skeleton");
+        add(ModItems.IRON_SKELETON_EGG.get(), "Iron Skeleton Spawn Egg");
 
-        add(Registration.MAGMA_SKELETON_TYPE.get(), "Magma Skeleton");
-        add(Registration.MAGMA_SKELETON_EGG.get(), "Magma Skeleton Spawn Egg");
+        add(ModEntities.MAGMA_SKELETON_TYPE.get(), "Magma Skeleton");
+        add(ModItems.MAGMA_SKELETON_EGG.get(), "Magma Skeleton Spawn Egg");
 
         add(ModEntities.GARGOYLE_TYPE.get(), "Gargoyle");
         add(ModItems.GARGOYLE_EGG.get(), "Gargoyle Spawn Egg");
@@ -92,23 +91,23 @@ DDLanguageProvider extends LanguageProvider {
         add(ModEntities.MARGOYLE_TYPE.get(), "Margoyle");
         add(ModItems.MARGOYLE_EGG.get(), "Margoyle Spawn Egg");
 
-        add(Registration.PARALYSIS_SPELL_ITEM.get(), "Slow Spell");
-        add(Registration.HARM_SPELL_ITEM.get(), "Harm Spell");
-        add(Registration.DISINTEGRATE_SPELL_ITEM.get(), "Disintegrate Spell");
-        add(Registration.DISARM_SPELL_ITEM.get(), "Disarm Spell");
+        add(ModItems.PARALYSIS_SPELL_ITEM.get(), "Slow Spell");
+        add(ModItems.HARM_SPELL_ITEM.get(), "Harm Spell");
+        add(ModItems.DISINTEGRATE_SPELL_ITEM.get(), "Disintegrate Spell");
+        add(ModItems.DISARM_SPELL_ITEM.get(), "Disarm Spell");
 
-        add(Registration.ROCK_ITEM.get(), "Rock");
+        add(ModItems.ROCK_ITEM.get(), "Rock");
         
-        add(Registration.CLUB.get(), "Club");
-        add(Registration.SPIKED_CLUB.get(), "Spiked Club");
-        add(Registration.RUSTY_IRON_AXE1.get(), "Rusty Iron Axe");
-        add(Registration.RUSTY_IRON_AXE2.get(), "Rusty Iron Axe");
-        add(Registration.RUSTY_IRON_SWORD1.get(), "Rusty Iron Sword");
-        add(Registration.RUSTY_IRON_SWORD2.get(), "Rusty Iron Sword");
-        add(Registration.RUSTY_IRON_SWORD3.get(), "Rusty Iron Sword");
-        add(Registration.RUSTY_IRON_SWORD4.get(), "Rusty Iron Sword");
-        add(Registration.SHADOW_BLADE.get(), "Shadow Blade");
-        add(Registration.SHADOW_FALCHION.get(), "Shadow Falchion");
+        add(ModItems.CLUB.get(), "Club");
+        add(ModItems.SPIKED_CLUB.get(), "Spiked Club");
+        add(ModItems.RUSTY_IRON_AXE1.get(), "Rusty Iron Axe");
+        add(ModItems.RUSTY_IRON_AXE2.get(), "Rusty Iron Axe");
+        add(ModItems.RUSTY_IRON_SWORD1.get(), "Rusty Iron Sword");
+        add(ModItems.RUSTY_IRON_SWORD2.get(), "Rusty Iron Sword");
+        add(ModItems.RUSTY_IRON_SWORD3.get(), "Rusty Iron Sword");
+        add(ModItems.RUSTY_IRON_SWORD4.get(), "Rusty Iron Sword");
+        add(ModItems.SHADOW_BLADE.get(), "Shadow Blade");
+        add(ModItems.SHADOW_FALCHION.get(), "Shadow Falchion");
 
         add(LangUtil.tooltip("boolean.yes"), "Yes");
         add(LangUtil.tooltip("boolean.no"), "No");

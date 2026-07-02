@@ -18,6 +18,7 @@
  * along with Dungeon Denizens.  If not, see <http://www.gnu.org/licenses/lgpl>.
  */
 package com.someguyssoftware.ddenizens.setup;
+import com.someguyssoftware.ddenizens.sound.DDSounds;
 
 import com.someguyssoftware.ddenizens.DD;
 import com.someguyssoftware.ddenizens.config.Config;
@@ -27,23 +28,23 @@ import mod.gottsch.forge.gmm.core.entity.monster.ghoul.Ghoul;
 import mod.gottsch.forge.gmm.core.entity.monster.Headless;
 import mod.gottsch.forge.gmm.core.entity.monster.Orc;
 import mod.gottsch.forge.gmm.core.entity.monster.Shadow;
-import mod.gottsch.forge.gmm.core.entity.monster.SkeletonWarrior;
-import mod.gottsch.forge.gmm.core.entity.monster.Gargoyle;
-import mod.gottsch.forge.gmm.core.entity.monster.Margoyle;
+import mod.gottsch.forge.gmm.core.entity.monster.skeleton.SkeletonWarrior;
+import mod.gottsch.forge.gmm.core.entity.monster.gargoyle.Gargoyle;
+import mod.gottsch.forge.gmm.core.entity.monster.gargoyle.Margoyle;
 
 import com.someguyssoftware.ddenizens.entity.projectile.Rock;
 import com.someguyssoftware.ddenizens.entity.projectile.ParalysisSpell;
 import com.someguyssoftware.ddenizens.entity.projectile.HarmSpell;
 import com.someguyssoftware.ddenizens.entity.projectile.DisintegrateSpell;
 import com.someguyssoftware.ddenizens.entity.projectile.DisarmSpell;
-import mod.gottsch.forge.gmm.core.entity.monster.BowSkeleton;
-import mod.gottsch.forge.gmm.core.entity.monster.IronSkeleton;
-import mod.gottsch.forge.gmm.core.entity.monster.MagmaSkeleton;
-import mod.gottsch.forge.gmm.core.entity.monster.WingedSkeleton;
-import mod.gottsch.forge.gmm.core.entity.monster.Beholder;
-import mod.gottsch.forge.gmm.core.entity.monster.DeathTyrant;
-import mod.gottsch.forge.gmm.core.entity.monster.Gazer;
-import mod.gottsch.forge.gmm.core.entity.monster.Spectator;
+import mod.gottsch.forge.gmm.core.entity.monster.skeleton.BowSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.skeleton.IronSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.skeleton.MagmaSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.skeleton.WingedSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.beholderkin.Beholder;
+import mod.gottsch.forge.gmm.core.entity.monster.beholderkin.DeathTyrant;
+import mod.gottsch.forge.gmm.core.entity.monster.beholderkin.Gazer;
+import mod.gottsch.forge.gmm.core.entity.monster.beholderkin.Spectator;
 import mod.gottsch.forge.gmm.core.entity.monster.Boulder;
 import mod.gottsch.forge.gmm.core.entity.monster.Daemon;
 import mod.gottsch.forge.gmm.core.entity.monster.Shadowlord;
@@ -100,42 +101,42 @@ public class CommonSetup {
 		// gmm's Orc owns no projectile; supply DD's Rock as its thrown projectile. The throw goal
 		// computes the spawn point (the orc's right hand); we create + ballistically lob the Rock.
 		Orc.projectileLauncher = (shooter, target, x, y, z) -> {
-			Rock rock = new Rock(Registration.ROCK_ENTITY_TYPE.get(), shooter.level());
+			Rock rock = new Rock(ModEntities.ROCK_ENTITY_TYPE.get(), shooter.level());
 			rock.setPos(x, y, z);
 			rock.lobTo(shooter, target.getX(), target.getY(0.5D), target.getZ(), 0.8D);
 			shooter.level().addFreshEntity(rock);
 		};
 
 		// gmm's Shadow ships no sound events; supply DD's ambient shadow sound consumer-side.
-		Shadow.ambientSound = Registration.AMBIENT_SHADOW;
+		Shadow.ambientSound = DDSounds.AMBIENT_SHADOW;
 
 		// gmm's Gargoyle/Margoyle ship no sound events; supply DD's wing-flap ambient sound.
-		Gargoyle.ambientSound = Registration.WINGED_SKELETON_FLAP;
-		Margoyle.ambientSound = Registration.WINGED_SKELETON_FLAP;
-		WingedSkeleton.ambientSound = Registration.WINGED_SKELETON_FLAP;
+		Gargoyle.ambientSound = DDSounds.WINGED_SKELETON_FLAP;
+		Margoyle.ambientSound = DDSounds.WINGED_SKELETON_FLAP;
+		WingedSkeleton.ambientSound = DDSounds.WINGED_SKELETON_FLAP;
 
 		// gmm's Beholderkin family owns no concrete spell/summon-target/sound; supply DD's via the
 		// same static-hook pattern as Orc.projectileLauncher / Shadow.ambientSound.
 		CastSpellGoal.SpellLauncher paralysisSpell = (caster, target, x, y, z) -> {
-			ParalysisSpell spell = new ParalysisSpell(Registration.PARALYSIS_SPELL_ENTITY_TYPE.get(), caster.level());
+			ParalysisSpell spell = new ParalysisSpell(ModEntities.PARALYSIS_SPELL_ENTITY_TYPE.get(), caster.level());
 			spell.init(caster, target.getX() - x, target.getY(0.5D) - y, target.getZ() - z);
 			spell.setPos(x, y, z);
 			caster.level().addFreshEntity(spell);
 		};
 		CastSpellGoal.SpellLauncher harmSpell = (caster, target, x, y, z) -> {
-			HarmSpell spell = new HarmSpell(Registration.HARM_SPELL_ENTITY_TYPE.get(), caster.level());
+			HarmSpell spell = new HarmSpell(ModEntities.HARM_SPELL_ENTITY_TYPE.get(), caster.level());
 			spell.init(caster, target.getX() - x, target.getY(0.5D) - y, target.getZ() - z);
 			spell.setPos(x, y, z);
 			caster.level().addFreshEntity(spell);
 		};
 		CastSpellGoal.SpellLauncher disintegrateSpell = (caster, target, x, y, z) -> {
-			DisintegrateSpell spell = new DisintegrateSpell(Registration.DISINTEGRATE_SPELL_ENTITY_TYPE.get(), caster.level());
+			DisintegrateSpell spell = new DisintegrateSpell(ModEntities.DISINTEGRATE_SPELL_ENTITY_TYPE.get(), caster.level());
 			spell.init(caster, target.getX() - x, target.getY(0.5D) - y, target.getZ() - z);
 			spell.setPos(x, y, z);
 			caster.level().addFreshEntity(spell);
 		};
 		CastSpellGoal.SpellLauncher disarmSpell = (caster, target, x, y, z) -> {
-			DisarmSpell spell = new DisarmSpell(Registration.DISARM_SPELL_ENTITY_TYPE.get(), caster.level());
+			DisarmSpell spell = new DisarmSpell(ModEntities.DISARM_SPELL_ENTITY_TYPE.get(), caster.level());
 			spell.init(caster, target.getX() - x, target.getY(0.5D) - y, target.getZ() - z);
 			spell.setPos(x, y, z);
 			caster.level().addFreshEntity(spell);
@@ -157,16 +158,16 @@ public class CommonSetup {
 		Spectator.spellCaster = paralysisSpell;
 
 		WeightedCollection<Double, EntityType<? extends Mob>> beholderMobs = new WeightedCollection<>();
-		beholderMobs.add(60D, Registration.HEADLESS_ENTITY_TYPE.get());
-		beholderMobs.add(40D, Registration.ORC_ENTITY_TYPE.get());
-		beholderMobs.add(20D, Registration.SPECTATOR_TYPE.get());
+		beholderMobs.add(60D, ModEntities.HEADLESS_ENTITY_TYPE.get());
+		beholderMobs.add(40D, ModEntities.ORC_ENTITY_TYPE.get());
+		beholderMobs.add(20D, ModEntities.SPECTATOR_TYPE.get());
 		beholderMobs.add(20D, EntityType.BLAZE);
 		Beholder.summonMobs = beholderMobs;
-		Beholder.summonDaemon = Registration.DAEMON_ENTITY_TYPE.get();
+		Beholder.summonDaemon = ModEntities.DAEMON_ENTITY_TYPE.get();
 
 		WeightedCollection<Double, EntityType<? extends Mob>> gazerMobs = new WeightedCollection<>();
-		gazerMobs.add(33D, Registration.HEADLESS_ENTITY_TYPE.get());
-		gazerMobs.add(33D, Registration.ORC_ENTITY_TYPE.get());
+		gazerMobs.add(33D, ModEntities.HEADLESS_ENTITY_TYPE.get());
+		gazerMobs.add(33D, ModEntities.ORC_ENTITY_TYPE.get());
 		gazerMobs.add(34D, EntityType.ZOMBIE);
 		gazerMobs.add(20D, EntityType.VEX);
 		Gazer.summonMobs = gazerMobs;
@@ -175,35 +176,35 @@ public class CommonSetup {
 		deathTyrantMobs.add(20D, EntityType.ZOMBIE);
 		deathTyrantMobs.add(20D, EntityType.HUSK);
 		deathTyrantMobs.add(20D, EntityType.SKELETON);
-		deathTyrantMobs.add(60D, Registration.SKELETON_WARRIOR_TYPE.get());
+		deathTyrantMobs.add(60D, ModEntities.SKELETON_WARRIOR_TYPE.get());
 		DeathTyrant.summonMobs = deathTyrantMobs;
-		DeathTyrant.summonDaemon = Registration.DAEMON_ENTITY_TYPE.get();
+		DeathTyrant.summonDaemon = ModEntities.DAEMON_ENTITY_TYPE.get();
 
-		Beholder.ambientSound = Registration.AMBIENT_BEHOLDER;
-		DeathTyrant.ambientSound = Registration.AMBIENT_DEATH_TYRANT;
-		Gazer.ambientSound = Registration.AMBIENT_GAZER;
-		Spectator.ambientSound = Registration.AMBIENT_SPECTATOR;
+		Beholder.ambientSound = DDSounds.AMBIENT_BEHOLDER;
+		DeathTyrant.ambientSound = DDSounds.AMBIENT_DEATH_TYRANT;
+		Gazer.ambientSound = DDSounds.AMBIENT_GAZER;
+		Spectator.ambientSound = DDSounds.AMBIENT_SPECTATOR;
 
 		// gmm's Daemon owns no firespout projectile; supply DD's FireSpoutSpell consumer-side.
 		Daemon.fireSpoutLauncher = (daemon, x, y, z, x2, y2, z2) -> {
-			FireSpoutSpell spell = new FireSpoutSpell(Registration.FIRESPOUT_SPELL_ENTITY_TYPE.get(), daemon.level());
+			FireSpoutSpell spell = new FireSpoutSpell(ModEntities.FIRESPOUT_SPELL_ENTITY_TYPE.get(), daemon.level());
 			spell.init(daemon, x, y, z, x2, y2, z2);
 			daemon.level().addFreshEntity(spell);
 		};
-		Daemon.ambientSound = Registration.AMBIENT_DAEMON;
+		Daemon.ambientSound = DDSounds.AMBIENT_DAEMON;
 
 		// gmm's Shadowlord shares Shadow's Harm spell + summon lists + sounds/weapon.
 		Shadowlord.spellCaster = harmSpell;
 
 		WeightedCollection<Double, EntityType<? extends Mob>> shadowlordMobs = new WeightedCollection<>();
-		shadowlordMobs.add(70D, Registration.SHADOW_ENTITY_TYPE.get());
-		shadowlordMobs.add(30D, Registration.GHOUL_ENTITY_TYPE.get());
+		shadowlordMobs.add(70D, ModEntities.SHADOW_ENTITY_TYPE.get());
+		shadowlordMobs.add(30D, ModEntities.GHOUL_ENTITY_TYPE.get());
 		Shadowlord.summonMobs = shadowlordMobs;
-		Shadowlord.summonDaemon = Registration.DAEMON_ENTITY_TYPE.get();
+		Shadowlord.summonDaemon = ModEntities.DAEMON_ENTITY_TYPE.get();
 
-		Shadowlord.ambientSound = Registration.AMBIENT_SHADOWLORD;
-		Shadowlord.stepSound = Registration.SHADOWLORD_STEP;
-		Shadowlord.weapon = Registration.SHADOW_BLADE;
+		Shadowlord.ambientSound = DDSounds.AMBIENT_SHADOWLORD;
+		Shadowlord.stepSound = DDSounds.SHADOWLORD_STEP;
+		Shadowlord.weapon = ModItems.SHADOW_BLADE;
 	}
 
 	/**
@@ -212,21 +213,21 @@ public class CommonSetup {
 	 */
 	@SubscribeEvent
 	public static void onAttributeCreate(EntityAttributeCreationEvent event) {
-		event.put(Registration.HEADLESS_ENTITY_TYPE.get(), Headless.createAttributes().build());
-		event.put(Registration.ORC_ENTITY_TYPE.get(), Orc.createAttributes().build());
-		event.put(Registration.GHOUL_ENTITY_TYPE.get(), Ghoul.createAttributes().build());
-		event.put(Registration.BEHOLDER_ENTITY_TYPE.get(), Beholder.prepareAttributes().build());
-		event.put(Registration.DEATH_TYRANT_TYPE.get(), DeathTyrant.prepareAttributes().build());
-		event.put(Registration.GAZER_ENTITY_TYPE.get(), Gazer.prepareAttributes().build());
-		event.put(Registration.SPECTATOR_TYPE.get(), Spectator.prepareAttributes().build());
-		event.put(Registration.BOULDER_ENTITY_TYPE.get(), Boulder.createAttributes().build());
-		event.put(Registration.SHADOW_ENTITY_TYPE.get(), Shadow.createAttributes().build());
-		event.put(Registration.SHADOWLORD_ENTITY_TYPE.get(), Shadowlord.createAttributes().build());
-		event.put(Registration.DAEMON_ENTITY_TYPE.get(), Daemon.createAttributes().build());
-		event.put(Registration.SKELETON_WARRIOR_TYPE.get(), SkeletonWarrior.createAttributes().build());
-		event.put(Registration.WINGED_SKELETON_TYPE.get(), WingedSkeleton.createAttributes().build());
-		event.put(Registration.IRON_SKELETON_TYPE.get(), IronSkeleton.createAttributes().build());
-		event.put(Registration.MAGMA_SKELETON_TYPE.get(), MagmaSkeleton.createAttributes().build());
+		event.put(ModEntities.HEADLESS_ENTITY_TYPE.get(), Headless.createAttributes().build());
+		event.put(ModEntities.ORC_ENTITY_TYPE.get(), Orc.createAttributes().build());
+		event.put(ModEntities.GHOUL_ENTITY_TYPE.get(), Ghoul.createAttributes().build());
+		event.put(ModEntities.BEHOLDER_ENTITY_TYPE.get(), Beholder.prepareAttributes().build());
+		event.put(ModEntities.DEATH_TYRANT_TYPE.get(), DeathTyrant.prepareAttributes().build());
+		event.put(ModEntities.GAZER_ENTITY_TYPE.get(), Gazer.prepareAttributes().build());
+		event.put(ModEntities.SPECTATOR_TYPE.get(), Spectator.prepareAttributes().build());
+		event.put(ModEntities.BOULDER_ENTITY_TYPE.get(), Boulder.createAttributes().build());
+		event.put(ModEntities.SHADOW_ENTITY_TYPE.get(), Shadow.createAttributes().build());
+		event.put(ModEntities.SHADOWLORD_ENTITY_TYPE.get(), Shadowlord.createAttributes().build());
+		event.put(ModEntities.DAEMON_ENTITY_TYPE.get(), Daemon.createAttributes().build());
+		event.put(ModEntities.SKELETON_WARRIOR_TYPE.get(), SkeletonWarrior.createAttributes().build());
+		event.put(ModEntities.WINGED_SKELETON_TYPE.get(), WingedSkeleton.createAttributes().build());
+		event.put(ModEntities.IRON_SKELETON_TYPE.get(), IronSkeleton.createAttributes().build());
+		event.put(ModEntities.MAGMA_SKELETON_TYPE.get(), MagmaSkeleton.createAttributes().build());
 
 		event.put(ModEntities.GARGOYLE_TYPE.get(), Gargoyle.createAttributes().build());
 		event.put(ModEntities.MARGOYLE_TYPE.get(), Margoyle.createAttributes().build());
@@ -235,22 +236,22 @@ public class CommonSetup {
 
 	@SubscribeEvent
 	public static void registerEntitySpawn(SpawnPlacementRegisterEvent event) {
-		event.register(Registration.HEADLESS_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.ORC_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.GHOUL_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.BOULDER_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE, SpawnRulesUtil::checkBoulderSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.HEADLESS_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.ORC_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.GHOUL_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.BOULDER_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE, SpawnRulesUtil::checkBoulderSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
-		event.register(Registration.SHADOW_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.SHADOWLORD_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.BEHOLDER_ENTITY_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.DEATH_TYRANT_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.GAZER_ENTITY_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.SPECTATOR_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.DAEMON_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.SKELETON_WARRIOR_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.WINGED_SKELETON_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.IRON_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(Registration.MAGMA_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkMagmaSkeletonSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.SHADOW_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.SHADOWLORD_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.BEHOLDER_ENTITY_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.DEATH_TYRANT_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.GAZER_ENTITY_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.SPECTATOR_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.DAEMON_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.SKELETON_WARRIOR_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.WINGED_SKELETON_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.IRON_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.MAGMA_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkMagmaSkeletonSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
 		event.register(ModEntities.GARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.MARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
@@ -260,36 +261,36 @@ public class CommonSetup {
 	@SubscribeEvent
 	public static void registemItemsToTab(BuildCreativeModeTabContentsEvent event) {
 		if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
-			event.accept(Registration.HEADLESS_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.ORC_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.GHOUL_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.BOULDER_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.HEADLESS_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.ORC_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.GHOUL_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.BOULDER_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 
-			event.accept(Registration.SHADOW_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.SHADOWLORD_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.BEHOLDER_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.DEATH_TYRANT_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.GAZER_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.SPECTATOR_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.DAEMON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.SKELETON_WARRIOR_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.WINGED_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.IRON_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.MAGMA_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.SHADOW_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.SHADOWLORD_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.BEHOLDER_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.DEATH_TYRANT_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.GAZER_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.SPECTATOR_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.DAEMON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.SKELETON_WARRIOR_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.WINGED_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.IRON_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.MAGMA_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 
 			event.accept(ModItems.GARGOYLE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.MARGOYLE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 
 		}
 		else if (event.getTabKey() == CreativeModeTabs.COMBAT) {
-			event.accept(Registration.CLUB.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.SPIKED_CLUB.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.RUSTY_IRON_AXE1.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.RUSTY_IRON_AXE2.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.RUSTY_IRON_SWORD1.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.RUSTY_IRON_SWORD2.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.RUSTY_IRON_SWORD3.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.accept(Registration.RUSTY_IRON_SWORD4.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.CLUB.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.SPIKED_CLUB.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.RUSTY_IRON_AXE1.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.RUSTY_IRON_AXE2.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.RUSTY_IRON_SWORD1.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.RUSTY_IRON_SWORD2.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.RUSTY_IRON_SWORD3.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.RUSTY_IRON_SWORD4.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 
 		}
 	}

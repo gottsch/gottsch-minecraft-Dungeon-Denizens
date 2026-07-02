@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Changed
+
+- **Major internal rewrite:** Dungeon Denizens' monsters now run on a shared framework called *gottsch's Monster Manual*, split out so the same monster code can be reused across mods. Monster behavior, spawning, and stats are meant to feel exactly the same as before — this is a foundation change, not a rebalance.
+- **New required companion mod:** Dungeon Denizens now needs *gottsch's Monster Manual* installed alongside it to work. Grab both when you update.
+- Each monster's spawn conditions (whether it needs open sky, darkness, etc.) are now set individually through data files instead of being hardcoded, making them easier for pack authors to retune without a code change.
+
+---
+
 ## [1.6.0] - 2026-06-29
 
 ### Added

@@ -18,8 +18,9 @@
  * along with Dungeon Denizens.  If not, see <http://www.gnu.org/licenses/lgpl>.
  */
 package com.someguyssoftware.ddenizens.entity.projectile;
+import com.someguyssoftware.ddenizens.item.ModItems;
+import com.someguyssoftware.ddenizens.entity.ModEntities;
 
-import com.someguyssoftware.ddenizens.setup.Registration;
 
 import net.minecraft.Util;
 import net.minecraft.util.Mth;
@@ -58,7 +59,7 @@ public class Rock extends AbstractDDHurtingProjectile implements ItemSupplier {
 	 * @return
 	 */
 	public Rock create(Level level) {
-		return new Rock(Registration.ROCK_ENTITY_TYPE.get(), level);
+		return new Rock(ModEntities.ROCK_ENTITY_TYPE.get(), level);
 	}
 
 	/**
@@ -169,11 +170,11 @@ public class Rock extends AbstractDDHurtingProjectile implements ItemSupplier {
 	@Override
 	public ItemStack getItem() {
 		ItemStack stack = this.getItemRaw();
-		return stack.isEmpty() ? new ItemStack(Registration.ROCK_ITEM.get()) : stack;
+		return stack.isEmpty() ? new ItemStack(ModItems.ROCK_ITEM.get()) : stack;
 	}
 
 	public void setItem(ItemStack stack) {
-		if (!stack.is(Registration.ROCK_ITEM.get()) || stack.hasTag()) {
+		if (!stack.is(ModItems.ROCK_ITEM.get()) || stack.hasTag()) {
 			this.getEntityData().set(DATA_ITEM_STACK, Util.make(stack.copy(), (itemStack) -> {
 				itemStack.setCount(1);
 			}));

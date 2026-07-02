@@ -18,10 +18,11 @@
  * along with Dungeon Denizens.  If not, see <http://www.gnu.org/licenses/lgpl>.
  */
 package com.someguyssoftware.ddenizens.entity.projectile;
+import com.someguyssoftware.ddenizens.item.ModItems;
+import com.someguyssoftware.ddenizens.entity.ModEntities;
 
 import com.someguyssoftware.ddenizens.config.Config;
 import com.someguyssoftware.ddenizens.damagesource.ModDamageTypes;
-import com.someguyssoftware.ddenizens.setup.Registration;
 
 import net.minecraft.Util;
 import net.minecraft.core.particles.ParticleOptions;
@@ -55,7 +56,7 @@ public class HarmSpell extends AbstractDDHurtingProjectile implements ItemSuppli
 	 * @return
 	 */
 	public HarmSpell create(Level level) {
-		return new HarmSpell(Registration.HARM_SPELL_ENTITY_TYPE.get(), level);
+		return new HarmSpell(ModEntities.HARM_SPELL_ENTITY_TYPE.get(), level);
 	}
 
 	/**
@@ -115,7 +116,7 @@ public class HarmSpell extends AbstractDDHurtingProjectile implements ItemSuppli
 	}
 
 	public void setItem(ItemStack stack) {
-		if (!stack.is(Registration.HARM_SPELL_ITEM.get()) || stack.hasTag()) {
+		if (!stack.is(ModItems.HARM_SPELL_ITEM.get()) || stack.hasTag()) {
 			this.getEntityData().set(DATA_ITEM_STACK, Util.make(stack.copy(), (itemStack) -> {
 				itemStack.setCount(1);
 			}));
@@ -134,7 +135,7 @@ public class HarmSpell extends AbstractDDHurtingProjectile implements ItemSuppli
 	@Override
 	public ItemStack getItem() {
 		ItemStack stack = this.getItemRaw();
-		return stack.isEmpty() ? new ItemStack(Registration.HARM_SPELL_ITEM.get()) : stack;
+		return stack.isEmpty() ? new ItemStack(ModItems.HARM_SPELL_ITEM.get()) : stack;
 	}
 
 	@Override

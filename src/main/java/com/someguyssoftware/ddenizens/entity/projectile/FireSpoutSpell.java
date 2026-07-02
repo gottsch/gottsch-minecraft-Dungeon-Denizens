@@ -18,11 +18,11 @@
  * along with Dungeon Denizens.  If not, see <http://www.gnu.org/licenses/lgpl>.
  */
 package com.someguyssoftware.ddenizens.entity.projectile;
+import com.someguyssoftware.ddenizens.entity.ModEntities;
 
 import com.someguyssoftware.ddenizens.config.Config;
 import com.someguyssoftware.ddenizens.damagesource.ModDamageTypes;
 
-import com.someguyssoftware.ddenizens.setup.Registration;
 import mod.gottsch.forge.gottschcore.world.WorldInfo;
 import net.minecraft.Util;
 import net.minecraft.core.particles.ParticleOptions;
@@ -68,7 +68,7 @@ public class FireSpoutSpell extends AbstractDDHurtingProjectile implements ItemS
 	 * @return
 	 */
 	public FireSpoutSpell create(Level level) {
-		return new FireSpoutSpell(Registration.FIRESPOUT_SPELL_ENTITY_TYPE.get(), level);
+		return new FireSpoutSpell(ModEntities.FIRESPOUT_SPELL_ENTITY_TYPE.get(), level);
 	}
 
 

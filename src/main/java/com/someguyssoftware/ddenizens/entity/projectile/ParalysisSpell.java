@@ -18,9 +18,10 @@
  * along with Dungeon Denizens.  If not, see <http://www.gnu.org/licenses/lgpl>.
  */
 package com.someguyssoftware.ddenizens.entity.projectile;
+import com.someguyssoftware.ddenizens.item.ModItems;
+import com.someguyssoftware.ddenizens.entity.ModEntities;
 
 import com.someguyssoftware.ddenizens.config.Config;
-import com.someguyssoftware.ddenizens.setup.Registration;
 
 import net.minecraft.Util;
 import net.minecraft.core.particles.ParticleOptions;
@@ -55,7 +56,7 @@ public class ParalysisSpell extends AbstractDDHurtingProjectile implements ItemS
 	 * @return
 	 */
 	public ParalysisSpell create(Level level) {
-		return new ParalysisSpell(Registration.PARALYSIS_SPELL_ENTITY_TYPE.get(), level);
+		return new ParalysisSpell(ModEntities.PARALYSIS_SPELL_ENTITY_TYPE.get(), level);
 	}
 
 	/**
@@ -118,7 +119,7 @@ public class ParalysisSpell extends AbstractDDHurtingProjectile implements ItemS
 	}
 
 	public void setItem(ItemStack stack) {
-		if (!stack.is(Registration.PARALYSIS_SPELL_ITEM.get()) || stack.hasTag()) {
+		if (!stack.is(ModItems.PARALYSIS_SPELL_ITEM.get()) || stack.hasTag()) {
 			this.getEntityData().set(DATA_ITEM_STACK, Util.make(stack.copy(), (itemStack) -> {
 				itemStack.setCount(1);
 			}));
@@ -137,7 +138,7 @@ public class ParalysisSpell extends AbstractDDHurtingProjectile implements ItemS
 	@Override
 	public ItemStack getItem() {
 		ItemStack stack = this.getItemRaw();
-		return stack.isEmpty() ? new ItemStack(Registration.PARALYSIS_SPELL_ITEM.get()) : stack;
+		return stack.isEmpty() ? new ItemStack(ModItems.PARALYSIS_SPELL_ITEM.get()) : stack;
 	}
 
 	@Override

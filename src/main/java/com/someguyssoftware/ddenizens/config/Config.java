@@ -22,7 +22,6 @@ package com.someguyssoftware.ddenizens.config;
 import com.google.common.collect.Maps;
 import com.someguyssoftware.ddenizens.DD;
 import com.someguyssoftware.ddenizens.entity.ModEntities;
-import com.someguyssoftware.ddenizens.setup.Registration;
 import mod.gottsch.forge.gottschcore.config.AbstractConfig;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -301,21 +300,21 @@ public final class Config extends AbstractConfig {
 			GARGOYLE = new GargoyleConfig(builder);
 			MARGOYLE = new MargoyleConfig(builder);
 
-			MOBS.put(new ResourceLocation(DD.MODID, Registration.HEADLESS), HEADLESS);
-			MOBS.put(new ResourceLocation(DD.MODID, Registration.ORC), ORC);
-			MOBS.put(new ResourceLocation(DD.MODID, Registration.GHOUL), GHOUL);
-			MOBS.put(new ResourceLocation(DD.MODID, Registration.BOULDER), BOULDER);
-			MOBS.put(new ResourceLocation(DD.MODID, Registration.SHADOW), SHADOW);
-			MOBS.put(new ResourceLocation(DD.MODID, Registration.BEHOLDER), BEHOLDER);
-			MOBS.put(new ResourceLocation(DD.MODID, Registration.DEATH_TYRANT), DEATH_TYRANT);
-			MOBS.put(new ResourceLocation(DD.MODID, Registration.GAZER), GAZER);
-			MOBS.put(new ResourceLocation(DD.MODID, Registration.SPECTATOR), SPECTATOR);
-			MOBS.put(new ResourceLocation(DD.MODID, Registration.SHADOWLORD), SHADOWLORD);
-			MOBS.put(new ResourceLocation(DD.MODID, Registration.DAEMON), DAEMON);
-			MOBS.put(new ResourceLocation(DD.MODID, Registration.SKELETON_WARRIOR), SKELETON_WARRIOR);
-			MOBS.put(new ResourceLocation(DD.MODID, Registration.WINGED_SKELETON), WINGED_SKELETON);
-			MOBS.put(new ResourceLocation(DD.MODID, Registration.IRON_SKELETON), IRON_SKELETON);
-			MOBS.put(new ResourceLocation(DD.MODID, Registration.MAGMA_SKELETON), MAGMA_SKELETON);
+			MOBS.put(new ResourceLocation(DD.MODID, ModEntities.HEADLESS), HEADLESS);
+			MOBS.put(new ResourceLocation(DD.MODID, ModEntities.ORC), ORC);
+			MOBS.put(new ResourceLocation(DD.MODID, ModEntities.GHOUL), GHOUL);
+			MOBS.put(new ResourceLocation(DD.MODID, ModEntities.BOULDER), BOULDER);
+			MOBS.put(new ResourceLocation(DD.MODID, ModEntities.SHADOW), SHADOW);
+			MOBS.put(new ResourceLocation(DD.MODID, ModEntities.BEHOLDER), BEHOLDER);
+			MOBS.put(new ResourceLocation(DD.MODID, ModEntities.DEATH_TYRANT), DEATH_TYRANT);
+			MOBS.put(new ResourceLocation(DD.MODID, ModEntities.GAZER), GAZER);
+			MOBS.put(new ResourceLocation(DD.MODID, ModEntities.SPECTATOR), SPECTATOR);
+			MOBS.put(new ResourceLocation(DD.MODID, ModEntities.SHADOWLORD), SHADOWLORD);
+			MOBS.put(new ResourceLocation(DD.MODID, ModEntities.DAEMON), DAEMON);
+			MOBS.put(new ResourceLocation(DD.MODID, ModEntities.SKELETON_WARRIOR), SKELETON_WARRIOR);
+			MOBS.put(new ResourceLocation(DD.MODID, ModEntities.WINGED_SKELETON), WINGED_SKELETON);
+			MOBS.put(new ResourceLocation(DD.MODID, ModEntities.IRON_SKELETON), IRON_SKELETON);
+			MOBS.put(new ResourceLocation(DD.MODID, ModEntities.MAGMA_SKELETON), MAGMA_SKELETON);
 			MOBS.put(new ResourceLocation(DD.MODID, ModEntities.GARGOYLE), GARGOYLE);
 			MOBS.put(new ResourceLocation(DD.MODID, ModEntities.MARGOYLE), MARGOYLE);
 
@@ -358,7 +357,7 @@ public final class Config extends AbstractConfig {
 		public ConfigValue<List<? extends String>> targetsAlertOthersList;
 
 		public HeadlessConfig(ForgeConfigSpec.Builder builder) {
-			builder.comment(CATEGORY_DIV, " Headless properties.", CATEGORY_DIV).push(Registration.HEADLESS);				
+			builder.comment(CATEGORY_DIV, " Headless properties.", CATEGORY_DIV).push(ModEntities.HEADLESS);				
 
 			spawnConfig = new CommonSpawnConfig(builder, true, 40, 1, 2, MIN_HEIGHT, MAX_HEIGHT); //,
 			//		new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),  Arrays.asList(BiomeCategory.NETHER.getName(), BiomeCategory.THEEND.getName()));
@@ -374,7 +373,7 @@ public final class Config extends AbstractConfig {
 		public DoubleValue rangedProbability;
 
 		public OrcConfig(ForgeConfigSpec.Builder builder) {
-			builder.comment(CATEGORY_DIV, " Orc properties.", CATEGORY_DIV).push(Registration.ORC);
+			builder.comment(CATEGORY_DIV, " Orc properties.", CATEGORY_DIV).push(ModEntities.ORC);
 			spawnConfig = new CommonSpawnConfig(builder, true, 35, 1, 2, MIN_HEIGHT, MAX_HEIGHT);//,
 //					new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), Arrays.asList(BiomeCategory.NETHER.getName(), BiomeCategory.THEEND.getName()));
 
@@ -395,7 +394,7 @@ public final class Config extends AbstractConfig {
 		public BooleanValue canOpenDoors;
 
 		public GhoulConfig(ForgeConfigSpec.Builder builder) {
-			builder.comment(CATEGORY_DIV, " Ghoul properties.", CATEGORY_DIV).push(Registration.GHOUL);				
+			builder.comment(CATEGORY_DIV, " Ghoul properties.", CATEGORY_DIV).push(ModEntities.GHOUL);				
 
 			spawnConfig = new CommonSpawnConfig(builder, true, 25, 1, 1,  MIN_HEIGHT, MAX_HEIGHT);//,
 
@@ -443,7 +442,7 @@ public final class Config extends AbstractConfig {
 		public IntValue weaknessDuration;
 
 		public ShadowConfig(ForgeConfigSpec.Builder builder) {
-			builder.comment(CATEGORY_DIV, " Shadow properties.", CATEGORY_DIV).push(Registration.SHADOW);				
+			builder.comment(CATEGORY_DIV, " Shadow properties.", CATEGORY_DIV).push(ModEntities.SHADOW);				
 
 			spawnConfig = new CommonSpawnConfig(builder, true, 30, 1, 2,  MIN_HEIGHT, 60);//,
 //					new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), Arrays.asList(BiomeCategory.THEEND.getName()));
@@ -489,7 +488,7 @@ public final class Config extends AbstractConfig {
 		public BooleanValue despawn;
 
 		public BeholderConfig(ForgeConfigSpec.Builder builder) {
-			builder.comment(CATEGORY_DIV, " Beholder properties.", CATEGORY_DIV).push(Registration.BEHOLDER);
+			builder.comment(CATEGORY_DIV, " Beholder properties.", CATEGORY_DIV).push(ModEntities.BEHOLDER);
 
 			spawnConfig = new CommonSpawnConfig(builder, true, 15, 1, 1,  MIN_HEIGHT, UNDERGROUND_HEIGHT);//,
 
@@ -545,7 +544,7 @@ public final class Config extends AbstractConfig {
 		public BooleanValue despawn;
 
 		public DeathTyrantConfig(ForgeConfigSpec.Builder builder) {
-			builder.comment(CATEGORY_DIV, " Death Tyrant properties.", CATEGORY_DIV).push(Registration.DEATH_TYRANT);
+			builder.comment(CATEGORY_DIV, " Death Tyrant properties.", CATEGORY_DIV).push(ModEntities.DEATH_TYRANT);
 
 			spawnConfig = new CommonSpawnConfig(builder, true, 15, 1, 1,  MIN_HEIGHT, UNDERGROUND_HEIGHT);//,
 
@@ -602,7 +601,7 @@ public final class Config extends AbstractConfig {
 		public IntValue maxSummonSpawns;
 
 		public GazerConfig(ForgeConfigSpec.Builder builder) {
-			builder.comment(CATEGORY_DIV, " Gazer properties.", CATEGORY_DIV).push(Registration.GAZER);				
+			builder.comment(CATEGORY_DIV, " Gazer properties.", CATEGORY_DIV).push(ModEntities.GAZER);				
 
 			spawnConfig = new CommonSpawnConfig(builder, true, 25, 1, 1,  MIN_HEIGHT, UNDERGROUND_HEIGHT);//,
 //					new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), Arrays.asList(BiomeCategory.THEEND.getName()));
@@ -644,7 +643,7 @@ public final class Config extends AbstractConfig {
 		public IntValue spellChargeTime;
 
 		public SpectatorConfig(ForgeConfigSpec.Builder builder) {
-			builder.comment(CATEGORY_DIV, " Spectator properties.", CATEGORY_DIV).push(Registration.SPECTATOR);
+			builder.comment(CATEGORY_DIV, " Spectator properties.", CATEGORY_DIV).push(ModEntities.SPECTATOR);
 
 			spawnConfig = new CommonSpawnConfig(builder, true, 25, 1, 1,  MIN_HEIGHT, UNDERGROUND_HEIGHT);//,
 
@@ -684,7 +683,7 @@ public final class Config extends AbstractConfig {
 		public BooleanValue despawn;
 
 		public ShadowlordConfig(ForgeConfigSpec.Builder builder) {
-			builder.comment(CATEGORY_DIV, " Shadowlord properties.", CATEGORY_DIV).push(Registration.SHADOWLORD);				
+			builder.comment(CATEGORY_DIV, " Shadowlord properties.", CATEGORY_DIV).push(ModEntities.SHADOWLORD);				
 
 			spawnConfig = new CommonSpawnConfig(builder, true, 15, 1, 1,  MIN_HEIGHT, 20);//,
 //					new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), Arrays.asList(BiomeCategory.THEEND.getName()));
@@ -752,7 +751,7 @@ public final class Config extends AbstractConfig {
 
 
 		public DaemonConfig(ForgeConfigSpec.Builder builder) {
-			builder.comment(CATEGORY_DIV, " Daemon properties.", CATEGORY_DIV).push(Registration.DAEMON);				
+			builder.comment(CATEGORY_DIV, " Daemon properties.", CATEGORY_DIV).push(ModEntities.DAEMON);				
 
 			spawnConfig = new CommonSpawnConfig(builder, true, 1, 1, 1,  MIN_HEIGHT, 0);//,
 //					new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), Arrays.asList(BiomeCategory.THEEND.getName()));
@@ -783,7 +782,7 @@ public final class Config extends AbstractConfig {
 
 	public static class SkeletonWarriorConfig extends MobConfig {
 		public SkeletonWarriorConfig(ForgeConfigSpec.Builder builder) {
-			builder.comment(CATEGORY_DIV, " Skeleton Warrior properties.", CATEGORY_DIV).push(Registration.SKELETON_WARRIOR);
+			builder.comment(CATEGORY_DIV, " Skeleton Warrior properties.", CATEGORY_DIV).push(ModEntities.SKELETON_WARRIOR);
 			spawnConfig = new CommonSpawnConfig(builder, true, 50, 1, 2, MIN_HEIGHT, MAX_HEIGHT);//,
 			builder.pop();
 		}
@@ -791,7 +790,7 @@ public final class Config extends AbstractConfig {
 
 	public static class WingedSkeletonConfig extends MobConfig {
 		public WingedSkeletonConfig(ForgeConfigSpec.Builder builder) {
-			builder.comment(CATEGORY_DIV, " Winged Skeleton properties.", CATEGORY_DIV).push(Registration.WINGED_SKELETON);
+			builder.comment(CATEGORY_DIV, " Winged Skeleton properties.", CATEGORY_DIV).push(ModEntities.WINGED_SKELETON);
 			spawnConfig = new CommonSpawnConfig(builder, true, 50, 1, 2, MIN_HEIGHT, MAX_HEIGHT);//,
 			builder.pop();
 		}
@@ -799,7 +798,7 @@ public final class Config extends AbstractConfig {
 
 	public static class IronSkeletonConfig extends MobConfig {
 		public IronSkeletonConfig(ForgeConfigSpec.Builder builder) {
-			builder.comment(CATEGORY_DIV, " Iron Skeleton properties.", CATEGORY_DIV).push(Registration.IRON_SKELETON);
+			builder.comment(CATEGORY_DIV, " Iron Skeleton properties.", CATEGORY_DIV).push(ModEntities.IRON_SKELETON);
 			spawnConfig = new CommonSpawnConfig(builder, true, 30, 1, 1, MIN_HEIGHT, MAX_HEIGHT);//,
 			builder.pop();
 		}
@@ -807,7 +806,7 @@ public final class Config extends AbstractConfig {
 
 	public static class MagmaSkeletonConfig extends NetherMobConfig {
 		public MagmaSkeletonConfig(ForgeConfigSpec.Builder builder) {
-			builder.comment(CATEGORY_DIV, " Magma Skeleton properties.", CATEGORY_DIV).push(Registration.MAGMA_SKELETON);
+			builder.comment(CATEGORY_DIV, " Magma Skeleton properties.", CATEGORY_DIV).push(ModEntities.MAGMA_SKELETON);
 			spawnConfig = new CommonSpawnConfig(builder, true, 30, 1, 1, MIN_HEIGHT, MAX_HEIGHT);//,
 			netherSpawnConfig = new NetherSpawnConfig(builder, true, 10, 1, 1,  MIN_HEIGHT, MAX_HEIGHT);
 
