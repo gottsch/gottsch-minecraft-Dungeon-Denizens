@@ -110,8 +110,8 @@ public class Headless extends DenizensMonster {
 				.add(Attributes.ARMOR, 1.0D)
 				.add(Attributes.ARMOR_TOUGHNESS, 1.0D)
 				.add(Attributes.MAX_HEALTH, 24.0)
-				.add(Attributes.FOLLOW_RANGE, 40.0)
-				.add(Attributes.MOVEMENT_SPEED, 0.28F);                
+				.add(Attributes.FOLLOW_RANGE, 36.0)
+				.add(Attributes.MOVEMENT_SPEED, 0.26F);
 	}
 
 	/**

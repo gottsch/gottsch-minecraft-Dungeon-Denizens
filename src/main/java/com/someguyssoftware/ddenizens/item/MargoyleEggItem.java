@@ -31,11 +31,11 @@ import java.util.List;
 import java.util.function.Supplier;
 
 /**
- * @author Mark Gottschling on July 7, 2025
+ * @author Mark Gottschling on July 26, 2025
  */
-public class GargoyleEggItem extends DDEggItem {
+public class MargoyleEggItem extends DDEggItem {
 
-    public GargoyleEggItem(Supplier<? extends EntityType<? extends Mob>> type, int backgroundColor, int highlightColor, Properties props) {
+    public MargoyleEggItem(Supplier<? extends EntityType<? extends Mob>> type, int backgroundColor, int highlightColor, Properties props) {
         super(type, backgroundColor, highlightColor, props);
     }
 

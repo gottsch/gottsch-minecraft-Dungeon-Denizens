@@ -3,8 +3,6 @@
  */
 package com.someguyssoftware.ddenizens.entity.monster;
 
-import java.util.Random;
-
 import com.someguyssoftware.ddenizens.DD;
 import com.someguyssoftware.ddenizens.config.Config;
 import com.someguyssoftware.ddenizens.setup.Registration;
@@ -141,21 +139,19 @@ public class Shadow extends DenizensMonster {
 
 	@Override
 	public boolean doHurtTarget(Entity target) {
-		Random random = new Random();
-		
 		if (super.doHurtTarget(target)) {
 			if (target instanceof Player) {
 
 				// inflict blindness and/or weakness
 				ItemStack helmetStack = ((Player)target).getItemBySlot(EquipmentSlot.HEAD);
 				if (helmetStack.isEmpty() || helmetStack.getItem() != Items.GOLDEN_HELMET) {
-					if (RandomHelper.checkProbability(random, Config.Mobs.SHADOW.blindnessProbability.get())) {
+					if (RandomHelper.checkProbability(this.random, Config.Mobs.SHADOW.blindnessProbability.get())) {
 						if (Config.Mobs.SHADOW.blindnessDuration.get() > 0) {
 							((LivingEntity)target).addEffect(new MobEffectInstance(MobEffects.BLINDNESS, Config.Mobs.SHADOW.blindnessDuration.get(), 0), this);
 						}
 					}
 				}
-				if (RandomHelper.checkProbability(random, Config.Mobs.SHADOW.weaknessProbability.get())) {
+				if (RandomHelper.checkProbability(this.random, Config.Mobs.SHADOW.weaknessProbability.get())) {
 					if (Config.Mobs.SHADOW.weaknessDuration.get() > 0) {
 						((LivingEntity)target).addEffect(new MobEffectInstance(MobEffects.WEAKNESS, Config.Mobs.SHADOW.weaknessDuration.get(), 0), this);
 					}
@@ -190,19 +186,19 @@ public class Shadow extends DenizensMonster {
 					// negate the weakness from the strike power of the sword
 					// gold does full damage
 					if (player.hasEffect(MobEffects.WEAKNESS)) {
-						amount += MobEffects.WEAKNESS.getAttributeModifierValue(0, null);
+						amount += 4.0F * (player.getEffect(MobEffects.WEAKNESS).getAmplifier() + 1);
 					}
 				} else if (heldStack.is(Registration.SHADOW_BLADE.get())) {
 					// increase damage to that of a netherite tier
 					amount += 2.0F;
 					if (player.hasEffect(MobEffects.WEAKNESS)) {
-						amount += MobEffects.WEAKNESS.getAttributeModifierValue(0, null);
+						amount += 4.0F * (player.getEffect(MobEffects.WEAKNESS).getAmplifier() + 1);
 					}
 				} else if (heldStack.is(Registration.SHADOW_FALCHION.get())) {
 					// increase damage to that of a diamond tier
 					amount += 1.0F;
 					if (player.hasEffect(MobEffects.WEAKNESS)) {
-						amount += MobEffects.WEAKNESS.getAttributeModifierValue(0, null);
+						amount += 4.0F * (player.getEffect(MobEffects.WEAKNESS).getAmplifier() + 1);
 					}
 				} else {
 					if (heldStack.getItem() instanceof TieredItem tieredItem) {

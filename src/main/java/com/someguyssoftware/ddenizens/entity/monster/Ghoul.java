@@ -44,16 +44,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 
-/**
- * Slightly faster than zombie.
- * Burns in sun but for shorter time.
- * Attempts to shelter from sun.
- * Attacks all farm (chicken, cow, pig, sheep) animals
- * Picks up meats.
- * Heals self if standing still and holding meat.
- * @author Mark Gottschling on Apr 6, 2022
- *
- */
 public class Ghoul extends DenizensMonster {
 	private boolean canOpenDoors;
 

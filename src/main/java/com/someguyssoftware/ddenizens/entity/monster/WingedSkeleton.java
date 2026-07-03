@@ -48,9 +48,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -253,10 +251,12 @@ public class WingedSkeleton extends DenizensFlyingMonster implements RangedAttac
                 return;
             };
 
-            // NOTE can't use level().getHeight() as that won't work underground
-            // find ground below mob
+            // NOTE can't use level().getHeight() as that won't work underground.
+            // find ground below mob; isAir() also covers cave/void air, and the
+            // minBuildHeight guard bounds the loop over a void.
             double groundY = destY;
-            while (skeleton.level().getBlockState(new BlockPos((int)destX, (int)groundY, (int)destZ)).getBlock() == Blocks.AIR) {
+            int minY = skeleton.level().getMinBuildHeight();
+            while (groundY > minY && skeleton.level().getBlockState(new BlockPos((int)destX, (int)groundY, (int)destZ)).isAir()) {
                 groundY--;
             }
             destY = Math.min(destY, groundY + getMaxFloatHeight());
@@ -407,7 +407,6 @@ public class WingedSkeleton extends DenizensFlyingMonster implements RangedAttac
             if (cooldownCount >= cooldownTime) {
                 if (mob.getMeleeAttackRangeSqr(mob.getTarget()) >= this.mob.distanceToSqr(mob.getTarget())) {
                     this.mob.swing(InteractionHand.MAIN_HAND);
-                    MeleeAttackGoal m;
                     this.mob.doHurtTarget(mob.getTarget());
                     this.cooldownCount = 0;
                 }

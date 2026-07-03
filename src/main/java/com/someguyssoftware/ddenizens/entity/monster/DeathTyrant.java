@@ -20,7 +20,6 @@
 package com.someguyssoftware.ddenizens.entity.monster;
 
 import com.someguyssoftware.ddenizens.config.Config;
-import com.someguyssoftware.ddenizens.entity.ai.goal.CastDisintegrateGoal;
 import com.someguyssoftware.ddenizens.entity.ai.goal.CastParalysisGoal;
 import com.someguyssoftware.ddenizens.entity.ai.goal.WeightedChanceSummonGoal;
 import com.someguyssoftware.ddenizens.setup.Registration;
@@ -31,9 +30,7 @@ import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
@@ -103,12 +100,6 @@ public class DeathTyrant extends Beholderkin {
 	@Override
 	public int getAmbientSoundInterval() {
 		return 160;
-	}
-
-	@Nullable
-	@Override
-	protected SoundEvent getDeathSound() {
-		return super.getDeathSound();
 	}
 
 	@Nullable

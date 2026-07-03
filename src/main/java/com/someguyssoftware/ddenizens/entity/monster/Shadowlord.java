@@ -26,7 +26,6 @@ import com.someguyssoftware.ddenizens.DD;
 import com.someguyssoftware.ddenizens.config.Config;
 import com.someguyssoftware.ddenizens.entity.ai.goal.CastHarmGoal;
 import com.someguyssoftware.ddenizens.entity.ai.goal.WeightedChanceSummonGoal;
-import com.someguyssoftware.ddenizens.entity.projectile.HarmSpell;
 import com.someguyssoftware.ddenizens.setup.Registration;
 
 import mod.gottsch.forge.gottschcore.random.RandomHelper;
@@ -52,12 +51,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FleeSunGoal;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
@@ -72,7 +69,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -89,8 +85,6 @@ public class Shadowlord extends DenizensMonster {
 
 	private double auraOfBlindessTime;
 	private int drainCooldownTime;
-	@Deprecated
-	private int numSummonDaemons;
 
 
 	/**
@@ -109,8 +103,6 @@ public class Shadowlord extends DenizensMonster {
 	protected void registerGoals() {
 		this.goalSelector.addGoal(2, new RestrictSunGoal(this));
 		this.goalSelector.addGoal(3, new FleeSunGoal(this, 1.1D));
-				
-//		this.goalSelector.addGoal(4, new ShadowlordShootHarmGoal(this, Config.Mobs.SHADOWLORD.harmChargeTime.get()));
 		this.goalSelector.addGoal(4, new CastHarmGoal(this, Config.Mobs.SHADOWLORD.harmChargeTime.get(), SHOOT_DISTANCE_SQUARED, MELEE_DISTANCE_SQUARED));
 
 		// TODO change to the new WeightedSummonGoal
@@ -124,8 +116,6 @@ public class Shadowlord extends DenizensMonster {
 				Config.Mobs.SHADOWLORD.summonDaemonProbability.get(),
 				Registration.DAEMON_ENTITY_TYPE.get(), 1, 1));
 
-		// TODO update with strafing movement - see RangedBowAttackGoal
-		//		this.goalSelector.addGoal(5, new ShadowlordMeleeAttackGoal(this, 1.0D, false));
 		this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.1D, false));
 		
 		this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
@@ -299,13 +289,13 @@ public class Shadowlord extends DenizensMonster {
 					// negate the weakness from the strike power of the sword
 					// gold does full damage
 					if (player.hasEffect(MobEffects.WEAKNESS)) {
-						amount += MobEffects.WEAKNESS.getAttributeModifierValue(0, null);
+						amount += 4.0F * (player.getEffect(MobEffects.WEAKNESS).getAmplifier() + 1);
 					}
 				} else if (heldStack.getItem() == Registration.SHADOW_BLADE.get()) {
 					// increase damage to that of a netherite tier
 					amount += 2.0F;
 					if (player.hasEffect(MobEffects.WEAKNESS)) {
-						amount += MobEffects.WEAKNESS.getAttributeModifierValue(0, null);
+						amount += 4.0F * (player.getEffect(MobEffects.WEAKNESS).getAmplifier() + 1);
 					}
 				}
 				else {
@@ -333,79 +323,6 @@ public class Shadowlord extends DenizensMonster {
 		return super.hurt(damageSource, amount);
 	}
 
-	/**
-	 * Fires harmball at target every 4 secs.
-	 * @author Mark Gottschling on Apr 19, 2022
-	 *
-	 */
-	static class ShadowlordShootHarmGoal extends Goal {
-		private static final int DEFAULT_CHARGE_TIME = 50;
-		private final Shadowlord shadowlord;
-		public int maxChargeTime;
-		public int chargeTime;
-
-		public ShadowlordShootHarmGoal(Shadowlord mob) {
-			this(mob, DEFAULT_CHARGE_TIME);			
-		}
-
-		public ShadowlordShootHarmGoal(Shadowlord mob, int maxChargeTime) {
-			this.shadowlord = mob;
-			this.maxChargeTime = maxChargeTime;
-		}
-
-		@Override
-		public boolean canUse() {
-			return this.shadowlord.getTarget() != null; // && !(Shadowlord.MELEE_DISTANCE_SQUARED >= this.shadowlord.distanceToSqr(shadowlord.getTarget().getX(), shadowlord.getTarget().getY(), shadowlord.getTarget().getZ()));
-		}
-
-		@Override
-		public void start() {
-			this.chargeTime = 0;
-		}
-
-		@Override
-		public void stop() {
-		}
-
-		@Override
-		public boolean requiresUpdateEveryTick() {
-			return true;
-		}
-
-		@Override
-		public void tick() {
-			LivingEntity livingentity = this.shadowlord.getTarget();
-			if (livingentity != null) {
-				if (livingentity.distanceToSqr(this.shadowlord) < SHOOT_DISTANCE_SQUARED && this.shadowlord.hasLineOfSight(livingentity) 
-						&& livingentity.distanceToSqr(this.shadowlord) > Shadowlord.MELEE_DISTANCE_SQUARED) {
-
-					Level level = this.shadowlord.level();
-					++this.chargeTime;
-
-					if (this.chargeTime >= maxChargeTime) {
-						Vec3 vec3 = this.shadowlord.getViewVector(1.0F);
-						double x = livingentity.getX() - (this.shadowlord.getX() + vec3.x * 2.0D);
-						double y = livingentity.getY(0.5D) - (this.shadowlord.getY(0.5D));
-						double z = livingentity.getZ() - (this.shadowlord.getZ() + vec3.z * 2.0D);
-
-						HarmSpell spell = new HarmSpell(Registration.HARM_SPELL_ENTITY_TYPE.get(), level);
-						spell.init(this.shadowlord, x, y, z);
-						spell.setPos(this.shadowlord.getX() + vec3.x * 2.0D, this.shadowlord.getY(0.5D), spell.getZ() + vec3.z * 2.0);
-						level.addFreshEntity(spell);
-						this.chargeTime = 0;
-					}
-				} else if (this.chargeTime > 0) {
-					--this.chargeTime;
-				}
-
-			}
-		}
-
-		protected double getAttackReachSqr(LivingEntity entity) {
-			return (double)(this.shadowlord.getBbWidth() * 2.0F * this.shadowlord.getBbWidth() * 2.0F + entity.getBbWidth() + 0.5F);
-		}
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -420,130 +337,5 @@ public class Shadowlord extends DenizensMonster {
 	@Nullable
 	protected SoundEvent getStepSound() {
 		return Registration.SHADOWLORD_STEP.get();
-	}
-
-//	/**
-//	 *
-//	 * @author Mark Gottschling on Apr 19, 2022
-//	 *
-//	 */
-//	static class ShadowlordSummonGoal extends SummonGoal {
-//		private final Shadowlord shadowlord;
-//		private Random random;
-//
-//		public ShadowlordSummonGoal(Shadowlord shadowlord) {
-//			this(shadowlord, SUMMON_CHARGE_TIME, true);
-//		}
-//
-//		/**
-//		 *
-//		 * @param mob
-//		 * @param summonCooldownTime
-//		 * @param canSummonDaemon
-//		 */
-//		public ShadowlordSummonGoal(Shadowlord mob, int summonCooldownTime, boolean canSummonDaemon) {
-//			super(summonCooldownTime);
-//			this.shadowlord = mob;
-//			this.random = new Random();
-//		}
-//
-//		@Override
-//		public void start() {
-//			this.cooldownCount = cooldownTime / 2;
-//		}
-//
-//		@Override
-//		public void stop() {
-//		}
-//
-//		@Override
-//		public void tick() {
-//			LivingEntity target = this.shadowlord.getTarget();
-//			if (target != null) {
-//				if (target.distanceToSqr(this.shadowlord) < SUMMON_DISTANCE_SQUARED && this.shadowlord.hasLineOfSight(target)) {
-//					Level level = this.shadowlord.level();
-//					++this.cooldownCount;
-//
-//					if (this.cooldownCount >= cooldownTime) {
-//
-//						int y = shadowlord.blockPosition().getY();
-//						boolean spawnSuccess = false;
-//						// summon daemon is health < max/3
-//						if (shadowlord.getHealth() < shadowlord.getMaxHealth() / 3 && shadowlord.numSummonDaemons > 0) {
-//							spawnSuccess |=spawn((ServerLevel)level, level.getRandom(), shadowlord, Registration.DAEMON_ENTITY_TYPE.get(), new Coords(shadowlord.blockPosition().getX(), y + 1, shadowlord.blockPosition().getZ()), target);
-//							if (spawnSuccess) {
-//								shadowlord.numSummonDaemons--;
-//							}
-//						}
-//						else {
-//							int numSpawns = random.nextInt(Config.Mobs.SHADOWLORD.minSummonSpawns.get(), Config.Mobs.SHADOWLORD.maxSummonSpawns.get() + 1);
-//							for (int i = 0; i < numSpawns; i++) {
-//								EntityType<? extends Mob> mob;
-//								if (RandomHelper.checkProbability(random, 50)) {
-//									mob = Registration.SHADOW_ENTITY_TYPE.get();
-//								}
-//								else {
-//									mob = Registration.GHOUL_ENTITY_TYPE.get();
-//								}
-//								spawnSuccess |=spawn((ServerLevel)level, level.getRandom(), shadowlord, mob, new Coords(shadowlord.blockPosition().getX(), y + 1, shadowlord.blockPosition().getZ()), target);
-//							}
-//						}
-//						if (!WorldInfo.isClientSide(level) && spawnSuccess) {
-//							for (int p = 0; p < 20; p++) {
-//								double xSpeed = random.nextGaussian() * 0.02D;
-//								double ySpeed = random.nextGaussian() * 0.02D;
-//								double zSpeed = random.nextGaussian() * 0.02D;
-//								((ServerLevel)level).sendParticles(ParticleTypes.POOF, shadowlord.blockPosition().getX() + 0.5D, shadowlord.blockPosition().getY(), shadowlord.blockPosition().getZ() + 0.5D, 1, xSpeed, ySpeed, zSpeed, (double)0.15F);
-//							}
-//						}
-//						this.cooldownCount = 0;
-//					}
-//				}
-//			}
-//		}
-//
-//		@Override
-//		public boolean canUse() {
-//			return true;
-//		}
-//	}
-
-	/**
-	 * 
-	 * @author Mark Gottschling on Apr 19, 2022
-	 *
-	 */
-	public static class ShadowlordMeleeAttackGoal extends MeleeAttackGoal {
-
-		public ShadowlordMeleeAttackGoal(PathfinderMob mob, double walkSpeedModifier, boolean sprintSpeedModifier) {
-			super(mob, walkSpeedModifier, sprintSpeedModifier);
-		}
-
-		/**
-		 * 
-		 */
-		@Override
-		public boolean canUse() {
-			if (mob.getTarget() != null) {
-				if (mob.distanceToSqr(mob.getTarget().getX(), mob.getTarget().getY(), mob.getTarget().getZ()) <= 100D) {
-					boolean x = super.canUse();
-					DD.LOGGER.debug("can use melee at distance {} -> {}", mob.distanceToSqr(mob.getTarget().getX(), mob.getTarget().getY(), mob.getTarget().getZ()), x);
-					return x;
-				}
-			}
-			return false;
-		}
-
-		@Override
-		public boolean canContinueToUse() {
-			if (mob.getTarget() != null) {
-				if (mob.distanceToSqr(mob.getTarget().getX(), mob.getTarget().getY(), mob.getTarget().getZ()) <= 100D) {
-					boolean x = super.canContinueToUse();
-					DD.LOGGER.debug("can use melee at distance {} -> {}", mob.distanceToSqr(mob.getTarget().getX(), mob.getTarget().getY(), mob.getTarget().getZ()), x);
-					return x;
-				}
-			}
-			return false;
-		}
 	}
 }

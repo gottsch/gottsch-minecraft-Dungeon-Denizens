@@ -95,6 +95,7 @@ public class CommonSetup {
 		event.put(Registration.MAGMA_SKELETON_TYPE.get(), MagmaSkeleton.createAttributes().build());
 
 		event.put(ModEntities.GARGOYLE_TYPE.get(), Gargoyle.createAttributes().build());
+		event.put(ModEntities.MARGOYLE_TYPE.get(), Margoyle.createAttributes().build());
 
 	}
 
@@ -119,6 +120,7 @@ public class CommonSetup {
 		event.register(Registration.MAGMA_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, MagmaSkeleton::checkMagmaSkeletonSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
 		event.register(ModEntities.GARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.MARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterUndergroundSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
 	}
 
@@ -144,6 +146,7 @@ public class CommonSetup {
 			event.accept(Registration.MAGMA_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 
 			event.accept(ModItems.GARGOYLE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.MARGOYLE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 
 		}
 		else if (event.getTabKey() == CreativeModeTabs.COMBAT) {

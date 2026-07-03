@@ -77,6 +77,22 @@ public abstract class DenizensMonster extends Monster implements IDenizensMonste
 				&& checkMobSpawnRules(mob, level, spawnType, pos, random);
 	}
 
+	/**
+	 * Underground-only spawn rule: requires the position to be below the configured
+	 * max height (64 for the Margoyle) AND unable to see the sky, so the mob only
+	 * appears in caves / sewers / dungeons rather than on the dark surface.
+	 */
+	public static boolean checkDDMonsterUndergroundSpawnRules(EntityType<? extends Mob> mob, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+		IMobConfig mobConfig = Config.Mobs.MOBS.get(EntityType.getKey(mob));
+		CommonSpawnConfig config = mobConfig.getSpawnConfig();
+		return config.enabled.get()
+				&& level.getDifficulty() != Difficulty.PEACEFUL
+				&& isValidHeight(pos, config)
+				&& !level.canSeeSky(pos)
+				&& isDarkEnoughToSpawn(level, pos, random)
+				&& checkMobSpawnRules(mob, level, spawnType, pos, random);
+	}
+
 	public static boolean checkDDMonsterCanSeeSkySpawnRules(EntityType<? extends Mob> mob, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
 		Config.IMobConfig mobConfig = Config.Mobs.MOBS.get(EntityType.getKey(mob));
 		Config.CommonSpawnConfig config = mobConfig.getSpawnConfig();

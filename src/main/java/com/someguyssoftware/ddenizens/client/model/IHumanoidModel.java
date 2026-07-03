@@ -27,6 +27,9 @@ import net.minecraft.client.model.geom.ModelPart;
  *
  */
 public interface IHumanoidModel {
+	static final Position ZERO_POSITION = new Position(0, 0, 0);
+	static final Rotation ZERO_ROTATION = new Rotation(0, 0, 0);
+
 	public ModelPart getHead();
 	public ModelPart getBody();
 	public ModelPart getRightArm();

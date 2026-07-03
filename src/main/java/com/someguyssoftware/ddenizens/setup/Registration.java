@@ -26,6 +26,7 @@ import com.someguyssoftware.ddenizens.entity.monster.skeleton.IronSkeleton;
 import com.someguyssoftware.ddenizens.entity.monster.skeleton.MagmaSkeleton;
 import com.someguyssoftware.ddenizens.entity.projectile.*;
 import com.someguyssoftware.ddenizens.item.*;
+import com.someguyssoftware.ddenizens.serializer.data.ModDataSerializers;
 import com.someguyssoftware.ddenizens.util.LangUtil;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.chat.Component;
@@ -353,6 +354,7 @@ public class Registration {
 		ENTITIES.register(eventBus);		
 		PARTICLES.register(eventBus);
 		SOUNDS.register(eventBus);
+		ModDataSerializers.register(eventBus);
 	}
 
 	private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
