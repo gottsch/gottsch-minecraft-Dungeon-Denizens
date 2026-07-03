@@ -64,7 +64,6 @@ public class Daemon extends DenizensMonster {
 
 	private double flameParticlesTime;
 	private int particlesReset = 4;
-	// TODO needs to be saved
 	private int lifespanCount = 0;
 	
 	/**
@@ -74,7 +73,7 @@ public class Daemon extends DenizensMonster {
 	 */
 	public Daemon(EntityType<? extends Monster> entityType, Level level) {
 		super(entityType, level, MonsterSize.LARGE);
-		setPersistenceRequired();
+//		setPersistenceRequired();
 		this.xpReward = 10;
 	}
 
@@ -118,6 +117,11 @@ public class Daemon extends DenizensMonster {
 				.add(Attributes.ATTACK_KNOCKBACK, 2.0D)
 				.add(Attributes.MOVEMENT_SPEED, 0.2D)
 				.add(Attributes.FOLLOW_RANGE, 50D);
+	}
+
+	@Override
+	public boolean requiresCustomPersistence() {
+		return !Config.Mobs.DAEMON.despawn.get();
 	}
 
 	/**

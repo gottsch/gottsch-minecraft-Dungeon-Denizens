@@ -21,6 +21,7 @@ package com.someguyssoftware.ddenizens.config;
 
 import com.google.common.collect.Maps;
 import com.someguyssoftware.ddenizens.DD;
+import com.someguyssoftware.ddenizens.entity.ModEntities;
 import com.someguyssoftware.ddenizens.setup.Registration;
 import mod.gottsch.forge.gottschcore.config.AbstractConfig;
 import net.minecraft.resources.ResourceLocation;
@@ -224,7 +225,7 @@ public final class Config extends AbstractConfig {
 
 			maxHeight = builder
 					.comment(" Maximum height in blocks that a firespout can reach.")
-					.defineInRange("damage", 5, 1, 20);
+					.defineInRange("maxHeight", 5, 1, 20);
 
 			builder.pop();
 		}
@@ -239,6 +240,8 @@ public final class Config extends AbstractConfig {
 			damage = builder
 					.comment(" The amount of damage the spell inflicts.")
 					.defineInRange("damage", 8.0, 1, Integer.MAX_VALUE);
+
+			builder.pop();
 		}
 	}
 
@@ -274,6 +277,8 @@ public final class Config extends AbstractConfig {
 		public static FossilizedSkeletonConfig FOSSILIZED_SKELETON;
 		public static IronSkeletonConfig IRON_SKELETON;
 		public static MagmaSkeletonConfig MAGMA_SKELETON;
+		public static GargoyleConfig GARGOYLE;
+		public static MargoyleConfig MARGOYLE;
 
 		// TODO create a General Config is specific isn't found, use it. For things like spawn height
 		public static Map<ResourceLocation, IMobConfig> MOBS = Maps.newHashMap();
@@ -295,6 +300,8 @@ public final class Config extends AbstractConfig {
 			FOSSILIZED_SKELETON = new FossilizedSkeletonConfig(builder);
 			IRON_SKELETON = new IronSkeletonConfig(builder);
 			MAGMA_SKELETON = new MagmaSkeletonConfig(builder);
+			GARGOYLE = new GargoyleConfig(builder);
+			MARGOYLE = new MargoyleConfig(builder);
 
 			MOBS.put(new ResourceLocation(DD.MODID, Registration.HEADLESS), HEADLESS);
 			MOBS.put(new ResourceLocation(DD.MODID, Registration.ORC), ORC);
@@ -312,6 +319,8 @@ public final class Config extends AbstractConfig {
 			MOBS.put(new ResourceLocation(DD.MODID, Registration.FOSSILIZED_SKELETON), FOSSILIZED_SKELETON);
 			MOBS.put(new ResourceLocation(DD.MODID, Registration.IRON_SKELETON), IRON_SKELETON);
 			MOBS.put(new ResourceLocation(DD.MODID, Registration.MAGMA_SKELETON), MAGMA_SKELETON);
+			MOBS.put(new ResourceLocation(DD.MODID, ModEntities.GARGOYLE), GARGOYLE);
+			MOBS.put(new ResourceLocation(DD.MODID, ModEntities.MARGOYLE), MARGOYLE);
 
 		}
 	}
@@ -365,10 +374,17 @@ public final class Config extends AbstractConfig {
 	 *
 	 */
 	public static class OrcConfig extends MobConfig {
+		public DoubleValue rangedProbability;
+
 		public OrcConfig(ForgeConfigSpec.Builder builder) {
 			builder.comment(CATEGORY_DIV, " Orc properties.", CATEGORY_DIV).push(Registration.ORC);
 			spawnConfig = new CommonSpawnConfig(builder, true, 35, 1, 2, MIN_HEIGHT, MAX_HEIGHT);//,
 //					new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), Arrays.asList(BiomeCategory.NETHER.getName(), BiomeCategory.THEEND.getName()));
+
+			rangedProbability = builder
+					.comment(" The chance (0.0 - 1.0) that an Orc spawns as a ranged rock-thrower instead of a melee fighter.")
+					.defineInRange("rangedProbability", 0.15, 0.0, 1.0);
+
 			builder.pop();
 		}
 	}
@@ -402,12 +418,18 @@ public final class Config extends AbstractConfig {
 	 * 
 	 */
 	public static class BoulderConfig extends MobConfig {
-		// boulder specific		
+		// boulder specific
+		public BooleanValue despawn;
 
 		public BoulderConfig(ForgeConfigSpec.Builder builder) {
 			builder.comment(CATEGORY_DIV, " Boulder properties.", CATEGORY_DIV).push("boulder");				
 
 			spawnConfig = new CommonSpawnConfig(builder, false, 35, 1, 1,  MIN_HEIGHT, 60);//,
+
+			despawn = builder
+					.comment(" Whether the mob despawns or is persistent.",
+							" true = depsawns. Default.")
+					.define("despawns", true);
 
 			builder.pop();
 		}
@@ -467,6 +489,7 @@ public final class Config extends AbstractConfig {
 		public IntValue maxSummonSpawns;
 
 		public IntValue summonDaemonCooldownTime;
+		public BooleanValue despawn;
 
 		public BeholderConfig(ForgeConfigSpec.Builder builder) {
 			builder.comment(CATEGORY_DIV, " Beholder properties.", CATEGORY_DIV).push(Registration.BEHOLDER);
@@ -501,7 +524,12 @@ public final class Config extends AbstractConfig {
 
 			summonDaemonCooldownTime = builder
 					.comment(" The cooldown time of a summon daemon spell (measured in ticks).")
-					.defineInRange("summonCooldownTime", 2400, 1, Integer.MAX_VALUE);
+					.defineInRange("summonDaemonCooldownTime", 2400, 1, Integer.MAX_VALUE);
+
+			despawn = builder
+					.comment(" Whether the mob despawns or is persistent.",
+							" true = depsawns. Default.")
+					.define("despawns", true);
 
 			builder.pop();
 		}
@@ -517,6 +545,7 @@ public final class Config extends AbstractConfig {
 		public IntValue minSummonSpawns;
 		public IntValue maxSummonSpawns;
 		public IntValue summonDaemonCooldownTime;
+		public BooleanValue despawn;
 
 		public DeathTyrantConfig(ForgeConfigSpec.Builder builder) {
 			builder.comment(CATEGORY_DIV, " Death Tyrant properties.", CATEGORY_DIV).push(Registration.DEATH_TYRANT);
@@ -551,7 +580,12 @@ public final class Config extends AbstractConfig {
 
 			summonDaemonCooldownTime = builder
 					.comment(" The cooldown time of a summon daemon spell (measured in ticks).")
-					.defineInRange("summonCooldownTime", 2400, 1, Integer.MAX_VALUE);
+					.defineInRange("summonDaemonCooldownTime", 2400, 1, Integer.MAX_VALUE);
+
+			despawn = builder
+					.comment(" Whether the mob despawns or is persistent.",
+							" true = depsawns. Default.")
+					.define("despawns", true);
 
 			builder.pop();
 		}
@@ -650,6 +684,7 @@ public final class Config extends AbstractConfig {
 		public DoubleValue poisonProbability;
 		public IntValue poisonDuration;
 		public IntValue blindnessDuration;
+		public BooleanValue despawn;
 
 		public ShadowlordConfig(ForgeConfigSpec.Builder builder) {
 			builder.comment(CATEGORY_DIV, " Shadowlord properties.", CATEGORY_DIV).push(Registration.SHADOWLORD);				
@@ -681,7 +716,7 @@ public final class Config extends AbstractConfig {
 
 			summonDaemonCooldownTime = builder
 					.comment(" The cooldown time of a summon daemon spell (measured in ticks).")
-					.defineInRange("summonCooldownTime", 2400, 1, Integer.MAX_VALUE);
+					.defineInRange("summonDaemonCooldownTime", 2400, 1, Integer.MAX_VALUE);
 
 			summonDaemonProbability = builder
 					.comment(" The probability that a Shadowlord will be able to summon a daemon.")
@@ -699,6 +734,10 @@ public final class Config extends AbstractConfig {
 					.comment(" The length of time blindness from Aura of Blindess lasts (measured in ticks).")
 					.defineInRange("blindnessDuration", 40, 1, Integer.MAX_VALUE);
 
+			despawn = builder
+					.comment(" Whether the mob despawns or is persistent.",
+							" true = depsawns. Default.")
+					.define("despawns", true);
 
 			builder.pop();
 		}
@@ -712,6 +751,7 @@ public final class Config extends AbstractConfig {
 		public IntValue firespoutCooldownTime;
 		public IntValue firespoutMaxDistance;
 		public IntValue summonedLifespan;
+		public BooleanValue despawn;
 
 
 		public DaemonConfig(ForgeConfigSpec.Builder builder) {
@@ -734,6 +774,12 @@ public final class Config extends AbstractConfig {
 					.comment(" The duration in ticks that a summoned daemon can remain before returning to whence it came.")
 					.defineInRange("summonedLifespan", 1200
 							, 600, Integer.MAX_VALUE);
+
+			despawn = builder
+					.comment(" Whether the mob despawns or is persistent.",
+							" true = depsawns. Default.")
+							.define("despawns", true);
+
 			builder.pop();
 		}
 	}
@@ -772,10 +818,30 @@ public final class Config extends AbstractConfig {
 
 	public static class MagmaSkeletonConfig extends NetherMobConfig {
 		public MagmaSkeletonConfig(ForgeConfigSpec.Builder builder) {
-			builder.comment(CATEGORY_DIV, " Magma Skeleton properties.", CATEGORY_DIV).push(Registration.IRON_SKELETON);
+			builder.comment(CATEGORY_DIV, " Magma Skeleton properties.", CATEGORY_DIV).push(Registration.MAGMA_SKELETON);
 			spawnConfig = new CommonSpawnConfig(builder, true, 30, 1, 1, MIN_HEIGHT, MAX_HEIGHT);//,
 			netherSpawnConfig = new NetherSpawnConfig(builder, true, 10, 1, 1,  MIN_HEIGHT, MAX_HEIGHT);
 
+			builder.pop();
+		}
+	}
+
+	public static class GargoyleConfig extends NetherMobConfig {
+		public GargoyleConfig(ForgeConfigSpec.Builder builder) {
+			builder.comment(CATEGORY_DIV, " Gargoyle properties.", CATEGORY_DIV).push(ModEntities.GARGOYLE);
+			spawnConfig = new CommonSpawnConfig(builder, true, 30, 1, 1, MIN_HEIGHT, MAX_HEIGHT);//,
+			netherSpawnConfig = new NetherSpawnConfig(builder, true, 10, 1, 1,  MIN_HEIGHT, MAX_HEIGHT);
+
+			builder.pop();
+		}
+	}
+
+	public static class MargoyleConfig extends MobConfig {
+		public MargoyleConfig(ForgeConfigSpec.Builder builder) {
+			builder.comment(CATEGORY_DIV, " Margoyle properties.", CATEGORY_DIV).push(ModEntities.MARGOYLE);
+			// subterranean: maxHeight is capped at 64 so it only spawns underground
+			// (paired with the !canSeeSky check in checkDDMonsterUndergroundSpawnRules).
+			spawnConfig = new CommonSpawnConfig(builder, true, 10, 1, 2, MIN_HEIGHT, 64);
 			builder.pop();
 		}
 	}

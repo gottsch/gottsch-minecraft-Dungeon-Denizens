@@ -21,12 +21,14 @@ package com.someguyssoftware.ddenizens.setup;
 
 import com.someguyssoftware.ddenizens.DD;
 import com.someguyssoftware.ddenizens.config.Config;
+import com.someguyssoftware.ddenizens.entity.ModEntities;
 import com.someguyssoftware.ddenizens.entity.monster.*;
 
 import com.someguyssoftware.ddenizens.entity.monster.skeleton.FossilizedSkeleton;
 import com.someguyssoftware.ddenizens.entity.monster.skeleton.IronSkeleton;
 import com.someguyssoftware.ddenizens.entity.monster.skeleton.MagmaSkeleton;
 import com.someguyssoftware.ddenizens.integrations.Integrations;
+import com.someguyssoftware.ddenizens.item.ModItems;
 import mod.gottsch.forge.gottschcore.world.WorldInfo;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -92,6 +94,9 @@ public class CommonSetup {
 		event.put(Registration.IRON_SKELETON_TYPE.get(), IronSkeleton.createAttributes().build());
 		event.put(Registration.MAGMA_SKELETON_TYPE.get(), MagmaSkeleton.createAttributes().build());
 
+		event.put(ModEntities.GARGOYLE_TYPE.get(), Gargoyle.createAttributes().build());
+		event.put(ModEntities.MARGOYLE_TYPE.get(), Margoyle.createAttributes().build());
+
 	}
 
 	@SubscribeEvent
@@ -113,6 +118,9 @@ public class CommonSetup {
 		event.register(Registration.FOSSILIZED_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(Registration.IRON_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(Registration.MAGMA_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, MagmaSkeleton::checkMagmaSkeletonSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+
+		event.register(ModEntities.GARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.MARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DenizensMonster::checkDDMonsterUndergroundSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
 	}
 
@@ -136,6 +144,9 @@ public class CommonSetup {
 			event.accept(Registration.FOSSILIZED_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(Registration.IRON_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(Registration.MAGMA_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+
+			event.accept(ModItems.GARGOYLE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.MARGOYLE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 
 		}
 		else if (event.getTabKey() == CreativeModeTabs.COMBAT) {

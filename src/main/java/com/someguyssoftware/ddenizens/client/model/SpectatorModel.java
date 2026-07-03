@@ -37,12 +37,12 @@ public class SpectatorModel<T extends Entity> extends BeholderkinModel<T> {
 
 	private final float bodyY;
 	private final float headY;
-	private final Rotations tongueBaseRots;
-	private final Rotations tongueMiddleRots;
-	private final Rotations tongueEndRots;
+	private final Rotation tongueBaseRots;
+	private final Rotation tongueMiddleRots;
+	private final Rotation tongueEndRots;
 
 	private ModelPart[] eyeStalks = new ModelPart[4];
-	private Rotations[] eyeStalkRotations = new Rotations[4];
+	private Rotation[] eyeStalkRotations = new Rotation[4];
 	private int[] eyeStalkOffsets = new int[4];
 	private float[] eyeStalkSpeeds = new float[4];
 	private float[] directions = new float[4];
@@ -69,13 +69,13 @@ public class SpectatorModel<T extends Entity> extends BeholderkinModel<T> {
 		this.tongueMiddle = tongueBase.getChild("tm");
 		this.tongueEnd = tongueMiddle.getChild("te");
 
-		tongueBaseRots = new Rotations(tongueBase.xRot, tongueBase.yRot, tongueBase.zRot);
-		tongueMiddleRots = new Rotations(tongueMiddle.xRot, tongueMiddle.yRot, tongueMiddle.zRot);
-		tongueEndRots = new Rotations(tongueEnd.xRot, tongueEnd.yRot, tongueEnd.zRot);
+		tongueBaseRots = new Rotation(tongueBase.xRot, tongueBase.yRot, tongueBase.zRot);
+		tongueMiddleRots = new Rotation(tongueMiddle.xRot, tongueMiddle.yRot, tongueMiddle.zRot);
+		tongueEndRots = new Rotation(tongueEnd.xRot, tongueEnd.yRot, tongueEnd.zRot);
 
 		Random random = new Random();
 		for (int i = 0; i < 4; i++) {
-			eyeStalkRotations[i] = new Rotations(eyeStalks[i].xRot, eyeStalks[i].yRot, eyeStalks[i].zRot);
+			eyeStalkRotations[i] = new Rotation(eyeStalks[i].xRot, eyeStalks[i].yRot, eyeStalks[i].zRot);
 			eyeStalkOffsets[i] = random.nextInt(0, 180);
 			eyeStalkSpeeds[i] = random.nextFloat(0.02F, 0.05F);
 			directions[i] = random.nextInt() % 2 == 0 ? 1F: -1F;
@@ -225,7 +225,7 @@ public class SpectatorModel<T extends Entity> extends BeholderkinModel<T> {
 		tongueEnd.xRot = Mth.sin(age * (speed / 2)) * 0.261799F + 0.05F; //15o
 	}
 
-	private void resetRotations(ModelPart part, Rotations rots) {
+	private void resetRotations(ModelPart part, Rotation rots) {
 		part.xRot = rots.x();
 		part.yRot = rots.y();
 		part.zRot = rots.z();

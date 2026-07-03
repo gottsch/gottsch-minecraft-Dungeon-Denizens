@@ -6,129 +6,156 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+---
+
+## [1.6.0] - 2026-06-29
+
+### Added
+
+- 🗿 **Gargoyle** — a winged stone monster that stalks you on foot, then launches into the air to close the distance, swoops in, drops down to land, and strikes. If it loses sight of you while airborne it settles safely back to the ground on its own. It shrugs off poison and can't be slowed to a crawl.
+- 🦇 **Margoyle** — a cave-dwelling cousin of the Gargoyle. It can't truly fly, so it skims low along the ground as it hunts. It lurks only in the dark underground — caves, sewers, and dungeons below sea level — and never roams the surface. You'll know it by its four horns and short wings, which beat as it hovers.
+- 🪨 **Rock-throwing Orcs** — some orcs now turn up empty-handed and hurl rocks at you in an arc, backing away to keep their distance instead of charging in. Roughly 1 in 7 by default, and adjustable in the settings.
+
+### Changed
+
+- Rebalanced the **Orc** — it hits harder, now knocks you back a little, and wears some armor, trading a bit of its health for the extra protection.
+- Eased off the **Headless** a little — it gives up the chase a bit sooner and moves slightly slower, so it's not quite as relentless as before.
+
+### Fixed
+
+- Fixed a crash that could happen when you hit a **Shadow** or **Shadowlord** with a gold sword, Shadow Blade, or Shadow Falchion while you had the Weakness effect. Those weapons now also correctly ignore Weakness against these foes, so they land their full damage as intended.
+- **Skeleton Warriors** now turn up carrying worn, battle-used weapons and armor, the way they were always meant to, instead of perfectly fresh gear.
+- Fixed several **settings that were quietly being ignored**: the Magma Skeleton's options were tangled up with the Iron Skeleton's, and the Firespout spell's maximum height — along with the Beholder's and Death Tyrant's daemon-summoning timers — weren't using the values you set.
+- Fixed floating monsters — the **Beholder** family and the **Winged Skeleton** — sometimes hovering at an odd height underground, where they couldn't properly find the floor beneath them.
+
+---
+
+## [1.5.0] - 2024-12-14
+
+### Added
+
+- On/off **despawn settings** for the Daemon, Beholder, Death Tyrant, Shadowlord, and Boulder (all set to despawn by default).
+
+### Changed
+
+- The Patchouli guide book is no longer dropped into your inventory the first time you join a world — you can still grab the **DD Bestiary** any time from the Creative tab.
+- Monsters that used to linger forever now despawn like normal mobs by default. Want to keep one around? Flip its despawn setting.
+
+---
+
 ## [1.4.2] - 2024-09-12
 
-### Changed
+### Fixed
 
-- Fixed Daemon's summoned lifespan config option.
-- Moved logging config settings to the -common config.
-- Fixed accessing config properties before config is loaded error.
-- Removed check for treasure2 integrations config setting.
-
-## [1.4.1] - 2024-02 - Skeleton Update
+- The **Daemon's** summoned-helper lifespan setting now works as intended.
+- Fixed a startup error caused by reading settings before they had finished loading.
 
 ### Changed
 
-- Fixed Winged Skeleton not spawning issue. 
-- Fixed Death Tyrant pathouli page entry from crashing.
+- Tidied up the settings behind the scenes — moved the logging options into the shared "common" config and removed an unused Treasure2 integration check.
+
+---
+
+## [1.4.1] - 2024-02 — Skeleton Update
 
 ### Added
 
-- Built-In optional Treasure2 integration. ie. items can be injected into Treasure2 loot.
+- Optional built-in **Treasure2** support — Dungeon Denizens items can be mixed into Treasure2's loot.
 
-## [1.4.0] - 2024-02 - Skeleton Update
+### Fixed
 
-### Changed
+- The **Winged Skeleton** now spawns properly.
+- Fixed a crash when opening the **Death Tyrant's** page in the Bestiary.
 
-- Ghoul had RestrictSunGoal twice - removed duplicate.
-- Increased the hit box on the Orc to match body size better.
-- Updates to DD Bestiary.
+---
 
-### Added
-
-- Winged Skeleton.
-- Fossilized Skeleton.
-- Iron Skeleton.
-- Magma Skeleton.
-- PassiveMeleeAttackGoal.
-- VariantPoweredRangedBowAttackGoal.
-
-
-## [1.3.0] - 2024-01-31 - Shadowlord Update
-
-### Changed
-
-- New Shadowlord model.
-- Refactored Shadow model.
-- Shadowlords now carry a Shadow Blade.
-- Shadows now carry a Shadow Falchion.
-- Shadowlords and Shadows have a high chance of dropping a Shadow Blade/Falchion.
-- Reduced Aura of Blindness effect to 2 seconds duration by default.
-- Reduced duration of Poison effect
-- Refactored Shadowlord's and Shadow's weakness to gold weapons.
-- Refactored Shadowlord's and Shadow's immunity to all other weapons.
-- A Shadow Blade is now a weakness of a Shadowlord and Shadow - it does the same damage as Netherite Sword would normally do.
-- Fixed spamming logs when Shadowlord summons mobs.
-- Reduced Blindness duration for Shadow.
-- Reduced probability for Blindness for Shadow.
-- Reduced Knockback resistence for Shadow.
-- Updated Bestiary book with mobs.
+## [1.4.0] - 2024-02 — Skeleton Update
 
 ### Added
 
-- Shadowlord walking and ambient sounds.
-- Shadow ambient sound.
-- Shadow Blade.
-- Shadow Falchion.
-- Config options for existing and new Shadowlord abilities.
-- Config options for existing Shadow abilities.
-- A cooldown time for Drain spell.
-
-
-## [1.2.0] - 2024-01-09 - Beholderkin Update
+- Four new undead: the **Winged Skeleton**, **Fossilized Skeleton**, **Iron Skeleton**, and **Magma Skeleton**.
 
 ### Changed
 
-- Fixed Gazer LAYER_LOCATION
-- Refactored and rebalanced Gazer (lesser beholderkin now).
-- Fixed CommonSpawnConfig constructor. There was a mix-up with the weight and minSpawn, maxSpawn values.
-- Fixed some config label naming.
-- Refactored spawn rules classes for nether mobs.
-- Renamed spell classes and resources.
-- Updated Daemon's jaw and horns.
-- Updated Daemon's animation to include mouth bob.
-- Reduced Daemon's speed, knockback.
-- Daemon and Shadowlord will now despawn;
-- Nether spawnable mobs only spawn in the nether wastes
-- Reduced spawn weights for all nether spawning mobs
+- The **Ghoul** no longer doubles up on its avoid-the-sun behaviour (removed a duplicate).
+- Tightened the **Orc's** hitbox so it better matches its body.
+- Updated the DD Bestiary.
+- Behind the scenes: added shared attack behaviours that drive the new skeletons' melee and bow attacks.
+
+---
+
+## [1.3.0] - 2024-01-31 — Shadowlord Update
 
 ### Added
 
-- Beholder mob.
+- New **Shadow Blade** and **Shadow Falchion** weapons. **Shadowlords** now wield a Shadow Blade and **Shadows** a Shadow Falchion, and both have a high chance of dropping their weapon when defeated.
+- Ambient sounds for the Shadow, plus ambient and walking sounds for the Shadowlord.
+- A cooldown on the Shadowlord's **Drain** spell, and new settings for the Shadowlord's and Shadow's abilities.
+
+### Changed
+
+- A brand-new **Shadowlord** model and a refreshed **Shadow** model.
+- Reworked how the Shadowlord and Shadow take damage: they're vulnerable to **gold** weapons — and to a **Shadow Blade**, which hurts them as much as a Netherite sword would — and shrug off everything else.
+- Toned down the Shadow's **Aura of Blindness** (shorter by default, with a lower chance to blind) and made the Shadow easier to knock back.
+- Shortened the Poison effect's duration.
+- Added the new mobs to the Bestiary.
+
+### Fixed
+
+- Stopped the log spam when a Shadowlord summons monsters.
+
+---
+
+## [1.2.0] - 2024-01-09 — Beholderkin Update
+
+### Added
+
+- The **Beholder**.
 
   <img src="https://github.com/gottsch/gottsch-minecraft-Dungeon-Denizens/wiki/images/beholder-plaque.png" width="128px">
 
-- Death Tyrant mob.
+- The **Death Tyrant**.
 
   <img src="https://github.com/gottsch/gottsch-minecraft-Dungeon-Denizens/wiki/images/death-tyrant-plaque.png" width="128px">
 
-- Spectator mob.
+- The **Spectator**.
 
   <img src="https://github.com/gottsch/gottsch-minecraft-Dungeon-Denizens/wiki/images/spectator-plaque.png" width="128px">
 
-- Skeleton Warrior mob.
-- Disintegrate spell.
-- Disarm spell.
-- Daemon glowing eyes layer.
-- Owner and lifespan properties to Daemon if summoned.
-- Shadow glowing eyes layer.
-- Mob "enable" config option.
-- Supports Patchouli - DD Bestiary book contains new mobs (older mobs not complete). 
-- Bare-bones tooltips on mob eggs (similar but reduced info as DD Bestiary book).
-- Add custom sounds to Daemon and the beholderkin mobs.
-- Supports Biomes O Plenty
+- The **Skeleton Warrior**.
+- New **Disintegrate** and **Disarm** spells.
+- Glowing eyes for the **Daemon** and **Shadow** — they now light up in the dark.
+- Custom sounds for the Daemon and the beholderkin.
+- An "enable" on/off setting for every mob.
+- **Patchouli** support — a DD Bestiary book featuring the new mobs (older mobs not fully covered yet), plus brief tooltips on the mob spawn eggs.
+- **Biomes O' Plenty** support.
+- Summoned Daemons now remember their owner and have a lifespan.
+
+### Changed
+
+- Reworked and rebalanced the **Gazer** (now the lesser beholderkin).
+- Nether monsters now spawn only in the nether wastes, and all nether-spawning monsters appear less often.
+- The **Daemon** got an updated jaw and horns, a mouth-bob animation, and slightly lower speed and knockback.
+- The Daemon and Shadowlord now despawn.
+- Behind the scenes: tidied the spawn-rule and spell code and cleaned up some setting labels.
+
+### Fixed
+
+- Fixed a **Gazer** rendering glitch.
+- Fixed a spawn-settings mix-up where the spawn weight and the group-size (minimum/maximum) values were swapped.
+
+---
 
 ## [1.1.0] - 2023-10-18
 
 ### Changed
 
-- Changed spawn rules to require the correct darkness for mobs to spawn (like vanilla Minecraft)
+- Monsters now require proper darkness to spawn, just like vanilla Minecraft.
 
+---
 
 ## [1.0.0] - 2023-10-17
 
-### Changed
+### Added
 
-### Added 
-
-- Port from 1.19.3-1.0.0
+- First release — ported from the 1.19.3 version.

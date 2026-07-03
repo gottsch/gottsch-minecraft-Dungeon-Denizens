@@ -28,7 +28,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -203,9 +202,11 @@ public abstract class Beholderkin extends DenizensFlyingMonster {
                 return;
             };
 
-            // find ground below mob
+            // find ground below mob. isAir() also covers cave air and void air, so this works
+            // underground (== Blocks.AIR did not), and the minBuildHeight guard bounds the loop.
             double groundY = y;
-            while (beholderkin.level().getBlockState(new BlockPos((int)x, (int)groundY, (int)z)).getBlock() == Blocks.AIR) {
+            int minY = beholderkin.level().getMinBuildHeight();
+            while (groundY > minY && beholderkin.level().getBlockState(new BlockPos((int)x, (int)groundY, (int)z)).isAir()) {
                 groundY--;
             }
 

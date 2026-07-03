@@ -1,4 +1,4 @@
-// 1.20.1	2024-02-04T21:24:04.9215439	Item Models: ddenizens
+// 1.20.1	2025-07-15T15:15:45.4295349	Item Models: ddenizens
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/ddenizens/models/item/beholder_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/ddenizens/models/item/boulder_egg.json
 6c4d45376e3cf30bc2d5e456a3c6579cec5e76d9 assets/ddenizens/models/item/club.json
@@ -7,6 +7,7 @@
 99887e90d3f16b471ee2baa2a39579a64984a267 assets/ddenizens/models/item/disarm.json
 f665ff36c0a5939498db986e2ac3aad98f59fd51 assets/ddenizens/models/item/disintegrate.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/ddenizens/models/item/fossilized_skeleton_egg.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/ddenizens/models/item/gargoyle_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/ddenizens/models/item/gazer_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/ddenizens/models/item/ghoul_egg.json
 a17ea4505903bb4a304bba9c784cced1a6d661f6 assets/ddenizens/models/item/harm.json

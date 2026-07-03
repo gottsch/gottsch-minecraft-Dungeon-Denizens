@@ -49,17 +49,17 @@ public class WingedSkeletonModel<T extends Mob> extends HumanoidModel<T> {
 	public final ModelPart rightFlapAxis;
 	public final ModelPart leftFlapAxis;
 
-	public Rotations rightArmRots;
-	public Rotations leftArmRots;
-	public Positions headPos;
-	public Positions bodyPos;
-	public Positions rightArmPos;
-	public Positions leftArmPos;
-	public Positions rightLegPos;
-	public Positions leftLegPos;
+	public Rotation rightArmRots;
+	public Rotation leftArmRots;
+	public Position headPos;
+	public Position bodyPos;
+	public Position rightArmPos;
+	public Position leftArmPos;
+	public Position rightLegPos;
+	public Position leftLegPos;
 
-	public Rotations rightFlapAxisRots;
-	public Rotations leftFlapAxisRots;
+	public Rotation rightFlapAxisRots;
+	public Rotation leftFlapAxisRots;
 
 	public WingedSkeletonModel(ModelPart root) {
 		super(root);
@@ -69,19 +69,19 @@ public class WingedSkeletonModel<T extends Mob> extends HumanoidModel<T> {
 		rightFlapAxis = bodyWrapper.getChild("rightFlapAxis");
 		leftFlapAxis = bodyWrapper.getChild("leftFlapAxis");
 
-		rightFlapAxisRots = new Rotations(rightFlapAxis);
-		leftFlapAxisRots = new Rotations(leftFlapAxis);
+		rightFlapAxisRots = new Rotation(rightFlapAxis);
+		leftFlapAxisRots = new Rotation(leftFlapAxis);
 
-		rightArmRots = new Rotations(this.rightArm);
-		leftArmRots = new Rotations(this.leftArm);
+		rightArmRots = new Rotation(this.rightArm);
+		leftArmRots = new Rotation(this.leftArm);
 
 		// save all the original positions
-		headPos = new Positions(this.head);
-		bodyPos = new Positions(this.body);
-		rightArmPos = new Positions(rightArm);
-		leftArmPos = new Positions(leftArm);
-		rightLegPos = new Positions(rightLeg);
-		leftLegPos = new Positions(leftLeg);
+		headPos = new Position(this.head);
+		bodyPos = new Position(this.body);
+		rightArmPos = new Position(rightArm);
+		leftArmPos = new Position(leftArm);
+		rightLegPos = new Position(rightLeg);
+		leftLegPos = new Position(leftLeg);
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -180,7 +180,7 @@ public class WingedSkeletonModel<T extends Mob> extends HumanoidModel<T> {
 	}
 
 	// TODO abstract out to DenizensSkeleton
-	public void resetRotations(ModelPart part, Rotations rotations) {
+	public void resetRotations(ModelPart part, Rotation rotations) {
 		part.yRot = rotations.y();
 		part.zRot = rotations.z();
 	}

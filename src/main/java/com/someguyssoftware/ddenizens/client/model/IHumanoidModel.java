@@ -26,9 +26,16 @@ import net.minecraft.client.model.geom.ModelPart;
  * @author Mark Gottschling on Apr 30, 2022
  *
  */
-public interface IHumanlikeModel {
+public interface IHumanoidModel {
+	static final Position ZERO_POSITION = new Position(0, 0, 0);
+	static final Rotation ZERO_ROTATION = new Rotation(0, 0, 0);
+
 	public ModelPart getHead();
 	public ModelPart getBody();
 	public ModelPart getRightArm();
 	public ModelPart getLeftArm();
+	public ModelPart getRightLeg();
+	public ModelPart getLeftLeg();
+
+	// TODO for API add all the attribute getters - getRightArmOriginalPosition() etc
 }

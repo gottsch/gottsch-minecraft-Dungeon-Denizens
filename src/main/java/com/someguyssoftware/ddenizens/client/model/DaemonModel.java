@@ -22,7 +22,7 @@ package com.someguyssoftware.ddenizens.client.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import net.minecraft.client.model.EntityModel;
+import com.someguyssoftware.ddenizens.DD;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -35,9 +35,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 
-public class DaemonModel<T extends Entity> extends DDModel<T> {
+public class DaemonModel<T extends Entity> extends HumanlikeModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("modid", "daemon2"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(DD.MODID, "daemon"), "main");
 	private final ModelPart daemon;
 	private final ModelPart head;
 	private final ModelPart mouth;
@@ -293,5 +293,15 @@ public class DaemonModel<T extends Entity> extends DDModel<T> {
 	
 	public ModelPart getLeftArm() {
 		return leftArm;
+	}
+
+	@Override
+	public ModelPart getRightLeg() {
+		return this.rightLeg;
+	}
+
+	@Override
+	public ModelPart getLeftLeg() {
+		return this.leftLeg;
 	}
 }

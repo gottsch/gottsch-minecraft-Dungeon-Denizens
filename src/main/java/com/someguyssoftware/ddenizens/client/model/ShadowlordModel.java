@@ -27,10 +27,8 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.network.protocol.game.ClientboundMoveEntityPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.Mob;
 
@@ -64,12 +62,12 @@ public class ShadowlordModel<T extends Mob> extends HumanoidModel<T> {
 	private float[] robeSpeeds = new float[12];
 	private float[] robeDirections = new float[12];
 
-	private Rotations[] robeRotations = new Rotations[12];
+	private Rotation[] robeRotations = new Rotation[12];
 
-	protected Rotations rightArmRots;
-	protected Positions rightArmPos;
-	protected Rotations leftArmRots;
-	protected Positions leftArmPos;
+	protected Rotation rightArmRots;
+	protected Position rightArmPos;
+	protected Rotation leftArmRots;
+	protected Position leftArmPos;
 
 	public ShadowlordModel(ModelPart root) {
 		super(root, RenderType::entityTranslucentCull);
@@ -91,10 +89,10 @@ public class ShadowlordModel<T extends Mob> extends HumanoidModel<T> {
 		this.backLeftRobe = root.getChild("back_left_robe");
 		this.backRightRobe = root.getChild("back_right_robe");
 
-		rightArmRots = new Rotations(this.rightArm);
-		rightArmPos = new Positions(this.rightArm);
-		leftArmRots = new Rotations(this.leftArm);
-		leftArmPos = new Positions(this.leftArm);
+		rightArmRots = new Rotation(this.rightArm);
+		rightArmPos = new Position(this.rightArm);
+		leftArmRots = new Rotation(this.leftArm);
+		leftArmPos = new Position(this.leftArm);
 
 		robes[0] = frontRobe1;
 		robes[1] = frontRobe2;
@@ -111,7 +109,7 @@ public class ShadowlordModel<T extends Mob> extends HumanoidModel<T> {
 
 		Random random = new Random();
 		for (int i = 0; i < 12; i++) {
-			robeRotations[i] = new Rotations(robes[i].xRot, robes[i].yRot, robes[i].zRot);
+			robeRotations[i] = new Rotation(robes[i].xRot, robes[i].yRot, robes[i].zRot);
 			robeOffsets[i] = random.nextInt(0, 180);
 			robeSpeeds[i] = random.nextFloat(0.2F, 0.35F);
 			robeDirections[i] = random.nextInt() % 2 == 0 ? 1F: -1F;
@@ -253,17 +251,17 @@ public class ShadowlordModel<T extends Mob> extends HumanoidModel<T> {
 	}
 
 	// this is for arms
-	public void resetArm(ModelPart part, Rotations rotations, Positions positions) {
-		part.xRot = rotations.x();
-		part.yRot = rotations.y();
-		part.zRot = rotations.z();
+	public void resetArm(ModelPart part, Rotation rotation, Position position) {
+		part.xRot = rotation.x();
+		part.yRot = rotation.y();
+		part.zRot = rotation.z();
 
-		part.x = positions.x();
-		part.y = positions.y();
-		part.z = positions.z();
+		part.x = position.x();
+		part.y = position.y();
+		part.z = position.z();
 	}
 
-	private void resetRobe(ModelPart robe, Rotations rotation) {
+	private void resetRobe(ModelPart robe, Rotation rotation) {
 		robe.xRot = rotation.x();
 		robe.yRot = rotation.y();
 		robe.zRot = rotation.z();

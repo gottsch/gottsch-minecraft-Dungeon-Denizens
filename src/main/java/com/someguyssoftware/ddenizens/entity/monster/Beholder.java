@@ -48,7 +48,6 @@ public class Beholder extends Beholderkin {
 	public Beholder(EntityType<? extends FlyingMob> entityType, Level level) {
 		super(entityType, level, MonsterSize.LARGE);
 		this.moveControl = new BeholderkinMoveControl(this);
-//		setPersistenceRequired();
 		this.xpReward = 20;
 	}
 
@@ -92,6 +91,11 @@ public class Beholder extends Beholderkin {
 				.add(Attributes.MAX_HEALTH, 36.0)
 				.add(Attributes.FOLLOW_RANGE, 100.0)
 				.add(Attributes.MOVEMENT_SPEED, 0.20F);
+	}
+
+	@Override
+	public boolean requiresCustomPersistence() {
+		return !Config.Mobs.BEHOLDER.despawn.get();
 	}
 
 	@Override
