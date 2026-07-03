@@ -21,7 +21,6 @@ package com.someguyssoftware.ddenizens;
 
 import com.someguyssoftware.ddenizens.entity.ModEntities;
 import com.someguyssoftware.ddenizens.item.ModItems;
-import com.someguyssoftware.ddenizens.sound.DDSounds;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,7 +48,7 @@ public class DD {
         // register the deferred registries
         ModItems.init();
         ModEntities.init();
-        DDSounds.init();
+        // sound events now live in gmm (GMMSounds); DD registers none.
         Config.register();
 
         // register the setup method for mod loading

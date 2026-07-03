@@ -8,6 +8,8 @@ import mod.gottsch.forge.gmm.core.entity.projectile.DisintegrateSpell;
 import mod.gottsch.forge.gmm.core.entity.projectile.DisarmSpell;
 import mod.gottsch.forge.gmm.core.entity.projectile.FireSpoutSpell;
 import mod.gottsch.forge.gmm.core.entity.projectile.Rock;
+import mod.gottsch.forge.gmm.core.entity.projectile.BoneShard;
+import mod.gottsch.forge.gmm.core.entity.monster.AlligatorGar;
 import mod.gottsch.forge.gmm.core.entity.monster.Boulder;
 import mod.gottsch.forge.gmm.core.entity.monster.Daemon;
 import mod.gottsch.forge.gmm.core.entity.monster.beholderkin.DeathTyrant;
@@ -27,6 +29,8 @@ import mod.gottsch.forge.gmm.core.entity.monster.skeleton.SkeletonWarrior;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.WingedSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.IronSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.MagmaSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.skeleton.FrostSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.skeleton.TaintedSkeleton;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -49,6 +53,7 @@ public class ModEntities {
 	public static final String GHOUL = "ghoul";
 	public static final String SEWER_GHOUL = "sewer_ghoul";
 	public static final String RAT = "rat";
+	public static final String ALLIGATOR_GAR = "alligator_gar";
 	public static final String SHADOW = "shadow";
 	public static final String SHADOWLORD = "shadowlord";
 	public static final String BEHOLDER = "beholder";
@@ -62,6 +67,8 @@ public class ModEntities {
 	public static final String WINGED_SKELETON = "winged_skeleton";
 	public static final String IRON_SKELETON = "iron_skeleton";
 	public static final String MAGMA_SKELETON = "magma_skeleton";
+	public static final String FROST_SKELETON = "frost_skeleton";
+	public static final String TAINTED_SKELETON = "tainted_skeleton";
 	public static final String SKELETON_CHAMPION = "skeleton_champion";
 	public static final String DEATH_KNIGHT = "death_knight";
 	public static String GARGOYLE = "gargoyle";
@@ -74,6 +81,7 @@ public class ModEntities {
 	public static final String DISARM_SPELL = "disarm";
 	public static final String FIRESPOUT_SPELL = "firespout";
 	public static final String ROCK = "rock";
+	public static final String BONE_SHARD = "bone_shard";
 
 	// mob collections
 	public static final List<RegistryObject<?>> ALL_MOBS = Lists.newArrayList();
@@ -120,6 +128,13 @@ public class ModEntities {
 			.setShouldReceiveVelocityUpdates(false)
 			.setTrackingRange(20)
 			.build(RAT));
+
+	public static final RegistryObject<EntityType<AlligatorGar>> ALLIGATOR_GAR_ENTITY_TYPE = ENTITIES.register(ALLIGATOR_GAR, () -> EntityType.Builder.of(AlligatorGar::new, MobCategory.MONSTER)
+			.sized(0.6F, 0.4F)
+			.clientTrackingRange(8)
+			.setShouldReceiveVelocityUpdates(false)
+			.setTrackingRange(20)
+			.build(ALLIGATOR_GAR));
 
 	public static final RegistryObject<EntityType<Beholder>> BEHOLDER_ENTITY_TYPE = ENTITIES.register(BEHOLDER, () -> EntityType.Builder.of(Beholder::new, MobCategory.MONSTER)
 			.sized(2.25F, 3.5F)
@@ -196,6 +211,18 @@ public class ModEntities {
 			.fireImmune()
 			.build(MAGMA_SKELETON));
 
+	public static final RegistryObject<EntityType<FrostSkeleton>> FROST_SKELETON_TYPE = ENTITIES.register(FROST_SKELETON, () -> EntityType.Builder.of(FrostSkeleton::new, MobCategory.MONSTER)
+			.sized(0.6F, 1.99F)
+			.clientTrackingRange(15)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(FROST_SKELETON));
+
+	public static final RegistryObject<EntityType<TaintedSkeleton>> TAINTED_SKELETON_TYPE = ENTITIES.register(TAINTED_SKELETON, () -> EntityType.Builder.of(TaintedSkeleton::new, MobCategory.MONSTER)
+			.sized(0.7F, 1.99F)
+			.clientTrackingRange(15)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(TAINTED_SKELETON));
+
 	public static final RegistryObject<EntityType<Gargoyle>> GARGOYLE_TYPE = ENTITIES.register(GARGOYLE, () -> EntityType.Builder.of(Gargoyle::new, MobCategory.MONSTER)
 			.sized(0.75F, 1.75F)
 			.clientTrackingRange(12)
@@ -252,6 +279,14 @@ public class ModEntities {
 			.setShouldReceiveVelocityUpdates(false)
 			.build(ROCK));
 
+	// arrow-like bone-fragment projectile (Tainted Skeleton shrapnel); mirrors vanilla arrow tracking
+	public static final RegistryObject<EntityType<BoneShard>> BONE_SHARD_ENTITY_TYPE =
+			ENTITIES.register(BONE_SHARD, () -> EntityType.Builder.<BoneShard>of(BoneShard::new, MobCategory.MISC)
+			.sized(0.5F, 0.5F)
+			.clientTrackingRange(4)
+			.updateInterval(20)
+			.build(BONE_SHARD));
+
 	// NOTE must add mob to ALL_MOBS collection in order to register them to the biomes - see CommonSetup.onBiomeLoading
 	// NOTE 7/3/2025 - this doesn't apply to 1.20.1+ as Biomes are handled in data files.
 	static {
@@ -259,6 +294,7 @@ public class ModEntities {
 		ALL_MOBS.add(GHOUL_ENTITY_TYPE);
 		ALL_MOBS.add(SEWER_GHOUL_ENTITY_TYPE);
 		ALL_MOBS.add(RAT_ENTITY_TYPE);
+		ALL_MOBS.add(ALLIGATOR_GAR_ENTITY_TYPE);
 		ALL_MOBS.add(BOULDER_ENTITY_TYPE);
 		ALL_MOBS.add(SHADOW_ENTITY_TYPE);
 		ALL_MOBS.add(BEHOLDER_ENTITY_TYPE);
@@ -271,6 +307,8 @@ public class ModEntities {
 		ALL_MOBS.add(SKELETON_WARRIOR_TYPE);
 		ALL_MOBS.add(WINGED_SKELETON_TYPE);
 		ALL_MOBS.add(MAGMA_SKELETON_TYPE);
+		ALL_MOBS.add(FROST_SKELETON_TYPE);
+		ALL_MOBS.add(TAINTED_SKELETON_TYPE);
 		ALL_MOBS.add(IRON_SKELETON_TYPE);
 		ALL_MOBS.add(GARGOYLE_TYPE);
 	}

@@ -26,6 +26,7 @@ import mod.gottsch.forge.gmm.core.entity.monster.Boulder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
@@ -122,6 +123,35 @@ public final class SpawnRulesUtil {
 					.filter(bs -> bs.is(Blocks.LAVA)).toList().isEmpty();
 			return checkSpawnRules(mob, level, spawnType, pos, random) && isLavaNear;
 		}
+	}
+
+	/**
+	 * Drowned-style gate for aquatic mobs (AlligatorGar, and any future water mob — piranha, croc,
+	 * etc.). Like vanilla {@code Drowned.checkDrownedSpawnRules}, it requires the mob to be submerged
+	 * in a genuine body of water — water in the block below (so it isn't sitting on the surface film)
+	 * and water at the spawn position itself — and, by default, spawning in the dark. This replaces
+	 * the standard ground-mob path ({@link #checkSpawnRules}), whose closing
+	 * {@code Monster.checkMobSpawnRules} needs a solid valid-spawn surface below and therefore never
+	 * fires inside a water column.
+	 * <p>
+	 * Rarity is governed by the {@code add_spawns} biome-modifier weight (kept low), not an internal
+	 * random gate. Enabled / height band / darkness are codec-driven ({@code gmm:mob_config}); flip
+	 * {@code requiresDarkness} to {@code false} there for daytime river spawns.
+	 */
+	public static boolean checkWaterMobSpawnRules(EntityType<? extends Mob> mob, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+		// submerged in a real body of water (water below + at the position), like the Drowned
+		if (!level.getFluidState(pos.below()).is(FluidTags.WATER) || !level.getFluidState(pos).is(FluidTags.WATER)) {
+			return false;
+		}
+		MobConfig.SpawnSettings spawn = spawnSettings(level, mob, false);
+		if (!spawn.enabled() || level.getDifficulty() == Difficulty.PEACEFUL || !isValidHeight(pos, spawn)) {
+			return false;
+		}
+		// like the Drowned, gate on darkness (tunable via the codec's requiresDarkness)
+		if (spawn.requiresDarkness() && !Monster.isDarkEnoughToSpawn(level, pos, random)) {
+			return false;
+		}
+		return true;
 	}
 
 	/**

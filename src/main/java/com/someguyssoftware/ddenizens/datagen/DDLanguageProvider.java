@@ -52,6 +52,8 @@ DDLanguageProvider extends LanguageProvider {
         add(ModItems.SEWER_GHOUL_EGG.get(), "Sewer Ghoul Spawn Egg");
         add(ModEntities.RAT_ENTITY_TYPE.get(), "Rat");
         add(ModItems.RAT_EGG.get(), "Rat Spawn Egg");
+        add(ModEntities.ALLIGATOR_GAR_ENTITY_TYPE.get(), "Alligator Gar");
+        add(ModItems.ALLIGATOR_GAR_EGG.get(), "Alligator Gar Spawn Egg");
 
         add(ModEntities.BEHOLDER_ENTITY_TYPE.get(), "Beholder");
         add(ModItems.BEHOLDER_EGG.get(), "Beholder Spawn Egg");
@@ -88,6 +90,12 @@ DDLanguageProvider extends LanguageProvider {
 
         add(ModEntities.MAGMA_SKELETON_TYPE.get(), "Magma Skeleton");
         add(ModItems.MAGMA_SKELETON_EGG.get(), "Magma Skeleton Spawn Egg");
+
+        add(ModEntities.FROST_SKELETON_TYPE.get(), "Frost Skeleton");
+        add(ModItems.FROST_SKELETON_EGG.get(), "Frost Skeleton Spawn Egg");
+
+        add(ModEntities.TAINTED_SKELETON_TYPE.get(), "Tainted Skeleton");
+        add(ModItems.TAINTED_SKELETON_EGG.get(), "Tainted Skeleton Spawn Egg");
 
         add(ModEntities.GARGOYLE_TYPE.get(), "Gargoyle");
         add(ModItems.GARGOYLE_EGG.get(), "Gargoyle Spawn Egg");

@@ -27,9 +27,11 @@ import com.someguyssoftware.ddenizens.client.model.*;
 import mod.gottsch.forge.gmm.core.client.model.GhoulModel;
 import mod.gottsch.forge.gmm.core.client.model.SewerGhoulModel;
 import mod.gottsch.forge.gmm.core.client.model.RatModel;
+import mod.gottsch.forge.gmm.core.client.model.AlligatorGarModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.GhoulRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.SewerGhoulRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.RatRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.AlligatorGarRenderer;
 import mod.gottsch.forge.gmm.core.client.model.HeadlessModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.HeadlessRenderer;
 import mod.gottsch.forge.gmm.core.client.model.SkeletonWarriorModel;
@@ -42,6 +44,12 @@ import mod.gottsch.forge.gmm.core.client.model.IronSkeletonModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.IronSkeletonRenderer;
 import mod.gottsch.forge.gmm.core.client.model.MagmaSkeletonModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.MagmaSkeletonRenderer;
+import mod.gottsch.forge.gmm.core.client.model.FrostSkeletonModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.FrostSkeletonRenderer;
+import mod.gottsch.forge.gmm.core.client.model.TaintedSkeletonModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.TaintedSkeletonRenderer;
+import mod.gottsch.forge.gmm.core.client.model.BoneShardModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.BoneShardRenderer;
 import mod.gottsch.forge.gmm.core.client.model.WingedSkeletonModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.WingedSkeletonRenderer;
 import mod.gottsch.forge.gmm.core.client.model.GargoyleModel;
@@ -93,6 +101,7 @@ public class ClientSetup {
 		event.registerLayerDefinition(GhoulModel.LAYER_LOCATION, GhoulModel::createBodyLayer);
 		event.registerLayerDefinition(SewerGhoulModel.LAYER_LOCATION, SewerGhoulModel::createBodyLayer);
 		event.registerLayerDefinition(RatModel.LAYER_LOCATION, RatModel::createBodyLayer);
+		event.registerLayerDefinition(AlligatorGarModel.LAYER_LOCATION, AlligatorGarModel::createBodyLayer);
 		event.registerLayerDefinition(EttinModel.LAYER_LOCATION, EttinModel::createBodyLayer);
 		event.registerLayerDefinition(BeholderModel.LAYER_LOCATION, BeholderModel::createBodyLayer);
 		event.registerLayerDefinition(DeathTyrantModel.LAYER_LOCATION, DeathTyrantModel::createBodyLayer);
@@ -106,6 +115,12 @@ public class ClientSetup {
 		event.registerLayerDefinition(WingedSkeletonModel.LAYER_LOCATION, WingedSkeletonModel::createBodyLayer);
 		event.registerLayerDefinition(IronSkeletonModel.LAYER_LOCATION, IronSkeletonModel::createBodyLayer);
 		event.registerLayerDefinition(MagmaSkeletonModel.LAYER_LOCATION, MagmaSkeletonModel::createBodyLayer);
+		event.registerLayerDefinition(FrostSkeletonModel.LAYER_LOCATION, FrostSkeletonModel::createBodyLayer);
+		event.registerLayerDefinition(TaintedSkeletonModel.LAYER_LOCATION, TaintedSkeletonModel::createBodyLayer);
+		for (int v = 0; v < BoneShardModel.LAYERS.length; v++) {
+			final int variant = v;
+			event.registerLayerDefinition(BoneShardModel.LAYERS[variant], () -> BoneShardModel.createBodyLayer(variant));
+		}
 
 		event.registerLayerDefinition(GargoyleModel.LAYER_LOCATION, GargoyleModel::createBodyLayer);
 		event.registerLayerDefinition(MargoyleModel.LAYER_LOCATION, MargoyleModel::createBodyLayer);
@@ -123,6 +138,7 @@ public class ClientSetup {
         event.registerEntityRenderer(ModEntities.GHOUL_ENTITY_TYPE.get(), GhoulRenderer::new);
 		event.registerEntityRenderer(ModEntities.SEWER_GHOUL_ENTITY_TYPE.get(), SewerGhoulRenderer::new);
 		event.registerEntityRenderer(ModEntities.RAT_ENTITY_TYPE.get(), RatRenderer::new);
+		event.registerEntityRenderer(ModEntities.ALLIGATOR_GAR_ENTITY_TYPE.get(), AlligatorGarRenderer::new);
 		event.registerEntityRenderer(ModEntities.BEHOLDER_ENTITY_TYPE.get(), BeholderRenderer::new);
 		event.registerEntityRenderer(ModEntities.DEATH_TYRANT_TYPE.get(), DeathTyrantRenderer::new);
         event.registerEntityRenderer(ModEntities.GAZER_ENTITY_TYPE.get(), GazerRenderer::new);
@@ -135,6 +151,8 @@ public class ClientSetup {
 		event.registerEntityRenderer(ModEntities.WINGED_SKELETON_TYPE.get(), WingedSkeletonRenderer::new);
 		event.registerEntityRenderer(ModEntities.IRON_SKELETON_TYPE.get(), IronSkeletonRenderer::new);
 		event.registerEntityRenderer(ModEntities.MAGMA_SKELETON_TYPE.get(), MagmaSkeletonRenderer::new);
+		event.registerEntityRenderer(ModEntities.FROST_SKELETON_TYPE.get(), FrostSkeletonRenderer::new);
+		event.registerEntityRenderer(ModEntities.TAINTED_SKELETON_TYPE.get(), TaintedSkeletonRenderer::new);
 
 		event.registerEntityRenderer(ModEntities.GARGOYLE_TYPE.get(), GargoyleRenderer::new);
 		event.registerEntityRenderer(ModEntities.MARGOYLE_TYPE.get(), MargoyleRenderer::new);
@@ -160,5 +178,6 @@ public class ClientSetup {
         	// second arg is the render scale of the thrown item (lower = smaller rock)
         	return new ThrownItemRenderer<>(provider, 0.5F, true);
          });
+        event.registerEntityRenderer(ModEntities.BONE_SHARD_ENTITY_TYPE.get(), BoneShardRenderer::new);
 	}
 }

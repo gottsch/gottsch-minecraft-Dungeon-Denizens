@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- 🐀 **Rat** — a small, common nuisance that lurks in the dark and swarms at night.
+- 🧟 **Sewer Ghoul** — a mossy, underground-dwelling cousin of the Ghoul. Like its kin it hunts farm animals and heals when it eats meat, but it never surfaces — you'll only meet it below ground.
+- 🐊 **Alligator Gar** — a hostile predator fish that lurks in rivers. A relatively rare find, but dangerous if it catches you in the water.
+
 ### Changed
 
 - **Major internal rewrite:** Dungeon Denizens' monsters now run on a shared framework called *gottsch's Monster Manual*, split out so the same monster code can be reused across mods. Monster behavior, spawning, and stats are meant to feel exactly the same as before — this is a foundation change, not a rebalance.

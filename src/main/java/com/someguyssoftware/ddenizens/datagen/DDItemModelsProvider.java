@@ -91,6 +91,7 @@ public class DDItemModelsProvider extends ItemModelProvider {
     	withExistingParent(ModItems.GHOUL_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     	withExistingParent(ModItems.SEWER_GHOUL_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     	withExistingParent(ModItems.RAT_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+    	withExistingParent(ModItems.ALLIGATOR_GAR_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     	withExistingParent(ModItems.BEHOLDER_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.DEATH_TYRANT_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.GAZER_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
@@ -103,6 +104,8 @@ public class DDItemModelsProvider extends ItemModelProvider {
         withExistingParent(ModItems.WINGED_SKELETON_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.IRON_SKELETON_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.MAGMA_SKELETON_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.FROST_SKELETON_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.TAINTED_SKELETON_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.GARGOYLE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.MARGOYLE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 

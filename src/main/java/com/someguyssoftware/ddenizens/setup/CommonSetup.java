@@ -18,7 +18,6 @@
  * along with Dungeon Denizens.  If not, see <http://www.gnu.org/licenses/lgpl>.
  */
 package com.someguyssoftware.ddenizens.setup;
-import com.someguyssoftware.ddenizens.sound.DDSounds;
 
 import com.someguyssoftware.ddenizens.DD;
 import com.someguyssoftware.ddenizens.config.Config;
@@ -27,6 +26,7 @@ import com.someguyssoftware.ddenizens.entity.ModEntities;
 import mod.gottsch.forge.gmm.core.entity.monster.ghoul.Ghoul;
 import mod.gottsch.forge.gmm.core.entity.monster.ghoul.SewerGhoul;
 import mod.gottsch.forge.gmm.core.entity.monster.Rat;
+import mod.gottsch.forge.gmm.core.entity.monster.AlligatorGar;
 import mod.gottsch.forge.gmm.core.entity.monster.Headless;
 import mod.gottsch.forge.gmm.core.entity.monster.Orc;
 import mod.gottsch.forge.gmm.core.entity.monster.Shadow;
@@ -42,6 +42,9 @@ import mod.gottsch.forge.gmm.core.entity.projectile.DisarmSpell;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.BowSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.IronSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.MagmaSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.skeleton.FrostSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.skeleton.TaintedSkeleton;
+import mod.gottsch.forge.gmm.core.entity.projectile.BoneShard;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.WingedSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.beholderkin.Beholder;
 import mod.gottsch.forge.gmm.core.entity.monster.beholderkin.DeathTyrant;
@@ -117,13 +120,8 @@ public class CommonSetup {
 		DisarmSpell.itemSupplier = () -> ModItems.DISARM_SPELL_ITEM.get();
 		Rock.itemSupplier = () -> ModItems.ROCK_ITEM.get();
 
-		// Shadow now defaults to gmm's own GMMSounds.SHADOW_AMBIENT (shipped in gmm); no DD wiring needed.
-		// (override example: Shadow.ambientSound = DDSounds.SOME_SOUND; to use a DD sound instead.)
-
-		// gmm's Gargoyle/Margoyle ship no sound events; supply DD's wing-flap ambient sound.
-		Gargoyle.ambientSound = DDSounds.WINGED_SKELETON_FLAP;
-		Margoyle.ambientSound = DDSounds.WINGED_SKELETON_FLAP;
-		WingedSkeleton.ambientSound = DDSounds.WINGED_SKELETON_FLAP;
+		// All GMM mob ambient/step sounds now default to gmm's own GMMSounds (shipped in gmm); no DD
+		// wiring needed. A consumer may still override per-mob, e.g. Gargoyle.ambientSound = () -> ...;
 
 		// gmm's Beholderkin family owns no concrete spell/summon-target/sound; supply DD's via the
 		// same static-hook pattern as Orc.projectileLauncher / Shadow.ambientSound.
@@ -190,20 +188,14 @@ public class CommonSetup {
 		DeathTyrant.summonMobs = deathTyrantMobs;
 		DeathTyrant.summonDaemon = ModEntities.DAEMON_ENTITY_TYPE.get();
 
-		Beholder.ambientSound = DDSounds.AMBIENT_BEHOLDER;
-		DeathTyrant.ambientSound = DDSounds.AMBIENT_DEATH_TYRANT;
-		Gazer.ambientSound = DDSounds.AMBIENT_GAZER;
-		Spectator.ambientSound = DDSounds.AMBIENT_SPECTATOR;
-
 		// gmm's Daemon owns no firespout projectile; supply DD's FireSpoutSpell consumer-side.
 		Daemon.fireSpoutLauncher = (daemon, x, y, z, x2, y2, z2) -> {
 			FireSpoutSpell spell = new FireSpoutSpell(ModEntities.FIRESPOUT_SPELL_ENTITY_TYPE.get(), daemon.level());
 			spell.init(daemon, x, y, z, x2, y2, z2);
 			daemon.level().addFreshEntity(spell);
 		};
-		Daemon.ambientSound = DDSounds.AMBIENT_DAEMON;
 
-		// gmm's Shadowlord shares Shadow's Harm spell + summon lists + sounds/weapon.
+		// gmm's Shadowlord shares Shadow's Harm spell + summon lists + weapon.
 		Shadowlord.spellCaster = harmSpell;
 
 		WeightedCollection<Double, EntityType<? extends Mob>> shadowlordMobs = new WeightedCollection<>();
@@ -212,9 +204,10 @@ public class CommonSetup {
 		Shadowlord.summonMobs = shadowlordMobs;
 		Shadowlord.summonDaemon = ModEntities.DAEMON_ENTITY_TYPE.get();
 
-		Shadowlord.ambientSound = DDSounds.AMBIENT_SHADOWLORD;
-		Shadowlord.stepSound = DDSounds.SHADOWLORD_STEP;
 		Shadowlord.weapon = ModItems.SHADOW_BLADE;
+
+		// gmm's TaintedSkeleton owns no projectile; supply DD-registered BoneShard as its shrapnel.
+		TaintedSkeleton.shardFactory = (shooter, level) -> new BoneShard(ModEntities.BONE_SHARD_ENTITY_TYPE.get(), shooter, level);
 	}
 
 	/**
@@ -228,6 +221,7 @@ public class CommonSetup {
 		event.put(ModEntities.GHOUL_ENTITY_TYPE.get(), Ghoul.createAttributes().build());
 		event.put(ModEntities.SEWER_GHOUL_ENTITY_TYPE.get(), SewerGhoul.createAttributes().build());
 		event.put(ModEntities.RAT_ENTITY_TYPE.get(), Rat.createAttributes().build());
+		event.put(ModEntities.ALLIGATOR_GAR_ENTITY_TYPE.get(), AlligatorGar.createAttributes().build());
 		event.put(ModEntities.BEHOLDER_ENTITY_TYPE.get(), Beholder.prepareAttributes().build());
 		event.put(ModEntities.DEATH_TYRANT_TYPE.get(), DeathTyrant.prepareAttributes().build());
 		event.put(ModEntities.GAZER_ENTITY_TYPE.get(), Gazer.prepareAttributes().build());
@@ -240,6 +234,8 @@ public class CommonSetup {
 		event.put(ModEntities.WINGED_SKELETON_TYPE.get(), WingedSkeleton.createAttributes().build());
 		event.put(ModEntities.IRON_SKELETON_TYPE.get(), IronSkeleton.createAttributes().build());
 		event.put(ModEntities.MAGMA_SKELETON_TYPE.get(), MagmaSkeleton.createAttributes().build());
+		event.put(ModEntities.FROST_SKELETON_TYPE.get(), FrostSkeleton.createAttributes().build());
+		event.put(ModEntities.TAINTED_SKELETON_TYPE.get(), TaintedSkeleton.createAttributes().build());
 
 		event.put(ModEntities.GARGOYLE_TYPE.get(), Gargoyle.createAttributes().build());
 		event.put(ModEntities.MARGOYLE_TYPE.get(), Margoyle.createAttributes().build());
@@ -254,6 +250,7 @@ public class CommonSetup {
 		event.register(ModEntities.SEWER_GHOUL_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.RAT_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.BOULDER_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE, SpawnRulesUtil::checkBoulderSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.ALLIGATOR_GAR_ENTITY_TYPE.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.OCEAN_FLOOR, SpawnRulesUtil::checkWaterMobSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
 		event.register(ModEntities.SHADOW_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.SHADOWLORD_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
@@ -266,6 +263,8 @@ public class CommonSetup {
 		event.register(ModEntities.WINGED_SKELETON_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.IRON_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.MAGMA_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkMagmaSkeletonSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.FROST_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.TAINTED_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
 		event.register(ModEntities.GARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.MARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
@@ -280,6 +279,7 @@ public class CommonSetup {
 			event.accept(ModItems.GHOUL_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.SEWER_GHOUL_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.RAT_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.ALLIGATOR_GAR_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.BOULDER_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 
 			event.accept(ModItems.SHADOW_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
@@ -293,6 +293,8 @@ public class CommonSetup {
 			event.accept(ModItems.WINGED_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.IRON_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.MAGMA_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.FROST_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.TAINTED_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 
 			event.accept(ModItems.GARGOYLE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.MARGOYLE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
