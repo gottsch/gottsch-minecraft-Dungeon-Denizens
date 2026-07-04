@@ -55,6 +55,7 @@ public class ModItems {
 	public static final RegistryObject<Item> MAGMA_SKELETON_EGG = ITEMS.register(MAGMA_SKELETON + "_egg", () -> new MagmaSkeletonEggItem(ModEntities.MAGMA_SKELETON_TYPE, 0x4b0000, 0xff7900, new Item.Properties()));
 	public static final RegistryObject<Item> FROST_SKELETON_EGG = ITEMS.register(FROST_SKELETON + "_egg", () -> new ForgeSpawnEggItem(ModEntities.FROST_SKELETON_TYPE, 0x3d5878, 0xd6f4ff, new Item.Properties()));
 	public static final RegistryObject<Item> TAINTED_SKELETON_EGG = ITEMS.register(TAINTED_SKELETON + "_egg", () -> new ForgeSpawnEggItem(ModEntities.TAINTED_SKELETON_TYPE, 0xa8a596, 0x8a1420, new Item.Properties()));
+	public static final RegistryObject<Item> ACID_SKELETON_EGG = ITEMS.register(ACID_SKELETON + "_egg", () -> new ForgeSpawnEggItem(ModEntities.ACID_SKELETON_TYPE, 0xb2e278, 0x2c4e1c, new Item.Properties()));
 
 	public static final RegistryObject<Item> GARGOYLE_EGG = ITEMS.register(GARGOYLE + "_egg", () -> new GargoyleEggItem(ModEntities.GARGOYLE_TYPE, 0x6d6d81, 0x373b41, new Item.Properties()));
 	public static final RegistryObject<Item> MARGOYLE_EGG = ITEMS.register(MARGOYLE + "_egg", () -> new MargoyleEggItem(ModEntities.MARGOYLE_TYPE, 0x7f7f7f, 0x5a6d41, new Item.Properties()));
@@ -129,6 +130,7 @@ public class ModItems {
 				output.accept(MAGMA_SKELETON_EGG.get());
 				output.accept(FROST_SKELETON_EGG.get());
 				output.accept(TAINTED_SKELETON_EGG.get());
+				output.accept(ACID_SKELETON_EGG.get());
 				output.accept(GARGOYLE_EGG.get());
 				output.accept(MARGOYLE_EGG.get());
 				// weapons

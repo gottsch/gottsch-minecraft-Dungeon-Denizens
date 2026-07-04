@@ -97,6 +97,9 @@ DDLanguageProvider extends LanguageProvider {
         add(ModEntities.TAINTED_SKELETON_TYPE.get(), "Tainted Skeleton");
         add(ModItems.TAINTED_SKELETON_EGG.get(), "Tainted Skeleton Spawn Egg");
 
+        add(ModEntities.ACID_SKELETON_TYPE.get(), "Acid Skeleton");
+        add(ModItems.ACID_SKELETON_EGG.get(), "Acid Skeleton Spawn Egg");
+
         add(ModEntities.GARGOYLE_TYPE.get(), "Gargoyle");
         add(ModItems.GARGOYLE_EGG.get(), "Gargoyle Spawn Egg");
 

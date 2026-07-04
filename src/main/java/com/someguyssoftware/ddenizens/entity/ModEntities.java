@@ -31,6 +31,7 @@ import mod.gottsch.forge.gmm.core.entity.monster.skeleton.IronSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.MagmaSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.FrostSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.TaintedSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.skeleton.AcidSkeleton;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -69,6 +70,7 @@ public class ModEntities {
 	public static final String MAGMA_SKELETON = "magma_skeleton";
 	public static final String FROST_SKELETON = "frost_skeleton";
 	public static final String TAINTED_SKELETON = "tainted_skeleton";
+	public static final String ACID_SKELETON = "acid_skeleton";
 	public static final String SKELETON_CHAMPION = "skeleton_champion";
 	public static final String DEATH_KNIGHT = "death_knight";
 	public static String GARGOYLE = "gargoyle";
@@ -223,6 +225,12 @@ public class ModEntities {
 			.setShouldReceiveVelocityUpdates(false)
 			.build(TAINTED_SKELETON));
 
+	public static final RegistryObject<EntityType<AcidSkeleton>> ACID_SKELETON_TYPE = ENTITIES.register(ACID_SKELETON, () -> EntityType.Builder.of(AcidSkeleton::new, MobCategory.MONSTER)
+			.sized(0.6F, 1.99F)
+			.clientTrackingRange(15)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(ACID_SKELETON));
+
 	public static final RegistryObject<EntityType<Gargoyle>> GARGOYLE_TYPE = ENTITIES.register(GARGOYLE, () -> EntityType.Builder.of(Gargoyle::new, MobCategory.MONSTER)
 			.sized(0.75F, 1.75F)
 			.clientTrackingRange(12)
@@ -309,6 +317,7 @@ public class ModEntities {
 		ALL_MOBS.add(MAGMA_SKELETON_TYPE);
 		ALL_MOBS.add(FROST_SKELETON_TYPE);
 		ALL_MOBS.add(TAINTED_SKELETON_TYPE);
+		ALL_MOBS.add(ACID_SKELETON_TYPE);
 		ALL_MOBS.add(IRON_SKELETON_TYPE);
 		ALL_MOBS.add(GARGOYLE_TYPE);
 	}

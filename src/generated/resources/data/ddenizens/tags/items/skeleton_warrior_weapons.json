@@ -5,6 +5,12 @@
     "ddenizens:rusty_iron_sword",
     "ddenizens:rusty_iron_sword_2",
     "ddenizens:rusty_iron_sword_3",
-    "ddenizens:rusty_iron_sword_4"
+    "ddenizens:rusty_iron_sword_4",
+    "minecraft:golden_sword",
+    "minecraft:golden_axe",
+    "minecraft:iron_sword",
+    "minecraft:iron_axe",
+    "minecraft:stone_sword",
+    "minecraft:stone_axe"
   ]
 }

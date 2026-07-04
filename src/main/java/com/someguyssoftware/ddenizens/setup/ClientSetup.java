@@ -48,6 +48,7 @@ import mod.gottsch.forge.gmm.core.client.model.FrostSkeletonModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.FrostSkeletonRenderer;
 import mod.gottsch.forge.gmm.core.client.model.TaintedSkeletonModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.TaintedSkeletonRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.AcidSkeletonRenderer;
 import mod.gottsch.forge.gmm.core.client.model.BoneShardModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BoneShardRenderer;
 import mod.gottsch.forge.gmm.core.client.model.WingedSkeletonModel;
@@ -153,6 +154,8 @@ public class ClientSetup {
 		event.registerEntityRenderer(ModEntities.MAGMA_SKELETON_TYPE.get(), MagmaSkeletonRenderer::new);
 		event.registerEntityRenderer(ModEntities.FROST_SKELETON_TYPE.get(), FrostSkeletonRenderer::new);
 		event.registerEntityRenderer(ModEntities.TAINTED_SKELETON_TYPE.get(), TaintedSkeletonRenderer::new);
+		// Acid reuses SkeletonWarriorModel.LAYER_LOCATION (registered above) — no new layer definition needed.
+		event.registerEntityRenderer(ModEntities.ACID_SKELETON_TYPE.get(), AcidSkeletonRenderer::new);
 
 		event.registerEntityRenderer(ModEntities.GARGOYLE_TYPE.get(), GargoyleRenderer::new);
 		event.registerEntityRenderer(ModEntities.MARGOYLE_TYPE.get(), MargoyleRenderer::new);

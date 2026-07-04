@@ -1,4 +1,5 @@
 {
+  "entity.ddenizens.acid_skeleton": "Acid Skeleton",
   "entity.ddenizens.alligator_gar": "Alligator Gar",
   "entity.ddenizens.beholder": "Beholder",
   "entity.ddenizens.boulder": "Boulder",
@@ -21,6 +22,7 @@
   "entity.ddenizens.spectator": "Spectator",
   "entity.ddenizens.tainted_skeleton": "Tainted Skeleton",
   "entity.ddenizens.winged_skeleton": "Winged Skeleton",
+  "item.ddenizens.acid_skeleton_egg": "Acid Skeleton Spawn Egg",
   "item.ddenizens.alligator_gar_egg": "Alligator Gar Spawn Egg",
   "item.ddenizens.beholder_egg": "Beholder Spawn Egg",
   "item.ddenizens.boulder_egg": "Boulder Spawn Egg",
