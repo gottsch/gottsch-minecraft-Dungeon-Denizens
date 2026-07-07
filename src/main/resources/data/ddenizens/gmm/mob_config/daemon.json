@@ -12,7 +12,7 @@
 	"properties": {
 		"firespoutCooldownTime": 200,
 		"firespoutMaxDistance": 10,
-		"summonedLifespan": 1200
+		"summonLifespan": 1200
 	},
 	"flags": {
 		"despawn": true

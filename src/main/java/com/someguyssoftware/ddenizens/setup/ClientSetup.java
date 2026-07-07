@@ -49,6 +49,9 @@ import mod.gottsch.forge.gmm.core.client.renderer.entity.FrostSkeletonRenderer;
 import mod.gottsch.forge.gmm.core.client.model.TaintedSkeletonModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.TaintedSkeletonRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.AcidSkeletonRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.ElectricSkeletonRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.BurningSkeletonRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.BloaterRenderer;
 import mod.gottsch.forge.gmm.core.client.model.BoneShardModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BoneShardRenderer;
 import mod.gottsch.forge.gmm.core.client.model.WingedSkeletonModel;
@@ -156,6 +159,12 @@ public class ClientSetup {
 		event.registerEntityRenderer(ModEntities.TAINTED_SKELETON_TYPE.get(), TaintedSkeletonRenderer::new);
 		// Acid reuses SkeletonWarriorModel.LAYER_LOCATION (registered above) — no new layer definition needed.
 		event.registerEntityRenderer(ModEntities.ACID_SKELETON_TYPE.get(), AcidSkeletonRenderer::new);
+		// Electric likewise reuses SkeletonWarriorModel.LAYER_LOCATION — no new layer definition needed.
+		event.registerEntityRenderer(ModEntities.ELECTRIC_SKELETON_TYPE.get(), ElectricSkeletonRenderer::new);
+		// Burning likewise reuses SkeletonWarriorModel.LAYER_LOCATION — no new layer definition needed.
+		event.registerEntityRenderer(ModEntities.BURNING_SKELETON_TYPE.get(), BurningSkeletonRenderer::new);
+		// Bloater reuses the vanilla ModelLayers.ZOMBIE rig — no new layer definition needed.
+		event.registerEntityRenderer(ModEntities.BLOATER_TYPE.get(), BloaterRenderer::new);
 
 		event.registerEntityRenderer(ModEntities.GARGOYLE_TYPE.get(), GargoyleRenderer::new);
 		event.registerEntityRenderer(ModEntities.MARGOYLE_TYPE.get(), MargoyleRenderer::new);

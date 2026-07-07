@@ -32,6 +32,9 @@ import mod.gottsch.forge.gmm.core.entity.monster.skeleton.MagmaSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.FrostSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.TaintedSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.AcidSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.skeleton.ElectricSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.skeleton.BurningSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.zombie.Bloater;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -71,6 +74,9 @@ public class ModEntities {
 	public static final String FROST_SKELETON = "frost_skeleton";
 	public static final String TAINTED_SKELETON = "tainted_skeleton";
 	public static final String ACID_SKELETON = "acid_skeleton";
+	public static final String ELECTRIC_SKELETON = "electric_skeleton";
+	public static final String BURNING_SKELETON = "burning_skeleton";
+	public static final String BLOATER = "bloater";
 	public static final String SKELETON_CHAMPION = "skeleton_champion";
 	public static final String DEATH_KNIGHT = "death_knight";
 	public static String GARGOYLE = "gargoyle";
@@ -231,6 +237,26 @@ public class ModEntities {
 			.setShouldReceiveVelocityUpdates(false)
 			.build(ACID_SKELETON));
 
+	public static final RegistryObject<EntityType<ElectricSkeleton>> ELECTRIC_SKELETON_TYPE = ENTITIES.register(ELECTRIC_SKELETON, () -> EntityType.Builder.of(ElectricSkeleton::new, MobCategory.MONSTER)
+			.sized(0.6F, 1.99F)
+			.clientTrackingRange(15)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(ELECTRIC_SKELETON));
+
+	public static final RegistryObject<EntityType<BurningSkeleton>> BURNING_SKELETON_TYPE = ENTITIES.register(BURNING_SKELETON, () -> EntityType.Builder.of(BurningSkeleton::new, MobCategory.MONSTER)
+			.sized(0.6F, 1.99F)
+			.clientTrackingRange(15)
+			.setShouldReceiveVelocityUpdates(false)
+			// made of fire: immune to fire/lava, wades through its own death blaze unharmed
+			.fireImmune()
+			.build(BURNING_SKELETON));
+
+	public static final RegistryObject<EntityType<Bloater>> BLOATER_TYPE = ENTITIES.register(BLOATER, () -> EntityType.Builder.of(Bloater::new, MobCategory.MONSTER)
+			.sized(0.7F, 2.1F)
+			.clientTrackingRange(15)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(BLOATER));
+
 	public static final RegistryObject<EntityType<Gargoyle>> GARGOYLE_TYPE = ENTITIES.register(GARGOYLE, () -> EntityType.Builder.of(Gargoyle::new, MobCategory.MONSTER)
 			.sized(0.75F, 1.75F)
 			.clientTrackingRange(12)
@@ -318,6 +344,9 @@ public class ModEntities {
 		ALL_MOBS.add(FROST_SKELETON_TYPE);
 		ALL_MOBS.add(TAINTED_SKELETON_TYPE);
 		ALL_MOBS.add(ACID_SKELETON_TYPE);
+		ALL_MOBS.add(ELECTRIC_SKELETON_TYPE);
+		ALL_MOBS.add(BURNING_SKELETON_TYPE);
+		ALL_MOBS.add(BLOATER_TYPE);
 		ALL_MOBS.add(IRON_SKELETON_TYPE);
 		ALL_MOBS.add(GARGOYLE_TYPE);
 	}

@@ -12,6 +12,7 @@
 	"properties": {
 		"maxFloatHeight": 3,
 		"biteCooldownTime": 20,
-		"spellChargeTime": 80
+		"spellChargeTime": 80,
+		"summonLifespan": 2400
 	}
 }

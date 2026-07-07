@@ -45,6 +45,9 @@ import mod.gottsch.forge.gmm.core.entity.monster.skeleton.MagmaSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.FrostSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.TaintedSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.AcidSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.skeleton.ElectricSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.skeleton.BurningSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.zombie.Bloater;
 import mod.gottsch.forge.gmm.core.entity.projectile.BoneShard;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.WingedSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.beholderkin.Beholder;
@@ -238,6 +241,9 @@ public class CommonSetup {
 		event.put(ModEntities.FROST_SKELETON_TYPE.get(), FrostSkeleton.createAttributes().build());
 		event.put(ModEntities.TAINTED_SKELETON_TYPE.get(), TaintedSkeleton.createAttributes().build());
 		event.put(ModEntities.ACID_SKELETON_TYPE.get(), AcidSkeleton.createAttributes().build());
+		event.put(ModEntities.ELECTRIC_SKELETON_TYPE.get(), ElectricSkeleton.createAttributes().build());
+		event.put(ModEntities.BURNING_SKELETON_TYPE.get(), BurningSkeleton.createAttributes().build());
+		event.put(ModEntities.BLOATER_TYPE.get(), Bloater.createAttributes().build());
 
 		event.put(ModEntities.GARGOYLE_TYPE.get(), Gargoyle.createAttributes().build());
 		event.put(ModEntities.MARGOYLE_TYPE.get(), Margoyle.createAttributes().build());
@@ -268,6 +274,9 @@ public class CommonSetup {
 		event.register(ModEntities.FROST_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.TAINTED_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.ACID_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.ELECTRIC_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.BURNING_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.BLOATER_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
 		event.register(ModEntities.GARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.MARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
@@ -299,6 +308,9 @@ public class CommonSetup {
 			event.accept(ModItems.FROST_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.TAINTED_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.ACID_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.ELECTRIC_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.BURNING_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.BLOATER_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 
 			event.accept(ModItems.GARGOYLE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.MARGOYLE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);

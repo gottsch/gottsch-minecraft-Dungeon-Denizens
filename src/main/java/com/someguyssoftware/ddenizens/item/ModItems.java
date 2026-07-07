@@ -56,6 +56,9 @@ public class ModItems {
 	public static final RegistryObject<Item> FROST_SKELETON_EGG = ITEMS.register(FROST_SKELETON + "_egg", () -> new ForgeSpawnEggItem(ModEntities.FROST_SKELETON_TYPE, 0x3d5878, 0xd6f4ff, new Item.Properties()));
 	public static final RegistryObject<Item> TAINTED_SKELETON_EGG = ITEMS.register(TAINTED_SKELETON + "_egg", () -> new ForgeSpawnEggItem(ModEntities.TAINTED_SKELETON_TYPE, 0xa8a596, 0x8a1420, new Item.Properties()));
 	public static final RegistryObject<Item> ACID_SKELETON_EGG = ITEMS.register(ACID_SKELETON + "_egg", () -> new ForgeSpawnEggItem(ModEntities.ACID_SKELETON_TYPE, 0xb2e278, 0x2c4e1c, new Item.Properties()));
+	public static final RegistryObject<Item> ELECTRIC_SKELETON_EGG = ITEMS.register(ELECTRIC_SKELETON + "_egg", () -> new ForgeSpawnEggItem(ModEntities.ELECTRIC_SKELETON_TYPE, 0x3a4e78, 0xb0f4ff, new Item.Properties()));
+	public static final RegistryObject<Item> BURNING_SKELETON_EGG = ITEMS.register(BURNING_SKELETON + "_egg", () -> new ForgeSpawnEggItem(ModEntities.BURNING_SKELETON_TYPE, 0x1c1512, 0xffb02e, new Item.Properties()));
+	public static final RegistryObject<Item> BLOATER_EGG = ITEMS.register(BLOATER + "_egg", () -> new ForgeSpawnEggItem(ModEntities.BLOATER_TYPE, 0x6c8a2c, 0x3a4a1e, new Item.Properties()));
 
 	public static final RegistryObject<Item> GARGOYLE_EGG = ITEMS.register(GARGOYLE + "_egg", () -> new GargoyleEggItem(ModEntities.GARGOYLE_TYPE, 0x6d6d81, 0x373b41, new Item.Properties()));
 	public static final RegistryObject<Item> MARGOYLE_EGG = ITEMS.register(MARGOYLE + "_egg", () -> new MargoyleEggItem(ModEntities.MARGOYLE_TYPE, 0x7f7f7f, 0x5a6d41, new Item.Properties()));
@@ -131,6 +134,9 @@ public class ModItems {
 				output.accept(FROST_SKELETON_EGG.get());
 				output.accept(TAINTED_SKELETON_EGG.get());
 				output.accept(ACID_SKELETON_EGG.get());
+				output.accept(ELECTRIC_SKELETON_EGG.get());
+				output.accept(BURNING_SKELETON_EGG.get());
+				output.accept(BLOATER_EGG.get());
 				output.accept(GARGOYLE_EGG.get());
 				output.accept(MARGOYLE_EGG.get());
 				// weapons

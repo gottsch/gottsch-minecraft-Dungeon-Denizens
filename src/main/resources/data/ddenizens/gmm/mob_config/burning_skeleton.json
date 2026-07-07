@@ -1,0 +1,23 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319,
+		"skyVisibility": "any",
+		"requiresDarkness": true
+	},
+	"properties": {
+		"auraRange": 2.5,
+		"auraFireSeconds": 4.0,
+		"auraInterval": 30.0,
+		"meleeFireSeconds": 6.0,
+		"deathFireRadius": 3.0,
+		"deathFireSeconds": 5.0
+	},
+	"flags": {
+		"flameAura": true,
+		"igniteOnHit": true,
+		"deathBurst": true,
+		"deathFireBlocks": true
+	}
+}

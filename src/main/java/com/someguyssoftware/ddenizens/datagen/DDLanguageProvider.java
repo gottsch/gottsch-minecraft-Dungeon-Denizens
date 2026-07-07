@@ -100,6 +100,15 @@ DDLanguageProvider extends LanguageProvider {
         add(ModEntities.ACID_SKELETON_TYPE.get(), "Acid Skeleton");
         add(ModItems.ACID_SKELETON_EGG.get(), "Acid Skeleton Spawn Egg");
 
+        add(ModEntities.ELECTRIC_SKELETON_TYPE.get(), "Electric Skeleton");
+        add(ModItems.ELECTRIC_SKELETON_EGG.get(), "Electric Skeleton Spawn Egg");
+
+        add(ModEntities.BURNING_SKELETON_TYPE.get(), "Burning Skeleton");
+        add(ModItems.BURNING_SKELETON_EGG.get(), "Burning Skeleton Spawn Egg");
+
+        add(ModEntities.BLOATER_TYPE.get(), "Bloater");
+        add(ModItems.BLOATER_EGG.get(), "Bloater Spawn Egg");
+
         add(ModEntities.GARGOYLE_TYPE.get(), "Gargoyle");
         add(ModItems.GARGOYLE_EGG.get(), "Gargoyle Spawn Egg");
 
