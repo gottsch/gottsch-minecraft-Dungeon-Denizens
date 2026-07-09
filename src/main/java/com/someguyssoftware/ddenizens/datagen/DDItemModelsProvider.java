@@ -54,7 +54,10 @@ public class DDItemModelsProvider extends ItemModelProvider {
 
         singleTexture("rock",
                 mcLoc("item/generated"), "layer0", modLoc("item/rock"));
-    	
+
+        singleTexture(ModItems.TAB_ICON.getId().getPath(),
+                mcLoc("item/generated"), "layer0", modLoc("item/tab"));
+
         // weapons
         singleTexture("club",
         		mcLoc("item/handheld"), "layer0", modLoc("item/club"));
@@ -109,7 +112,13 @@ public class DDItemModelsProvider extends ItemModelProvider {
         withExistingParent(ModItems.ACID_SKELETON_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.ELECTRIC_SKELETON_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.BURNING_SKELETON_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.BLOODY_BONES_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.BLOATER_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.GELATINOUS_CUBE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.OCHRE_JELLY_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.GRAY_OOZE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.VANILLA_CHEST_MIMIC_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.BARREL_MIMIC_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.GARGOYLE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.MARGOYLE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 

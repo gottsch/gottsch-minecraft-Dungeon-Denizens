@@ -1,0 +1,21 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 50,
+		"skyVisibility": "must_not_see",
+		"requiresDarkness": true
+	},
+	"properties": {
+		"slownessDuration": 100.0,
+		"slownessAmplifier": 1.0,
+		"acidDuration": 60.0,
+		"acidAmplifier": 0.0,
+		"corrosion": 8.0,
+		"attackCooldown": 40.0
+	},
+	"flags": {
+		"engulf": true,
+		"corrodeGear": true
+	}
+}

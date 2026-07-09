@@ -7,6 +7,7 @@ import mod.gottsch.forge.gmm.core.entity.projectile.HarmSpell;
 import mod.gottsch.forge.gmm.core.entity.projectile.DisintegrateSpell;
 import mod.gottsch.forge.gmm.core.entity.projectile.DisarmSpell;
 import mod.gottsch.forge.gmm.core.entity.projectile.FireSpoutSpell;
+import mod.gottsch.forge.gmm.core.entity.projectile.FirewallColumnSpell;
 import mod.gottsch.forge.gmm.core.entity.projectile.Rock;
 import mod.gottsch.forge.gmm.core.entity.projectile.BoneShard;
 import mod.gottsch.forge.gmm.core.entity.monster.AlligatorGar;
@@ -32,9 +33,15 @@ import mod.gottsch.forge.gmm.core.entity.monster.skeleton.MagmaSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.FrostSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.TaintedSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.AcidSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.skeleton.BloodyBones;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.ElectricSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.BurningSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.zombie.Bloater;
+import mod.gottsch.forge.gmm.core.entity.monster.GelatinousCube;
+import mod.gottsch.forge.gmm.core.entity.monster.OchreJelly;
+import mod.gottsch.forge.gmm.core.entity.monster.GrayOoze;
+import mod.gottsch.forge.gmm.core.entity.monster.mimic.VanillaChestMimic;
+import mod.gottsch.forge.gmm.core.entity.monster.mimic.BarrelMimic;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -76,7 +83,13 @@ public class ModEntities {
 	public static final String ACID_SKELETON = "acid_skeleton";
 	public static final String ELECTRIC_SKELETON = "electric_skeleton";
 	public static final String BURNING_SKELETON = "burning_skeleton";
+	public static final String BLOODY_BONES = "bloody_bones";
 	public static final String BLOATER = "bloater";
+	public static final String GELATINOUS_CUBE = "gelatinous_cube";
+	public static final String OCHRE_JELLY = "ochre_jelly";
+	public static final String GRAY_OOZE = "gray_ooze";
+	public static final String VANILLA_CHEST_MIMIC = "vanilla_chest_mimic";
+	public static final String BARREL_MIMIC = "barrel_mimic";
 	public static final String SKELETON_CHAMPION = "skeleton_champion";
 	public static final String DEATH_KNIGHT = "death_knight";
 	public static String GARGOYLE = "gargoyle";
@@ -88,6 +101,7 @@ public class ModEntities {
 	public static final String DISINTEGRATE_SPELL = "disintegrate";
 	public static final String DISARM_SPELL = "disarm";
 	public static final String FIRESPOUT_SPELL = "firespout";
+	public static final String FIREWALL_COLUMN_SPELL = "firewall_column";
 	public static final String ROCK = "rock";
 	public static final String BONE_SHARD = "bone_shard";
 
@@ -251,11 +265,57 @@ public class ModEntities {
 			.fireImmune()
 			.build(BURNING_SKELETON));
 
+	public static final RegistryObject<EntityType<BloodyBones>> BLOODY_BONES_TYPE = ENTITIES.register(BLOODY_BONES, () -> EntityType.Builder.of(BloodyBones::new, MobCategory.MONSTER)
+			.sized(0.6F, 1.99F)
+			.clientTrackingRange(15)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(BLOODY_BONES));
+
 	public static final RegistryObject<EntityType<Bloater>> BLOATER_TYPE = ENTITIES.register(BLOATER, () -> EntityType.Builder.of(Bloater::new, MobCategory.MONSTER)
 			.sized(0.7F, 2.1F)
 			.clientTrackingRange(15)
 			.setShouldReceiveVelocityUpdates(false)
 			.build(BLOATER));
+
+	// smaller than a full-sized ("Big") vanilla Slime (~2.04 blocks); see GelatinousCube's class doc.
+	// this is the size at gmm:mob_config's default "size": 1.0 -- GelatinousCube.getDimensions() scales
+	// it further at spawn if a consumer overrides that key.
+	public static final RegistryObject<EntityType<GelatinousCube>> GELATINOUS_CUBE_TYPE = ENTITIES.register(GELATINOUS_CUBE, () -> EntityType.Builder.of(GelatinousCube::new, MobCategory.MONSTER)
+			.sized(1.1F, 1.1F)
+			.clientTrackingRange(15)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(GELATINOUS_CUBE));
+
+	// smaller than the Gelatinous Cube -- its "smaller" split children are handled via reduced max
+	// health rather than a separate/shrinking hitbox (see OchreJelly's class doc).
+	public static final RegistryObject<EntityType<OchreJelly>> OCHRE_JELLY_TYPE = ENTITIES.register(OCHRE_JELLY, () -> EntityType.Builder.of(OchreJelly::new, MobCategory.MONSTER)
+			.sized(0.85F, 0.85F)
+			.clientTrackingRange(15)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(OCHRE_JELLY));
+
+	// ambush ooze -- spawns disguised as wet stone; see GrayOoze's class doc for the reveal mechanic
+	public static final RegistryObject<EntityType<GrayOoze>> GRAY_OOZE_TYPE = ENTITIES.register(GRAY_OOZE, () -> EntityType.Builder.of(GrayOoze::new, MobCategory.MONSTER)
+			.sized(0.9F, 0.9F)
+			.clientTrackingRange(15)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(GRAY_OOZE));
+
+	// disguised as a plain chest; NOT added to ALL_MOBS -- it's a dungeon-loot-room ambusher, not a
+	// biome-roaming natural spawn (see MobIdeasCatalog's "Chest Mimic" entry). Test via spawn egg / summon.
+	public static final RegistryObject<EntityType<VanillaChestMimic>> VANILLA_CHEST_MIMIC_TYPE = ENTITIES.register(VANILLA_CHEST_MIMIC, () -> EntityType.Builder.of(VanillaChestMimic::new, MobCategory.MONSTER)
+			.sized(1F, 1F)
+			.clientTrackingRange(12)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(VANILLA_CHEST_MIMIC));
+
+	// same Mimic base as VANILLA_CHEST_MIMIC, disguised as a barrel instead -- also NOT in ALL_MOBS,
+	// see the note above.
+	public static final RegistryObject<EntityType<BarrelMimic>> BARREL_MIMIC_TYPE = ENTITIES.register(BARREL_MIMIC, () -> EntityType.Builder.of(BarrelMimic::new, MobCategory.MONSTER)
+			.sized(1F, 1F)
+			.clientTrackingRange(12)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(BARREL_MIMIC));
 
 	public static final RegistryObject<EntityType<Gargoyle>> GARGOYLE_TYPE = ENTITIES.register(GARGOYLE, () -> EntityType.Builder.of(Gargoyle::new, MobCategory.MONSTER)
 			.sized(0.75F, 1.75F)
@@ -306,6 +366,13 @@ public class ModEntities {
 			.setShouldReceiveVelocityUpdates(false)
 			.build(FIRESPOUT_SPELL));
 
+	public static final RegistryObject<EntityType<FirewallColumnSpell>> FIREWALL_COLUMN_SPELL_ENTITY_TYPE =
+			ENTITIES.register(FIREWALL_COLUMN_SPELL, () -> EntityType.Builder.of(FirewallColumnSpell::new, MobCategory.MISC)
+			.sized(0.5F, 0.5F)
+			.clientTrackingRange(12)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(FIREWALL_COLUMN_SPELL));
+
 	public static final RegistryObject<EntityType<Rock>> ROCK_ENTITY_TYPE =
 			ENTITIES.register(ROCK, () -> EntityType.Builder.of(Rock::new, MobCategory.MISC)
 			.sized(0.5F, 0.5F)
@@ -346,7 +413,11 @@ public class ModEntities {
 		ALL_MOBS.add(ACID_SKELETON_TYPE);
 		ALL_MOBS.add(ELECTRIC_SKELETON_TYPE);
 		ALL_MOBS.add(BURNING_SKELETON_TYPE);
+		ALL_MOBS.add(BLOODY_BONES_TYPE);
 		ALL_MOBS.add(BLOATER_TYPE);
+		ALL_MOBS.add(GELATINOUS_CUBE_TYPE);
+		ALL_MOBS.add(OCHRE_JELLY_TYPE);
+		ALL_MOBS.add(GRAY_OOZE_TYPE);
 		ALL_MOBS.add(IRON_SKELETON_TYPE);
 		ALL_MOBS.add(GARGOYLE_TYPE);
 	}

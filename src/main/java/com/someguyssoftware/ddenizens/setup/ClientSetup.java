@@ -51,7 +51,15 @@ import mod.gottsch.forge.gmm.core.client.renderer.entity.TaintedSkeletonRenderer
 import mod.gottsch.forge.gmm.core.client.renderer.entity.AcidSkeletonRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.ElectricSkeletonRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BurningSkeletonRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.BloodyBonesRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BloaterRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.GelatinousCubeRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.OchreJellyRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.GrayOozeRenderer;
+import mod.gottsch.forge.gmm.core.client.model.VanillaChestMimicModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.VanillaChestMimicRenderer;
+import mod.gottsch.forge.gmm.core.client.model.BarrelMimicModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.BarrelMimicRenderer;
 import mod.gottsch.forge.gmm.core.client.model.BoneShardModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BoneShardRenderer;
 import mod.gottsch.forge.gmm.core.client.model.WingedSkeletonModel;
@@ -129,6 +137,9 @@ public class ClientSetup {
 		event.registerLayerDefinition(GargoyleModel.LAYER_LOCATION, GargoyleModel::createBodyLayer);
 		event.registerLayerDefinition(MargoyleModel.LAYER_LOCATION, MargoyleModel::createBodyLayer);
 
+		event.registerLayerDefinition(VanillaChestMimicModel.LAYER_LOCATION, VanillaChestMimicModel::createBodyLayer);
+		event.registerLayerDefinition(BarrelMimicModel.LAYER_LOCATION, BarrelMimicModel::createBodyLayer);
+
 	}
 
 	/**
@@ -163,8 +174,18 @@ public class ClientSetup {
 		event.registerEntityRenderer(ModEntities.ELECTRIC_SKELETON_TYPE.get(), ElectricSkeletonRenderer::new);
 		// Burning likewise reuses SkeletonWarriorModel.LAYER_LOCATION — no new layer definition needed.
 		event.registerEntityRenderer(ModEntities.BURNING_SKELETON_TYPE.get(), BurningSkeletonRenderer::new);
+		// Bloody Bones reuses SkeletonWarriorModel.LAYER_LOCATION (registered above) — no new layer definition needed.
+		event.registerEntityRenderer(ModEntities.BLOODY_BONES_TYPE.get(), BloodyBonesRenderer::new);
 		// Bloater reuses the vanilla ModelLayers.ZOMBIE rig — no new layer definition needed.
 		event.registerEntityRenderer(ModEntities.BLOATER_TYPE.get(), BloaterRenderer::new);
+		// Gelatinous Cube reuses the vanilla ModelLayers.SLIME rig — no new layer definition needed.
+		event.registerEntityRenderer(ModEntities.GELATINOUS_CUBE_TYPE.get(), GelatinousCubeRenderer::new);
+		// Ochre Jelly reuses the vanilla ModelLayers.SLIME rig — no new layer definition needed.
+		event.registerEntityRenderer(ModEntities.OCHRE_JELLY_TYPE.get(), OchreJellyRenderer::new);
+		// Gray Ooze reuses the vanilla ModelLayers.SLIME rig — no new layer definition needed.
+		event.registerEntityRenderer(ModEntities.GRAY_OOZE_TYPE.get(), GrayOozeRenderer::new);
+		event.registerEntityRenderer(ModEntities.VANILLA_CHEST_MIMIC_TYPE.get(), VanillaChestMimicRenderer::new);
+		event.registerEntityRenderer(ModEntities.BARREL_MIMIC_TYPE.get(), BarrelMimicRenderer::new);
 
 		event.registerEntityRenderer(ModEntities.GARGOYLE_TYPE.get(), GargoyleRenderer::new);
 		event.registerEntityRenderer(ModEntities.MARGOYLE_TYPE.get(), MargoyleRenderer::new);
@@ -185,6 +206,9 @@ public class ClientSetup {
 		});
         event.registerEntityRenderer(ModEntities.FIRESPOUT_SPELL_ENTITY_TYPE.get(), (provider) -> {
         	return new ThrownItemRenderer<>(provider, 1.5F, true);
+         });
+        event.registerEntityRenderer(ModEntities.FIREWALL_COLUMN_SPELL_ENTITY_TYPE.get(), (provider) -> {
+        	return new ThrownItemRenderer<>(provider, 1.0F, true);
          });
         event.registerEntityRenderer(ModEntities.ROCK_ENTITY_TYPE.get(), (provider) -> {
         	// second arg is the render scale of the thrown item (lower = smaller rock)

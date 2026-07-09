@@ -106,8 +106,26 @@ DDLanguageProvider extends LanguageProvider {
         add(ModEntities.BURNING_SKELETON_TYPE.get(), "Burning Skeleton");
         add(ModItems.BURNING_SKELETON_EGG.get(), "Burning Skeleton Spawn Egg");
 
+        add(ModEntities.BLOODY_BONES_TYPE.get(), "Bloody Bones");
+        add(ModItems.BLOODY_BONES_EGG.get(), "Bloody Bones Spawn Egg");
+
         add(ModEntities.BLOATER_TYPE.get(), "Bloater");
         add(ModItems.BLOATER_EGG.get(), "Bloater Spawn Egg");
+
+        add(ModEntities.GELATINOUS_CUBE_TYPE.get(), "Gelatinous Cube");
+        add(ModItems.GELATINOUS_CUBE_EGG.get(), "Gelatinous Cube Spawn Egg");
+
+        add(ModEntities.OCHRE_JELLY_TYPE.get(), "Ochre Jelly");
+        add(ModItems.OCHRE_JELLY_EGG.get(), "Ochre Jelly Spawn Egg");
+
+        add(ModEntities.GRAY_OOZE_TYPE.get(), "Gray Ooze");
+        add(ModItems.GRAY_OOZE_EGG.get(), "Gray Ooze Spawn Egg");
+
+        add(ModEntities.VANILLA_CHEST_MIMIC_TYPE.get(), "Chest Mimic");
+        add(ModItems.VANILLA_CHEST_MIMIC_EGG.get(), "Chest Mimic Spawn Egg");
+
+        add(ModEntities.BARREL_MIMIC_TYPE.get(), "Barrel Mimic");
+        add(ModItems.BARREL_MIMIC_EGG.get(), "Barrel Mimic Spawn Egg");
 
         add(ModEntities.GARGOYLE_TYPE.get(), "Gargoyle");
         add(ModItems.GARGOYLE_EGG.get(), "Gargoyle Spawn Egg");
@@ -121,7 +139,8 @@ DDLanguageProvider extends LanguageProvider {
         add(ModItems.DISARM_SPELL_ITEM.get(), "Disarm Spell");
 
         add(ModItems.ROCK_ITEM.get(), "Rock");
-        
+        add(ModItems.TAB_ICON.get(), "Dungeon Denizens Tab Icon");
+
         add(ModItems.CLUB.get(), "Club");
         add(ModItems.SPIKED_CLUB.get(), "Spiked Club");
         add(ModItems.RUSTY_IRON_AXE1.get(), "Rusty Iron Axe");

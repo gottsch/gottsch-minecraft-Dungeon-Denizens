@@ -45,9 +45,15 @@ import mod.gottsch.forge.gmm.core.entity.monster.skeleton.MagmaSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.FrostSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.TaintedSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.AcidSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.skeleton.BloodyBones;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.ElectricSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.BurningSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.zombie.Bloater;
+import mod.gottsch.forge.gmm.core.entity.monster.GelatinousCube;
+import mod.gottsch.forge.gmm.core.entity.monster.OchreJelly;
+import mod.gottsch.forge.gmm.core.entity.monster.GrayOoze;
+import mod.gottsch.forge.gmm.core.entity.monster.mimic.VanillaChestMimic;
+import mod.gottsch.forge.gmm.core.entity.monster.mimic.BarrelMimic;
 import mod.gottsch.forge.gmm.core.entity.projectile.BoneShard;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.WingedSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.beholderkin.Beholder;
@@ -212,6 +218,8 @@ public class CommonSetup {
 
 		// gmm's TaintedSkeleton owns no projectile; supply DD-registered BoneShard as its shrapnel.
 		TaintedSkeleton.shardFactory = (shooter, level) -> new BoneShard(ModEntities.BONE_SHARD_ENTITY_TYPE.get(), shooter, level);
+		// Bloody Bones flings the same BoneShard as its "arms and legs" when it collapses to a skull.
+		BloodyBones.shardFactory = (shooter, level) -> new BoneShard(ModEntities.BONE_SHARD_ENTITY_TYPE.get(), shooter, level);
 	}
 
 	/**
@@ -243,7 +251,13 @@ public class CommonSetup {
 		event.put(ModEntities.ACID_SKELETON_TYPE.get(), AcidSkeleton.createAttributes().build());
 		event.put(ModEntities.ELECTRIC_SKELETON_TYPE.get(), ElectricSkeleton.createAttributes().build());
 		event.put(ModEntities.BURNING_SKELETON_TYPE.get(), BurningSkeleton.createAttributes().build());
+		event.put(ModEntities.BLOODY_BONES_TYPE.get(), BloodyBones.createAttributes().build());
 		event.put(ModEntities.BLOATER_TYPE.get(), Bloater.createAttributes().build());
+		event.put(ModEntities.GELATINOUS_CUBE_TYPE.get(), GelatinousCube.createAttributes().build());
+		event.put(ModEntities.OCHRE_JELLY_TYPE.get(), OchreJelly.createAttributes().build());
+		event.put(ModEntities.GRAY_OOZE_TYPE.get(), GrayOoze.createAttributes().build());
+		event.put(ModEntities.VANILLA_CHEST_MIMIC_TYPE.get(), VanillaChestMimic.createAttributes().build());
+		event.put(ModEntities.BARREL_MIMIC_TYPE.get(), BarrelMimic.createAttributes().build());
 
 		event.put(ModEntities.GARGOYLE_TYPE.get(), Gargoyle.createAttributes().build());
 		event.put(ModEntities.MARGOYLE_TYPE.get(), Margoyle.createAttributes().build());
@@ -276,7 +290,16 @@ public class CommonSetup {
 		event.register(ModEntities.ACID_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.ELECTRIC_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.BURNING_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.BLOODY_BONES_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.BLOATER_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.GELATINOUS_CUBE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.OCHRE_JELLY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.GRAY_OOZE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		// placement rules only -- NOT added to ModEntities.ALL_MOBS, so this never natural-spawns by
+		// biome; it's a dungeon-loot-room ambusher meant to be hand-placed, see ModEntities note.
+		event.register(ModEntities.VANILLA_CHEST_MIMIC_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		// same reasoning as VANILLA_CHEST_MIMIC above -- placement rules only, not a biome natural spawn.
+		event.register(ModEntities.BARREL_MIMIC_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
 		event.register(ModEntities.GARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.MARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
@@ -310,7 +333,11 @@ public class CommonSetup {
 			event.accept(ModItems.ACID_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.ELECTRIC_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.BURNING_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.BLOODY_BONES_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.BLOATER_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.GELATINOUS_CUBE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.OCHRE_JELLY_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.GRAY_OOZE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 
 			event.accept(ModItems.GARGOYLE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.MARGOYLE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);

@@ -58,7 +58,13 @@ public class ModItems {
 	public static final RegistryObject<Item> ACID_SKELETON_EGG = ITEMS.register(ACID_SKELETON + "_egg", () -> new ForgeSpawnEggItem(ModEntities.ACID_SKELETON_TYPE, 0xb2e278, 0x2c4e1c, new Item.Properties()));
 	public static final RegistryObject<Item> ELECTRIC_SKELETON_EGG = ITEMS.register(ELECTRIC_SKELETON + "_egg", () -> new ForgeSpawnEggItem(ModEntities.ELECTRIC_SKELETON_TYPE, 0x3a4e78, 0xb0f4ff, new Item.Properties()));
 	public static final RegistryObject<Item> BURNING_SKELETON_EGG = ITEMS.register(BURNING_SKELETON + "_egg", () -> new ForgeSpawnEggItem(ModEntities.BURNING_SKELETON_TYPE, 0x1c1512, 0xffb02e, new Item.Properties()));
+	public static final RegistryObject<Item> BLOODY_BONES_EGG = ITEMS.register(BLOODY_BONES + "_egg", () -> new ForgeSpawnEggItem(ModEntities.BLOODY_BONES_TYPE, 0xe8e0d0, 0x8a1420, new Item.Properties()));
 	public static final RegistryObject<Item> BLOATER_EGG = ITEMS.register(BLOATER + "_egg", () -> new ForgeSpawnEggItem(ModEntities.BLOATER_TYPE, 0x6c8a2c, 0x3a4a1e, new Item.Properties()));
+	public static final RegistryObject<Item> GELATINOUS_CUBE_EGG = ITEMS.register(GELATINOUS_CUBE + "_egg", () -> new ForgeSpawnEggItem(ModEntities.GELATINOUS_CUBE_TYPE, 0x9adfc7, 0x5fae95, new Item.Properties()));
+	public static final RegistryObject<Item> OCHRE_JELLY_EGG = ITEMS.register(OCHRE_JELLY + "_egg", () -> new ForgeSpawnEggItem(ModEntities.OCHRE_JELLY_TYPE, 0xadb83d, 0x5f6b1f, new Item.Properties()));
+	public static final RegistryObject<Item> GRAY_OOZE_EGG = ITEMS.register(GRAY_OOZE + "_egg", () -> new ForgeSpawnEggItem(ModEntities.GRAY_OOZE_TYPE, 0x8a8a8a, 0x5a5a5a, new Item.Properties()));
+	public static final RegistryObject<Item> VANILLA_CHEST_MIMIC_EGG = ITEMS.register(VANILLA_CHEST_MIMIC + "_egg", () -> new ForgeSpawnEggItem(ModEntities.VANILLA_CHEST_MIMIC_TYPE, 0x8f691d, 0xab792d, new Item.Properties()));
+	public static final RegistryObject<Item> BARREL_MIMIC_EGG = ITEMS.register(BARREL_MIMIC + "_egg", () -> new ForgeSpawnEggItem(ModEntities.BARREL_MIMIC_TYPE, 0x9f854d, 0x54452c, new Item.Properties()));
 
 	public static final RegistryObject<Item> GARGOYLE_EGG = ITEMS.register(GARGOYLE + "_egg", () -> new GargoyleEggItem(ModEntities.GARGOYLE_TYPE, 0x6d6d81, 0x373b41, new Item.Properties()));
 	public static final RegistryObject<Item> MARGOYLE_EGG = ITEMS.register(MARGOYLE + "_egg", () -> new MargoyleEggItem(ModEntities.MARGOYLE_TYPE, 0x7f7f7f, 0x5a6d41, new Item.Properties()));
@@ -70,6 +76,9 @@ public class ModItems {
 	public static final RegistryObject<Item> DISARM_SPELL_ITEM = ITEMS.register(DISARM_SPELL, () -> new Item(new Item.Properties()));
 
 	public static final RegistryObject<Item> ROCK_ITEM = ITEMS.register(ROCK, () -> new Item(new Item.Properties()));
+
+	// creative tab icon (not displayed in the tab itself)
+	public static final RegistryObject<Item> TAB_ICON = ITEMS.register("tab", () -> new Item(new Item.Properties()));
 
 	/*
 	 * weapons
@@ -110,7 +119,7 @@ public class ModItems {
 	 */
 	public static final RegistryObject<CreativeModeTab> DD_TAB = CREATIVE_MODE_TABS.register("dungeon_denizens", () -> CreativeModeTab.builder()
 			.title(Component.translatable("itemGroup.ddenizens.dungeon_denizens"))
-			.icon(() -> new ItemStack(BEHOLDER_EGG.get()))
+			.icon(() -> new ItemStack(TAB_ICON.get()))
 			.displayItems((params, output) -> {
 				// spawn eggs
 				output.accept(HEADLESS_EGG.get());
@@ -136,7 +145,13 @@ public class ModItems {
 				output.accept(ACID_SKELETON_EGG.get());
 				output.accept(ELECTRIC_SKELETON_EGG.get());
 				output.accept(BURNING_SKELETON_EGG.get());
+				output.accept(BLOODY_BONES_EGG.get());
 				output.accept(BLOATER_EGG.get());
+				output.accept(GELATINOUS_CUBE_EGG.get());
+				output.accept(OCHRE_JELLY_EGG.get());
+				output.accept(GRAY_OOZE_EGG.get());
+				output.accept(VANILLA_CHEST_MIMIC_EGG.get());
+				output.accept(BARREL_MIMIC_EGG.get());
 				output.accept(GARGOYLE_EGG.get());
 				output.accept(MARGOYLE_EGG.get());
 				// weapons
