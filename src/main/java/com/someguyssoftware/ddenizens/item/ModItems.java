@@ -31,39 +31,43 @@ public class ModItems {
 
 	// mod eggs
 	public static final RegistryObject<Item> HEADLESS_EGG = ITEMS.register(HEADLESS + "_egg", () -> new ForgeSpawnEggItem(ModEntities.HEADLESS_ENTITY_TYPE, 0xc8b486, 0x6f5e48, new Item.Properties()));
-	public static final RegistryObject<Item> ORC_EGG = ITEMS.register(ORC + "_egg", () -> new ForgeSpawnEggItem(ModEntities.ORC_ENTITY_TYPE, 0xc8b486, 0x6f5e48, new Item.Properties()));
-	public static final RegistryObject<Item> GHOUL_EGG = ITEMS.register(GHOUL + "_egg", () -> new ForgeSpawnEggItem(ModEntities.GHOUL_ENTITY_TYPE, 0x93aba3, 0x869e96, new Item.Properties()));
+	public static final RegistryObject<Item> ORC_EGG = ITEMS.register(ORC + "_egg", () -> new ForgeSpawnEggItem(ModEntities.ORC_ENTITY_TYPE, 0x6b8e4e, 0x3f5c2c, new Item.Properties()));
+	public static final RegistryObject<Item> ORC_SHAMAN_EGG = ITEMS.register(ORC_SHAMAN + "_egg", () -> new ForgeSpawnEggItem(ModEntities.ORC_SHAMAN_ENTITY_TYPE, 0x6b8e4e, 0x4b2e83, new Item.Properties()));
+	public static final RegistryObject<Item> GHOUL_EGG = ITEMS.register(GHOUL + "_egg", () -> new ForgeSpawnEggItem(ModEntities.GHOUL_ENTITY_TYPE, 0x9fc2b8, 0x4f5b56, new Item.Properties()));
 	public static final RegistryObject<Item> SEWER_GHOUL_EGG = ITEMS.register(SEWER_GHOUL + "_egg", () -> new ForgeSpawnEggItem(ModEntities.SEWER_GHOUL_ENTITY_TYPE, 0x5a6650, 0x3d4636, new Item.Properties()));
-	public static final RegistryObject<Item> RAT_EGG = ITEMS.register(RAT + "_egg", () -> new ForgeSpawnEggItem(ModEntities.RAT_ENTITY_TYPE, 0x6e6459, 0x413a30, new Item.Properties()));
+	public static final RegistryObject<Item> RAT_EGG = ITEMS.register(RAT + "_egg", () -> new ForgeSpawnEggItem(ModEntities.RAT_ENTITY_TYPE, 0x7a5c3e, 0x4a3521, new Item.Properties()));
 	public static final RegistryObject<Item> ALLIGATOR_GAR_EGG = ITEMS.register(ALLIGATOR_GAR + "_egg", () -> new ForgeSpawnEggItem(ModEntities.ALLIGATOR_GAR_ENTITY_TYPE, 0x4a5c3a, 0x8f9f6b, new Item.Properties()));
 
 	public static final RegistryObject<Item> BEHOLDER_EGG = ITEMS.register(BEHOLDER + "_egg", () -> new BeholderEggItem(ModEntities.BEHOLDER_ENTITY_TYPE, 0x871e00, 0xc15227, new Item.Properties()));
 	public static final RegistryObject<Item> DEATH_TYRANT_EGG = ITEMS.register(DEATH_TYRANT + "_egg", () -> new DeathTyrantEggItem(ModEntities.DEATH_TYRANT_TYPE, 0x86765a, 0xcdc3bb, new Item.Properties()));
 
-	public static final RegistryObject<Item> GAZER_EGG = ITEMS.register(GAZER + "_egg", () -> new GazerEggItem(ModEntities.GAZER_ENTITY_TYPE, 0x7a2e2f, 0x63181d, new Item.Properties()));
+	public static final RegistryObject<Item> GAZER_EGG = ITEMS.register(GAZER + "_egg", () -> new GazerEggItem(ModEntities.GAZER_ENTITY_TYPE, 0x7a2e2f, 0xd4af37, new Item.Properties()));
 	public static final RegistryObject<Item> SPECTATOR_EGG = ITEMS.register(SPECTATOR + "_egg", () -> new SpectatorEggItem(ModEntities.SPECTATOR_TYPE, 0x344133, 0xabb685, new Item.Properties()));
 
-	public static final RegistryObject<Item> BOULDER_EGG = ITEMS.register(BOULDER + "_egg", () -> new ForgeSpawnEggItem(ModEntities.BOULDER_ENTITY_TYPE, 0x747474, 0x8f8f8f, new Item.Properties()));
+	public static final RegistryObject<Item> BOULDER_EGG = ITEMS.register(BOULDER + "_egg", () -> new ForgeSpawnEggItem(ModEntities.BOULDER_ENTITY_TYPE, 0x5c5c5c, 0x8f8f8f, new Item.Properties()));
 	public static final RegistryObject<Item> SHADOW_EGG = ITEMS.register(SHADOW + "_egg", () -> new ShadowEggItem(ModEntities.SHADOW_ENTITY_TYPE, 0x000000, 0x2b2b2b, new Item.Properties()));
 	public static final RegistryObject<Item> SHADOWLORD_EGG = ITEMS.register(SHADOWLORD + "_egg", () -> new ShadowlordEggItem(ModEntities.SHADOWLORD_ENTITY_TYPE, 0x000000, 0x6c6c6c, new Item.Properties()));
-	public static final RegistryObject<Item> DAEMON_EGG = ITEMS.register(DAEMON + "_egg", () -> new DaemonEggItem(ModEntities.DAEMON_ENTITY_TYPE, 0xff0000, 0xfc0000, new Item.Properties()));
+	public static final RegistryObject<Item> DAEMON_EGG = ITEMS.register(DAEMON + "_egg", () -> new DaemonEggItem(ModEntities.DAEMON_ENTITY_TYPE, 0xff0000, 0xff8c00, new Item.Properties()));
 
 	public static final RegistryObject<Item> SKELETON_WARRIOR_EGG = ITEMS.register(SKELETON_WARRIOR + "_egg", () -> new SkeletonWarriorEggItem(ModEntities.SKELETON_WARRIOR_TYPE, 0xf5f6d2, 0xcdc3bb, new Item.Properties()));
-	public static final RegistryObject<Item> WINGED_SKELETON_EGG = ITEMS.register(WINGED_SKELETON + "_egg", () -> new WingedSkeletonEggItem(ModEntities.WINGED_SKELETON_TYPE, 0xf5f6d2, 0xcdc3bb, new Item.Properties()));
+	public static final RegistryObject<Item> WINGED_SKELETON_EGG = ITEMS.register(WINGED_SKELETON + "_egg", () -> new WingedSkeletonEggItem(ModEntities.WINGED_SKELETON_TYPE, 0xe2ded0, 0x8a8478, new Item.Properties()));
 
-	public static final RegistryObject<Item> IRON_SKELETON_EGG = ITEMS.register(IRON_SKELETON + "_egg", () -> new IronSkeletonEggItem(ModEntities.IRON_SKELETON_TYPE, 0xf5f6d2, 0xcdc3bb, new Item.Properties()));
+	public static final RegistryObject<Item> IRON_SKELETON_EGG = ITEMS.register(IRON_SKELETON + "_egg", () -> new IronSkeletonEggItem(ModEntities.IRON_SKELETON_TYPE, 0xc8c8d0, 0x6e6e78, new Item.Properties()));
 	public static final RegistryObject<Item> MAGMA_SKELETON_EGG = ITEMS.register(MAGMA_SKELETON + "_egg", () -> new MagmaSkeletonEggItem(ModEntities.MAGMA_SKELETON_TYPE, 0x4b0000, 0xff7900, new Item.Properties()));
 	public static final RegistryObject<Item> FROST_SKELETON_EGG = ITEMS.register(FROST_SKELETON + "_egg", () -> new ForgeSpawnEggItem(ModEntities.FROST_SKELETON_TYPE, 0x3d5878, 0xd6f4ff, new Item.Properties()));
 	public static final RegistryObject<Item> TAINTED_SKELETON_EGG = ITEMS.register(TAINTED_SKELETON + "_egg", () -> new ForgeSpawnEggItem(ModEntities.TAINTED_SKELETON_TYPE, 0xa8a596, 0x8a1420, new Item.Properties()));
 	public static final RegistryObject<Item> ACID_SKELETON_EGG = ITEMS.register(ACID_SKELETON + "_egg", () -> new ForgeSpawnEggItem(ModEntities.ACID_SKELETON_TYPE, 0xb2e278, 0x2c4e1c, new Item.Properties()));
-	public static final RegistryObject<Item> ELECTRIC_SKELETON_EGG = ITEMS.register(ELECTRIC_SKELETON + "_egg", () -> new ForgeSpawnEggItem(ModEntities.ELECTRIC_SKELETON_TYPE, 0x3a4e78, 0xb0f4ff, new Item.Properties()));
+	public static final RegistryObject<Item> ELECTRIC_SKELETON_EGG = ITEMS.register(ELECTRIC_SKELETON + "_egg", () -> new ForgeSpawnEggItem(ModEntities.ELECTRIC_SKELETON_TYPE, 0x2d3a6e, 0xf5e642, new Item.Properties()));
 	public static final RegistryObject<Item> BURNING_SKELETON_EGG = ITEMS.register(BURNING_SKELETON + "_egg", () -> new ForgeSpawnEggItem(ModEntities.BURNING_SKELETON_TYPE, 0x1c1512, 0xffb02e, new Item.Properties()));
 	public static final RegistryObject<Item> BLOODY_BONES_EGG = ITEMS.register(BLOODY_BONES + "_egg", () -> new ForgeSpawnEggItem(ModEntities.BLOODY_BONES_TYPE, 0xe8e0d0, 0x8a1420, new Item.Properties()));
 	public static final RegistryObject<Item> BLOATER_EGG = ITEMS.register(BLOATER + "_egg", () -> new ForgeSpawnEggItem(ModEntities.BLOATER_TYPE, 0x6c8a2c, 0x3a4a1e, new Item.Properties()));
+	public static final RegistryObject<Item> GRAVE_ZOMBIE_EGG = ITEMS.register(GRAVE_ZOMBIE + "_egg", () -> new ForgeSpawnEggItem(ModEntities.GRAVE_ZOMBIE_TYPE, 0x8b5a2b, 0x3e2711, new Item.Properties()));
+	public static final RegistryObject<Item> WIGHT_EGG = ITEMS.register(WIGHT + "_egg", () -> new ForgeSpawnEggItem(ModEntities.WIGHT_TYPE, 0xced1d6, 0x2a2c33, new Item.Properties()));
+	public static final RegistryObject<Item> BODAK_EGG = ITEMS.register(BODAK + "_egg", () -> new ForgeSpawnEggItem(ModEntities.BODAK_TYPE, 0x6b6a63, 0x2b2a26, new Item.Properties()));
 	public static final RegistryObject<Item> GELATINOUS_CUBE_EGG = ITEMS.register(GELATINOUS_CUBE + "_egg", () -> new ForgeSpawnEggItem(ModEntities.GELATINOUS_CUBE_TYPE, 0x9adfc7, 0x5fae95, new Item.Properties()));
 	public static final RegistryObject<Item> OCHRE_JELLY_EGG = ITEMS.register(OCHRE_JELLY + "_egg", () -> new ForgeSpawnEggItem(ModEntities.OCHRE_JELLY_TYPE, 0xadb83d, 0x5f6b1f, new Item.Properties()));
-	public static final RegistryObject<Item> GRAY_OOZE_EGG = ITEMS.register(GRAY_OOZE + "_egg", () -> new ForgeSpawnEggItem(ModEntities.GRAY_OOZE_TYPE, 0x8a8a8a, 0x5a5a5a, new Item.Properties()));
-	public static final RegistryObject<Item> VANILLA_CHEST_MIMIC_EGG = ITEMS.register(VANILLA_CHEST_MIMIC + "_egg", () -> new ForgeSpawnEggItem(ModEntities.VANILLA_CHEST_MIMIC_TYPE, 0x8f691d, 0xab792d, new Item.Properties()));
+	public static final RegistryObject<Item> GRAY_OOZE_EGG = ITEMS.register(GRAY_OOZE + "_egg", () -> new ForgeSpawnEggItem(ModEntities.GRAY_OOZE_TYPE, 0x7d8a8f, 0x4a5459, new Item.Properties()));
+	public static final RegistryObject<Item> VANILLA_CHEST_MIMIC_EGG = ITEMS.register(VANILLA_CHEST_MIMIC + "_egg", () -> new ForgeSpawnEggItem(ModEntities.VANILLA_CHEST_MIMIC_TYPE, 0x8f691d, 0x2f3a24, new Item.Properties()));
 	public static final RegistryObject<Item> BARREL_MIMIC_EGG = ITEMS.register(BARREL_MIMIC + "_egg", () -> new ForgeSpawnEggItem(ModEntities.BARREL_MIMIC_TYPE, 0x9f854d, 0x54452c, new Item.Properties()));
 
 	public static final RegistryObject<Item> GARGOYLE_EGG = ITEMS.register(GARGOYLE + "_egg", () -> new GargoyleEggItem(ModEntities.GARGOYLE_TYPE, 0x6d6d81, 0x373b41, new Item.Properties()));
@@ -72,6 +76,12 @@ public class ModItems {
 	// projectiles
 	public static final RegistryObject<Item> PARALYSIS_SPELL_ITEM = ITEMS.register(PARALYSIS_SPELL, () -> new Item(new Item.Properties()));
 	public static final RegistryObject<Item> HARM_SPELL_ITEM = ITEMS.register(HARM_SPELL, () -> new Item(new Item.Properties()));
+	// icon is a hand-authored model (assets/ddenizens/models/item/withering_gaze.json) referencing
+	// gmm's textures/item/withering_gaze_spell.png directly -- no ItemModelProvider entry needed.
+	// That texture began as one of gmm's orb_black particle-palette candidates (textures/particle/),
+	// renamed into gmm's item textures once claimed here so the remaining orb_* colors stay available
+	// as an unclaimed palette for future use.
+	public static final RegistryObject<Item> WITHERING_GAZE_SPELL_ITEM = ITEMS.register(WITHERING_GAZE_SPELL, () -> new Item(new Item.Properties()));
 	public static final RegistryObject<Item> DISINTEGRATE_SPELL_ITEM = ITEMS.register(DISINTEGRATE_SPELL, () -> new Item(new Item.Properties()));
 	public static final RegistryObject<Item> DISARM_SPELL_ITEM = ITEMS.register(DISARM_SPELL, () -> new Item(new Item.Properties()));
 
@@ -124,6 +134,7 @@ public class ModItems {
 				// spawn eggs
 				output.accept(HEADLESS_EGG.get());
 				output.accept(ORC_EGG.get());
+					output.accept(ORC_SHAMAN_EGG.get());
 				output.accept(GHOUL_EGG.get());
 				output.accept(SEWER_GHOUL_EGG.get());
 				output.accept(RAT_EGG.get());
@@ -147,6 +158,9 @@ public class ModItems {
 				output.accept(BURNING_SKELETON_EGG.get());
 				output.accept(BLOODY_BONES_EGG.get());
 				output.accept(BLOATER_EGG.get());
+				output.accept(GRAVE_ZOMBIE_EGG.get());
+				output.accept(WIGHT_EGG.get());
+				output.accept(BODAK_EGG.get());
 				output.accept(GELATINOUS_CUBE_EGG.get());
 				output.accept(OCHRE_JELLY_EGG.get());
 				output.accept(GRAY_OOZE_EGG.get());
@@ -169,6 +183,7 @@ public class ModItems {
 				output.accept(ROCK_ITEM.get());
 				output.accept(PARALYSIS_SPELL_ITEM.get());
 				output.accept(HARM_SPELL_ITEM.get());
+				output.accept(WITHERING_GAZE_SPELL_ITEM.get());
 				output.accept(DISINTEGRATE_SPELL_ITEM.get());
 				output.accept(DISARM_SPELL_ITEM.get());
 			})

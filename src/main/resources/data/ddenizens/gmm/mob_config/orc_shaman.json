@@ -1,0 +1,14 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319,
+		"skyVisibility": "must_see",
+		"requiresDarkness": false
+	},
+	"properties": {
+		"rangedProbability": 0,
+		"spellChargeTime": 160,
+		"spellMinRange": 4.0
+	}
+}

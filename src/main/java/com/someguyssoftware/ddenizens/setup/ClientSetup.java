@@ -37,7 +37,9 @@ import mod.gottsch.forge.gmm.core.client.renderer.entity.HeadlessRenderer;
 import mod.gottsch.forge.gmm.core.client.model.SkeletonWarriorModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.SkeletonWarriorRenderer;
 import mod.gottsch.forge.gmm.core.client.model.OrcModel;
+import mod.gottsch.forge.gmm.core.client.model.OrcShamanModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.OrcRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.OrcShamanRenderer;
 import mod.gottsch.forge.gmm.core.client.model.ShadowModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.ShadowRenderer;
 import mod.gottsch.forge.gmm.core.client.model.IronSkeletonModel;
@@ -53,6 +55,9 @@ import mod.gottsch.forge.gmm.core.client.renderer.entity.ElectricSkeletonRendere
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BurningSkeletonRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BloodyBonesRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BloaterRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.GraveZombieRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.WightRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.BodakRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.GelatinousCubeRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.OchreJellyRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.GrayOozeRenderer;
@@ -62,6 +67,7 @@ import mod.gottsch.forge.gmm.core.client.model.BarrelMimicModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BarrelMimicRenderer;
 import mod.gottsch.forge.gmm.core.client.model.BoneShardModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BoneShardRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.SpikeGrowthSpellRenderer;
 import mod.gottsch.forge.gmm.core.client.model.WingedSkeletonModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.WingedSkeletonRenderer;
 import mod.gottsch.forge.gmm.core.client.model.GargoyleModel;
@@ -110,6 +116,7 @@ public class ClientSetup {
 	public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
 		event.registerLayerDefinition(HeadlessModel.LAYER_LOCATION, HeadlessModel::createBodyLayer);
 		event.registerLayerDefinition(OrcModel.LAYER_LOCATION, OrcModel::createBodyLayer);
+		event.registerLayerDefinition(OrcShamanModel.LAYER_LOCATION, OrcShamanModel::createBodyLayer);
 		event.registerLayerDefinition(GhoulModel.LAYER_LOCATION, GhoulModel::createBodyLayer);
 		event.registerLayerDefinition(SewerGhoulModel.LAYER_LOCATION, SewerGhoulModel::createBodyLayer);
 		event.registerLayerDefinition(RatModel.LAYER_LOCATION, RatModel::createBodyLayer);
@@ -150,6 +157,7 @@ public class ClientSetup {
     public static void onRegisterRenderer(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.HEADLESS_ENTITY_TYPE.get(), HeadlessRenderer::new);
         event.registerEntityRenderer(ModEntities.ORC_ENTITY_TYPE.get(), OrcRenderer::new);
+        event.registerEntityRenderer(ModEntities.ORC_SHAMAN_ENTITY_TYPE.get(), OrcShamanRenderer::new);
         event.registerEntityRenderer(ModEntities.GHOUL_ENTITY_TYPE.get(), GhoulRenderer::new);
 		event.registerEntityRenderer(ModEntities.SEWER_GHOUL_ENTITY_TYPE.get(), SewerGhoulRenderer::new);
 		event.registerEntityRenderer(ModEntities.RAT_ENTITY_TYPE.get(), RatRenderer::new);
@@ -178,6 +186,11 @@ public class ClientSetup {
 		event.registerEntityRenderer(ModEntities.BLOODY_BONES_TYPE.get(), BloodyBonesRenderer::new);
 		// Bloater reuses the vanilla ModelLayers.ZOMBIE rig — no new layer definition needed.
 		event.registerEntityRenderer(ModEntities.BLOATER_TYPE.get(), BloaterRenderer::new);
+		// Grave Zombie likewise reuses the vanilla ModelLayers.ZOMBIE rig — no new layer definition needed.
+		event.registerEntityRenderer(ModEntities.GRAVE_ZOMBIE_TYPE.get(), GraveZombieRenderer::new);
+		// Wight likewise reuses the vanilla ModelLayers.ZOMBIE rig — no new layer definition needed.
+		event.registerEntityRenderer(ModEntities.WIGHT_TYPE.get(), WightRenderer::new);
+		event.registerEntityRenderer(ModEntities.BODAK_TYPE.get(), BodakRenderer::new);
 		// Gelatinous Cube reuses the vanilla ModelLayers.SLIME rig — no new layer definition needed.
 		event.registerEntityRenderer(ModEntities.GELATINOUS_CUBE_TYPE.get(), GelatinousCubeRenderer::new);
 		// Ochre Jelly reuses the vanilla ModelLayers.SLIME rig — no new layer definition needed.
@@ -198,6 +211,9 @@ public class ClientSetup {
         event.registerEntityRenderer(ModEntities.HARM_SPELL_ENTITY_TYPE.get(), (provider) -> {
         	return new ThrownItemRenderer<>(provider, 1.25F, true);
          });
+        event.registerEntityRenderer(ModEntities.WITHERING_GAZE_SPELL_ENTITY_TYPE.get(), (provider) -> {
+        	return new ThrownItemRenderer<>(provider, 0.6F, true);
+         });
 		event.registerEntityRenderer(ModEntities.DISINTEGRATE_SPELL_ENTITY_TYPE.get(), (provider) -> {
 			return new ThrownItemRenderer<>(provider, 1.25F, true);
 		});
@@ -215,5 +231,7 @@ public class ClientSetup {
         	return new ThrownItemRenderer<>(provider, 0.5F, true);
          });
         event.registerEntityRenderer(ModEntities.BONE_SHARD_ENTITY_TYPE.get(), BoneShardRenderer::new);
+        // block-entity rendering (real BlockState, no custom mesh/texture) — see spell dev guide §2
+        event.registerEntityRenderer(ModEntities.SPIKE_GROWTH_SPELL_ENTITY_TYPE.get(), SpikeGrowthSpellRenderer::new);
 	}
 }

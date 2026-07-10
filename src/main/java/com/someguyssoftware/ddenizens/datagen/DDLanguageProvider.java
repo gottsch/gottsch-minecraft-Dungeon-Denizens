@@ -46,6 +46,8 @@ DDLanguageProvider extends LanguageProvider {
         add(ModItems.HEADLESS_EGG.get(), "Headless Spawn Egg");
     	add(ModEntities.ORC_ENTITY_TYPE.get(), "Orc");
         add(ModItems.ORC_EGG.get(), "Orc Spawn Egg");
+        add(ModEntities.ORC_SHAMAN_ENTITY_TYPE.get(), "Orc Shaman");
+        add(ModItems.ORC_SHAMAN_EGG.get(), "Orc Shaman Spawn Egg");
         add(ModEntities.GHOUL_ENTITY_TYPE.get(), "Ghoul");
         add(ModItems.GHOUL_EGG.get(), "Ghoul Spawn Egg");
         add(ModEntities.SEWER_GHOUL_ENTITY_TYPE.get(), "Sewer Ghoul");
@@ -112,6 +114,15 @@ DDLanguageProvider extends LanguageProvider {
         add(ModEntities.BLOATER_TYPE.get(), "Bloater");
         add(ModItems.BLOATER_EGG.get(), "Bloater Spawn Egg");
 
+        add(ModEntities.GRAVE_ZOMBIE_TYPE.get(), "Grave Zombie");
+        add(ModItems.GRAVE_ZOMBIE_EGG.get(), "Grave Zombie Spawn Egg");
+
+        add(ModEntities.WIGHT_TYPE.get(), "Wight");
+        add(ModItems.WIGHT_EGG.get(), "Wight Spawn Egg");
+
+        add(ModEntities.BODAK_TYPE.get(), "Bodak");
+        add(ModItems.BODAK_EGG.get(), "Bodak Spawn Egg");
+
         add(ModEntities.GELATINOUS_CUBE_TYPE.get(), "Gelatinous Cube");
         add(ModItems.GELATINOUS_CUBE_EGG.get(), "Gelatinous Cube Spawn Egg");
 
@@ -135,6 +146,7 @@ DDLanguageProvider extends LanguageProvider {
 
         add(ModItems.PARALYSIS_SPELL_ITEM.get(), "Slow Spell");
         add(ModItems.HARM_SPELL_ITEM.get(), "Harm Spell");
+        add(ModItems.WITHERING_GAZE_SPELL_ITEM.get(), "Withering Gaze Spell");
         add(ModItems.DISINTEGRATE_SPELL_ITEM.get(), "Disintegrate Spell");
         add(ModItems.DISARM_SPELL_ITEM.get(), "Disarm Spell");
 

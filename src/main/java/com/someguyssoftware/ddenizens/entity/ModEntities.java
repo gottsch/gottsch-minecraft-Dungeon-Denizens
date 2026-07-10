@@ -4,10 +4,12 @@ import com.google.common.collect.Lists;
 import com.someguyssoftware.ddenizens.DD;
 import mod.gottsch.forge.gmm.core.entity.projectile.ParalysisSpell;
 import mod.gottsch.forge.gmm.core.entity.projectile.HarmSpell;
+import mod.gottsch.forge.gmm.core.entity.projectile.WitheringGazeSpell;
 import mod.gottsch.forge.gmm.core.entity.projectile.DisintegrateSpell;
 import mod.gottsch.forge.gmm.core.entity.projectile.DisarmSpell;
 import mod.gottsch.forge.gmm.core.entity.projectile.FireSpoutSpell;
 import mod.gottsch.forge.gmm.core.entity.projectile.FirewallColumnSpell;
+import mod.gottsch.forge.gmm.core.entity.projectile.SpikeGrowthSpell;
 import mod.gottsch.forge.gmm.core.entity.projectile.Rock;
 import mod.gottsch.forge.gmm.core.entity.projectile.BoneShard;
 import mod.gottsch.forge.gmm.core.entity.monster.AlligatorGar;
@@ -23,6 +25,7 @@ import mod.gottsch.forge.gmm.core.entity.monster.beholderkin.Spectator;
 import mod.gottsch.forge.gmm.core.entity.monster.beholderkin.Beholder;
 import mod.gottsch.forge.gmm.core.entity.monster.Headless;
 import mod.gottsch.forge.gmm.core.entity.monster.Orc;
+import mod.gottsch.forge.gmm.core.entity.monster.OrcShaman;
 import mod.gottsch.forge.gmm.core.entity.monster.ghoul.Ghoul;
 import mod.gottsch.forge.gmm.core.entity.monster.ghoul.SewerGhoul;
 import mod.gottsch.forge.gmm.core.entity.monster.Rat;
@@ -37,6 +40,9 @@ import mod.gottsch.forge.gmm.core.entity.monster.skeleton.BloodyBones;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.ElectricSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.BurningSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.zombie.Bloater;
+import mod.gottsch.forge.gmm.core.entity.monster.zombie.GraveZombie;
+import mod.gottsch.forge.gmm.core.entity.monster.zombie.Wight;
+import mod.gottsch.forge.gmm.core.entity.monster.zombie.Bodak;
 import mod.gottsch.forge.gmm.core.entity.monster.GelatinousCube;
 import mod.gottsch.forge.gmm.core.entity.monster.OchreJelly;
 import mod.gottsch.forge.gmm.core.entity.monster.GrayOoze;
@@ -74,6 +80,7 @@ public class ModEntities {
 	public static final String DAEMON = "daemon";
 	public static final String BOULDER = "boulder";
 	public static final String ORC = "orc";
+	public static final String ORC_SHAMAN = "orc_shaman";
 	public static final String SKELETON_WARRIOR = "skeleton_warrior";
 	public static final String WINGED_SKELETON = "winged_skeleton";
 	public static final String IRON_SKELETON = "iron_skeleton";
@@ -85,6 +92,9 @@ public class ModEntities {
 	public static final String BURNING_SKELETON = "burning_skeleton";
 	public static final String BLOODY_BONES = "bloody_bones";
 	public static final String BLOATER = "bloater";
+	public static final String GRAVE_ZOMBIE = "grave_zombie";
+	public static final String WIGHT = "wight";
+	public static final String BODAK = "bodak";
 	public static final String GELATINOUS_CUBE = "gelatinous_cube";
 	public static final String OCHRE_JELLY = "ochre_jelly";
 	public static final String GRAY_OOZE = "gray_ooze";
@@ -102,6 +112,8 @@ public class ModEntities {
 	public static final String DISARM_SPELL = "disarm";
 	public static final String FIRESPOUT_SPELL = "firespout";
 	public static final String FIREWALL_COLUMN_SPELL = "firewall_column";
+	public static final String SPIKE_GROWTH_SPELL = "spike_growth";
+	public static final String WITHERING_GAZE_SPELL = "withering_gaze";
 	public static final String ROCK = "rock";
 	public static final String BONE_SHARD = "bone_shard";
 
@@ -129,6 +141,12 @@ public class ModEntities {
 			.clientTrackingRange(12)
 			.setShouldReceiveVelocityUpdates(false)
 			.build(ORC));
+
+	public static final RegistryObject<EntityType<OrcShaman>> ORC_SHAMAN_ENTITY_TYPE = ENTITIES.register(ORC_SHAMAN, () -> EntityType.Builder.of(OrcShaman::new, MobCategory.MONSTER)
+			.sized(1F, 1.99F)
+			.clientTrackingRange(12)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(ORC_SHAMAN));
 
 	public static final RegistryObject<EntityType<Ghoul>> GHOUL_ENTITY_TYPE = ENTITIES.register(GHOUL, () -> EntityType.Builder.of(Ghoul::new, MobCategory.MONSTER)
 			.sized(0.6F, 1.68F)
@@ -277,6 +295,28 @@ public class ModEntities {
 			.setShouldReceiveVelocityUpdates(false)
 			.build(BLOATER));
 
+	// standard vanilla zombie proportions -- it's a texture-only recolor, not a size change; the
+	// ambush (burrow/surface) mechanic is handled entirely by invisibility, not geometry.
+	public static final RegistryObject<EntityType<GraveZombie>> GRAVE_ZOMBIE_TYPE = ENTITIES.register(GRAVE_ZOMBIE, () -> EntityType.Builder.of(GraveZombie::new, MobCategory.MONSTER)
+			.sized(0.6F, 1.95F)
+			.clientTrackingRange(15)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(GRAVE_ZOMBIE));
+
+	// standard vanilla zombie proportions -- fights like a person (no shambling pose), see WightModel.
+	public static final RegistryObject<EntityType<Wight>> WIGHT_TYPE = ENTITIES.register(WIGHT, () -> EntityType.Builder.of(Wight::new, MobCategory.MONSTER)
+			.sized(0.6F, 1.95F)
+			.clientTrackingRange(15)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(WIGHT));
+
+	// standard vanilla zombie proportions/rig -- see Bodak's class doc for the Death Gaze + sunlight-panic kit.
+	public static final RegistryObject<EntityType<Bodak>> BODAK_TYPE = ENTITIES.register(BODAK, () -> EntityType.Builder.of(Bodak::new, MobCategory.MONSTER)
+			.sized(0.6F, 1.95F)
+			.clientTrackingRange(15)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(BODAK));
+
 	// smaller than a full-sized ("Big") vanilla Slime (~2.04 blocks); see GelatinousCube's class doc.
 	// this is the size at gmm:mob_config's default "size": 1.0 -- GelatinousCube.getDimensions() scales
 	// it further at spawn if a consumer overrides that key.
@@ -345,6 +385,13 @@ public class ModEntities {
 			.setShouldReceiveVelocityUpdates(false)
 			.build(HARM_SPELL));
 
+	public static final RegistryObject<EntityType<WitheringGazeSpell>> WITHERING_GAZE_SPELL_ENTITY_TYPE =
+			ENTITIES.register(WITHERING_GAZE_SPELL, () -> EntityType.Builder.of(WitheringGazeSpell::new, MobCategory.MISC)
+			.sized(1F, 1F)
+			.clientTrackingRange(12)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(WITHERING_GAZE_SPELL));
+
 	public static final RegistryObject<EntityType<DisarmSpell>> DISARM_SPELL_ENTITY_TYPE =
 			ENTITIES.register(DISARM_SPELL, () -> EntityType.Builder.of(DisarmSpell::new, MobCategory.MISC)
 					.sized(1F, 1F)
@@ -372,6 +419,13 @@ public class ModEntities {
 			.clientTrackingRange(12)
 			.setShouldReceiveVelocityUpdates(false)
 			.build(FIREWALL_COLUMN_SPELL));
+
+	public static final RegistryObject<EntityType<SpikeGrowthSpell>> SPIKE_GROWTH_SPELL_ENTITY_TYPE =
+			ENTITIES.register(SPIKE_GROWTH_SPELL, () -> EntityType.Builder.of(SpikeGrowthSpell::new, MobCategory.MISC)
+			.sized(0.5F, 0.5F)
+			.clientTrackingRange(12)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(SPIKE_GROWTH_SPELL));
 
 	public static final RegistryObject<EntityType<Rock>> ROCK_ENTITY_TYPE =
 			ENTITIES.register(ROCK, () -> EntityType.Builder.of(Rock::new, MobCategory.MISC)
@@ -405,6 +459,7 @@ public class ModEntities {
 		ALL_MOBS.add(SHADOWLORD_ENTITY_TYPE);
 		ALL_MOBS.add(DAEMON_ENTITY_TYPE);
 		ALL_MOBS.add(ORC_ENTITY_TYPE);
+		ALL_MOBS.add(ORC_SHAMAN_ENTITY_TYPE);
 		ALL_MOBS.add(SKELETON_WARRIOR_TYPE);
 		ALL_MOBS.add(WINGED_SKELETON_TYPE);
 		ALL_MOBS.add(MAGMA_SKELETON_TYPE);
@@ -415,6 +470,9 @@ public class ModEntities {
 		ALL_MOBS.add(BURNING_SKELETON_TYPE);
 		ALL_MOBS.add(BLOODY_BONES_TYPE);
 		ALL_MOBS.add(BLOATER_TYPE);
+		ALL_MOBS.add(GRAVE_ZOMBIE_TYPE);
+		ALL_MOBS.add(WIGHT_TYPE);
+		ALL_MOBS.add(BODAK_TYPE);
 		ALL_MOBS.add(GELATINOUS_CUBE_TYPE);
 		ALL_MOBS.add(OCHRE_JELLY_TYPE);
 		ALL_MOBS.add(GRAY_OOZE_TYPE);

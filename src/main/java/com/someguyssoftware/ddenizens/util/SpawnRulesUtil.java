@@ -26,6 +26,7 @@ import mod.gottsch.forge.gmm.core.entity.monster.Boulder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
@@ -163,5 +164,15 @@ public final class SpawnRulesUtil {
 		MobConfig.SpawnSettings spawn = spawnSettings(level, mob, false);
 		return ((pos.getY() > spawn.minHeight() && pos.getY() < spawn.maxHeight()) || level.getBiome(pos).is(BiomeTags.IS_MOUNTAIN))
 				&& Monster.checkAnyLightMonsterSpawnRules(mob, level, spawnType, pos, random);
+	}
+
+	/**
+	 * Bespoke gate for gmm's GraveZombie (reads DD's spawn bridge). It only ever digs into actual
+	 * dirt ({@code minecraft:dirt} — dirt/grass/podzol/coarse dirt/mycelium/rooted dirt, never stone
+	 * or other terrain — see the class doc), so natural spawning requires the same of the block it's
+	 * standing on; otherwise identical to the standard {@link #checkSpawnRules}.
+	 */
+	public static boolean checkGraveZombieSpawnRules(EntityType<? extends Mob> mob, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+		return level.getBlockState(pos.below()).is(BlockTags.DIRT) && checkSpawnRules(mob, level, spawnType, pos, random);
 	}
 }

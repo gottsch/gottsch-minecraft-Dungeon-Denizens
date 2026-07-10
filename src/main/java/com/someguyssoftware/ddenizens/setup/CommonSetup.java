@@ -29,6 +29,7 @@ import mod.gottsch.forge.gmm.core.entity.monster.Rat;
 import mod.gottsch.forge.gmm.core.entity.monster.AlligatorGar;
 import mod.gottsch.forge.gmm.core.entity.monster.Headless;
 import mod.gottsch.forge.gmm.core.entity.monster.Orc;
+import mod.gottsch.forge.gmm.core.entity.monster.OrcShaman;
 import mod.gottsch.forge.gmm.core.entity.monster.Shadow;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.SkeletonWarrior;
 import mod.gottsch.forge.gmm.core.entity.monster.gargoyle.Gargoyle;
@@ -39,6 +40,8 @@ import mod.gottsch.forge.gmm.core.entity.projectile.ParalysisSpell;
 import mod.gottsch.forge.gmm.core.entity.projectile.HarmSpell;
 import mod.gottsch.forge.gmm.core.entity.projectile.DisintegrateSpell;
 import mod.gottsch.forge.gmm.core.entity.projectile.DisarmSpell;
+import mod.gottsch.forge.gmm.core.entity.projectile.SpikeGrowthSpell;
+import mod.gottsch.forge.gmm.core.entity.projectile.WitheringGazeSpell;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.BowSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.IronSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.MagmaSkeleton;
@@ -49,6 +52,9 @@ import mod.gottsch.forge.gmm.core.entity.monster.skeleton.BloodyBones;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.ElectricSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.BurningSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.zombie.Bloater;
+import mod.gottsch.forge.gmm.core.entity.monster.zombie.GraveZombie;
+import mod.gottsch.forge.gmm.core.entity.monster.zombie.Wight;
+import mod.gottsch.forge.gmm.core.entity.monster.zombie.Bodak;
 import mod.gottsch.forge.gmm.core.entity.monster.GelatinousCube;
 import mod.gottsch.forge.gmm.core.entity.monster.OchreJelly;
 import mod.gottsch.forge.gmm.core.entity.monster.GrayOoze;
@@ -129,6 +135,12 @@ public class CommonSetup {
 		DisintegrateSpell.itemSupplier = () -> ModItems.DISINTEGRATE_SPELL_ITEM.get();
 		DisarmSpell.itemSupplier = () -> ModItems.DISARM_SPELL_ITEM.get();
 		Rock.itemSupplier = () -> ModItems.ROCK_ITEM.get();
+		// dedicated dark orb icon -- claimed from gmm's orb_black particle-palette candidate (left over
+		// from the Beholder/Oculus Orb work) rather than commissioning new art; a black orb reads as
+		// necrotic/death magic, fitting Withering Gaze's theme. The texture was renamed into gmm's item
+		// textures once claimed (see ModItems.WITHERING_GAZE_SPELL_ITEM), so it's not still sitting in
+		// the reusable orb_* palette.
+		WitheringGazeSpell.itemSupplier = () -> ModItems.WITHERING_GAZE_SPELL_ITEM.get();
 
 		// All GMM mob ambient/step sounds now default to gmm's own GMMSounds (shipped in gmm); no DD
 		// wiring needed. A consumer may still override per-mob, e.g. Gargoyle.ambientSound = () -> ...;
@@ -216,6 +228,23 @@ public class CommonSetup {
 
 		Shadowlord.weapon = ModItems.SHADOW_BLADE;
 
+		// gmm's OrcShaman owns no concrete spell; SpikeGrowthSpell's chevron/telegraph geometry lives
+		// entirely in its own static cast(...) factory (spell-intrinsic, not caster-side orchestration),
+		// so the launcher just delegates and ignores the goal's computed x,y,z spawn point.
+		CastSpellGoal.SpellLauncher spikeGrowthSpell = (caster, target, x, y, z) ->
+				SpikeGrowthSpell.cast(ModEntities.SPIKE_GROWTH_SPELL_ENTITY_TYPE.get(), caster, target);
+		OrcShaman.spellCaster = spikeGrowthSpell;
+
+		// gmm's Bodak owns no concrete spell for Withering Gaze; supply DD's WitheringGazeSpell
+		// consumer-side, same shape as harmSpell above (a plain direct-damage bolt, no special geometry).
+		CastSpellGoal.SpellLauncher witheringGazeSpell = (caster, target, x, y, z) -> {
+			WitheringGazeSpell spell = new WitheringGazeSpell(ModEntities.WITHERING_GAZE_SPELL_ENTITY_TYPE.get(), caster.level());
+			spell.init(caster, target.getX() - x, target.getY(0.5D) - y, target.getZ() - z);
+			spell.setPos(x, y, z);
+			caster.level().addFreshEntity(spell);
+		};
+		Bodak.spellCaster = witheringGazeSpell;
+
 		// gmm's TaintedSkeleton owns no projectile; supply DD-registered BoneShard as its shrapnel.
 		TaintedSkeleton.shardFactory = (shooter, level) -> new BoneShard(ModEntities.BONE_SHARD_ENTITY_TYPE.get(), shooter, level);
 		// Bloody Bones flings the same BoneShard as its "arms and legs" when it collapses to a skull.
@@ -230,6 +259,7 @@ public class CommonSetup {
 	public static void onAttributeCreate(EntityAttributeCreationEvent event) {
 		event.put(ModEntities.HEADLESS_ENTITY_TYPE.get(), Headless.createAttributes().build());
 		event.put(ModEntities.ORC_ENTITY_TYPE.get(), Orc.createAttributes().build());
+		event.put(ModEntities.ORC_SHAMAN_ENTITY_TYPE.get(), OrcShaman.createAttributes().build());
 		event.put(ModEntities.GHOUL_ENTITY_TYPE.get(), Ghoul.createAttributes().build());
 		event.put(ModEntities.SEWER_GHOUL_ENTITY_TYPE.get(), SewerGhoul.createAttributes().build());
 		event.put(ModEntities.RAT_ENTITY_TYPE.get(), Rat.createAttributes().build());
@@ -253,6 +283,9 @@ public class CommonSetup {
 		event.put(ModEntities.BURNING_SKELETON_TYPE.get(), BurningSkeleton.createAttributes().build());
 		event.put(ModEntities.BLOODY_BONES_TYPE.get(), BloodyBones.createAttributes().build());
 		event.put(ModEntities.BLOATER_TYPE.get(), Bloater.createAttributes().build());
+		event.put(ModEntities.GRAVE_ZOMBIE_TYPE.get(), GraveZombie.createAttributes().build());
+		event.put(ModEntities.WIGHT_TYPE.get(), Wight.createAttributes().build());
+		event.put(ModEntities.BODAK_TYPE.get(), Bodak.createAttributes().build());
 		event.put(ModEntities.GELATINOUS_CUBE_TYPE.get(), GelatinousCube.createAttributes().build());
 		event.put(ModEntities.OCHRE_JELLY_TYPE.get(), OchreJelly.createAttributes().build());
 		event.put(ModEntities.GRAY_OOZE_TYPE.get(), GrayOoze.createAttributes().build());
@@ -268,6 +301,7 @@ public class CommonSetup {
 	public static void registerEntitySpawn(SpawnPlacementRegisterEvent event) {
 		event.register(ModEntities.HEADLESS_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.ORC_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.ORC_SHAMAN_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.GHOUL_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.SEWER_GHOUL_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.RAT_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
@@ -292,6 +326,9 @@ public class CommonSetup {
 		event.register(ModEntities.BURNING_SKELETON_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.BLOODY_BONES_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.BLOATER_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.GRAVE_ZOMBIE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkGraveZombieSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.WIGHT_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.BODAK_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.GELATINOUS_CUBE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.OCHRE_JELLY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.GRAY_OOZE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
@@ -311,6 +348,7 @@ public class CommonSetup {
 		if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
 			event.accept(ModItems.HEADLESS_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.ORC_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.ORC_SHAMAN_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.GHOUL_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.SEWER_GHOUL_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.RAT_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
@@ -335,6 +373,9 @@ public class CommonSetup {
 			event.accept(ModItems.BURNING_SKELETON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.BLOODY_BONES_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.BLOATER_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.GRAVE_ZOMBIE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.WIGHT_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.BODAK_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.GELATINOUS_CUBE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.OCHRE_JELLY_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.GRAY_OOZE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);

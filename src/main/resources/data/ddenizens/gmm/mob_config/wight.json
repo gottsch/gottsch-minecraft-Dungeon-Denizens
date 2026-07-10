@@ -1,0 +1,24 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319,
+		"skyVisibility": "any",
+		"requiresDarkness": true
+	},
+	"properties": {
+		"witherDuration": 200.0,
+		"maxWitherStacks": 5.0,
+		"lifesteal": 0.5,
+		"summonChargeTime": 60.0,
+		"summonCooldownTime": 600.0,
+		"summonSpawnRadius": 2.5,
+		"enthrallChargeTime": 100.0,
+		"enthrallCooldownTime": 600.0,
+		"enthrallRange": 16.0,
+		"maxThralls": 3.0
+	},
+	"flags": {
+		"wither": true
+	}
+}

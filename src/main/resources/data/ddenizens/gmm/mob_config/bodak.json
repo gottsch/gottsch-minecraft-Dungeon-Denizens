@@ -1,0 +1,30 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319,
+		"skyVisibility": "any",
+		"requiresDarkness": true
+	},
+	"properties": {
+		"gazeRange": 8.0,
+		"gazeConeDegrees": 20.0,
+		"gazeChargeTicks": 60.0,
+		"gazeCooldownTicks": 100.0,
+		"gazeDamage": 14.0,
+		"nearLethalChance": 0.2,
+		"sunBonusDamage": 2.0,
+		"sunPanicSpeedBoost": 0.12,
+		"jerkMinAngleDegrees": 6.0,
+		"jerkMaxAngleDegrees": 12.0,
+		"jerkPeriodTicks": 16.0,
+		"spellChargeTime": 50.0,
+		"spellMinRange": 4.0,
+		"spellCooldownTime": 100.0
+	},
+	"flags": {
+		"deathGaze": true,
+		"nearLethalGazeAllowKill": false,
+		"sunPanic": true
+	}
+}

@@ -89,8 +89,14 @@ public class DDItemModelsProvider extends ItemModelProvider {
 
 
         // eggs
+        // NOTE: the orb-shaped template_gmm_egg (assets/ddenizens/models/item/template_gmm_egg.json +
+        // egg_base/egg_secondary/egg_rim textures) was reverted after in-game testing — user didn't like
+        // the orb look. Reverted to vanilla's item/template_spawn_egg below. The orb assets are left in
+        // place (unused) for a future attempt at a different custom shape — see
+        // ddenizens-forge-1.20.1-Handoff-Jul09.md §5d.
     	withExistingParent(ModItems.HEADLESS_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     	withExistingParent(ModItems.ORC_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+    	withExistingParent(ModItems.ORC_SHAMAN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     	withExistingParent(ModItems.GHOUL_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     	withExistingParent(ModItems.SEWER_GHOUL_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     	withExistingParent(ModItems.RAT_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
@@ -114,6 +120,9 @@ public class DDItemModelsProvider extends ItemModelProvider {
         withExistingParent(ModItems.BURNING_SKELETON_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.BLOODY_BONES_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.BLOATER_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.GRAVE_ZOMBIE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.WIGHT_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.BODAK_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.GELATINOUS_CUBE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.OCHRE_JELLY_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.GRAY_OOZE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
