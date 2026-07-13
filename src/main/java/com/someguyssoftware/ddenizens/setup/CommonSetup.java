@@ -64,6 +64,7 @@ import mod.gottsch.forge.gmm.core.entity.monster.mimic.VanillaChestMimic;
 import mod.gottsch.forge.gmm.core.entity.monster.mimic.BarrelMimic;
 import mod.gottsch.forge.gmm.core.entity.projectile.BoneShard;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.WingedSkeleton;
+import mod.gottsch.forge.gmm.core.entity.monster.skeleton.SkeletonChampion;
 import mod.gottsch.forge.gmm.core.entity.monster.beholderkin.Beholder;
 import mod.gottsch.forge.gmm.core.entity.monster.beholderkin.DeathTyrant;
 import mod.gottsch.forge.gmm.core.entity.monster.beholderkin.Gazer;
@@ -295,6 +296,7 @@ public class CommonSetup {
 		event.put(ModEntities.GRAY_OOZE_TYPE.get(), GrayOoze.createAttributes().build());
 		event.put(ModEntities.VANILLA_CHEST_MIMIC_TYPE.get(), VanillaChestMimic.createAttributes().build());
 		event.put(ModEntities.BARREL_MIMIC_TYPE.get(), BarrelMimic.createAttributes().build());
+		event.put(ModEntities.SKELETON_CHAMPION_TYPE.get(), SkeletonChampion.createAttributes().build());
 
 		event.put(ModEntities.GARGOYLE_TYPE.get(), Gargoyle.createAttributes().build());
 		event.put(ModEntities.MARGOYLE_TYPE.get(), Margoyle.createAttributes().build());
@@ -344,6 +346,8 @@ public class CommonSetup {
 		// same reasoning as VANILLA_CHEST_MIMIC above -- placement rules only, not a biome natural spawn.
 		event.register(ModEntities.BARREL_MIMIC_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
+		event.register(ModEntities.SKELETON_CHAMPION_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+
 		event.register(ModEntities.GARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.MARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
@@ -387,6 +391,7 @@ public class CommonSetup {
 			event.accept(ModItems.GELATINOUS_CUBE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.OCHRE_JELLY_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.GRAY_OOZE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.SKELETON_CHAMPION_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 
 			event.accept(ModItems.GARGOYLE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.MARGOYLE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);

@@ -1,0 +1,6 @@
+{
+  "parent": "ddenizens:item/single_edge_sword",
+  "textures": {
+    "layer0": "ddenizens:item/blackfang_sword"
+  }
+}

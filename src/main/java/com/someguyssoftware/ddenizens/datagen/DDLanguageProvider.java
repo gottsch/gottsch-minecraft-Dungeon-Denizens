@@ -123,6 +123,9 @@ DDLanguageProvider extends LanguageProvider {
         add(ModEntities.BODAK_TYPE.get(), "Bodak");
         add(ModItems.BODAK_EGG.get(), "Bodak Spawn Egg");
 
+        add(ModEntities.SKELETON_CHAMPION_TYPE.get(), "Skeleton Champion");
+        add(ModItems.SKELETON_CHAMPION_EGG.get(), "Skeleton Champion Spawn Egg");
+
         add(ModEntities.SHRIEKER_TYPE.get(), "Shrieker");
         add(ModItems.SHRIEKER_EGG.get(), "Shrieker Spawn Egg");
 
@@ -169,6 +172,9 @@ DDLanguageProvider extends LanguageProvider {
         add(ModItems.RUSTY_IRON_SWORD4.get(), "Rusty Iron Sword");
         add(ModItems.SHADOW_BLADE.get(), "Shadow Blade");
         add(ModItems.SHADOW_FALCHION.get(), "Shadow Falchion");
+        add(ModItems.ROYAL_OATH.get(), "Royal Oath");
+        add(ModItems.KINGSHIVER.get(), "Kingshiver");
+        add(ModItems.BLACKFANG_SWORD.get(), "Blackfang Sword");
 
         add(LangUtil.tooltip("boolean.yes"), "Yes");
         add(LangUtil.tooltip("boolean.no"), "No");

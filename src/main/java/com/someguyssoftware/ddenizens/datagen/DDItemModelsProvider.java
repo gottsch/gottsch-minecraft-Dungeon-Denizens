@@ -86,6 +86,13 @@ public class DDItemModelsProvider extends ItemModelProvider {
         singleTexture(ModItems.SHADOW_FALCHION.getId().getPath(),
                 modLoc("item/single_edge_sword"), "layer0", modLoc("item/" + ModItems.SHADOW_FALCHION.getId().getPath()));
 
+        singleTexture(ModItems.ROYAL_OATH.getId().getPath(),
+                mcLoc("item/handheld"), "layer0", modLoc("item/" + ModItems.ROYAL_OATH.getId().getPath()));
+        singleTexture(ModItems.KINGSHIVER.getId().getPath(),
+                mcLoc("item/handheld"), "layer0", modLoc("item/" + ModItems.KINGSHIVER.getId().getPath()));
+        singleTexture(ModItems.BLACKFANG_SWORD.getId().getPath(),
+                mcLoc("item/handheld"), "layer0", modLoc("item/" + ModItems.BLACKFANG_SWORD.getId().getPath()));
+
 
 
         // eggs
@@ -130,6 +137,7 @@ public class DDItemModelsProvider extends ItemModelProvider {
         withExistingParent(ModItems.GRAY_OOZE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.VANILLA_CHEST_MIMIC_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.BARREL_MIMIC_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.SKELETON_CHAMPION_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.GARGOYLE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.MARGOYLE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 

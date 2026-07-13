@@ -50,6 +50,7 @@ import mod.gottsch.forge.gmm.core.entity.monster.OchreJelly;
 import mod.gottsch.forge.gmm.core.entity.monster.GrayOoze;
 import mod.gottsch.forge.gmm.core.entity.monster.mimic.VanillaChestMimic;
 import mod.gottsch.forge.gmm.core.entity.monster.mimic.BarrelMimic;
+import mod.gottsch.forge.gmm.core.entity.monster.skeleton.SkeletonChampion;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -378,6 +379,15 @@ public class ModEntities {
 			.setShouldReceiveVelocityUpdates(false)
 			.build(BARREL_MIMIC));
 
+	// hitbox widened 1.2x over vanilla skeleton's 0.6x1.99 to match SkeletonChampionRenderer's
+	// visual-only render scale (same 1.2x) -- an elite pack leader should physically read as bigger
+	// than the rank-and-file skeletons it rallies, not just render oversized with a mismatched hitbox.
+	public static final RegistryObject<EntityType<SkeletonChampion>> SKELETON_CHAMPION_TYPE = ENTITIES.register(SKELETON_CHAMPION, () -> EntityType.Builder.of(SkeletonChampion::new, MobCategory.MONSTER)
+			.sized(0.72F, 2.39F)
+			.clientTrackingRange(12)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(SKELETON_CHAMPION));
+
 	public static final RegistryObject<EntityType<Gargoyle>> GARGOYLE_TYPE = ENTITIES.register(GARGOYLE, () -> EntityType.Builder.of(Gargoyle::new, MobCategory.MONSTER)
 			.sized(0.75F, 1.75F)
 			.clientTrackingRange(12)
@@ -500,7 +510,9 @@ public class ModEntities {
 		ALL_MOBS.add(OCHRE_JELLY_TYPE);
 		ALL_MOBS.add(GRAY_OOZE_TYPE);
 		ALL_MOBS.add(IRON_SKELETON_TYPE);
+		ALL_MOBS.add(SKELETON_CHAMPION_TYPE);
 		ALL_MOBS.add(GARGOYLE_TYPE);
+		ALL_MOBS.add(MARGOYLE_TYPE);
 	}
 
 	public static void init() {

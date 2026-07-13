@@ -34,10 +34,50 @@ public class DDEntityTypeTagsProvider extends EntityTypeTagsProvider {
                 .add(ModEntities.HEADLESS_ENTITY_TYPE.get(),
                      ModEntities.GAZER_ENTITY_TYPE.get());
 
+        // a rallied skeleton champion buffs nearby tagged pack-mates -- the vanilla skeleton plus DD's
+        // own rank-and-file skeleton variants, so the rally has an actual pack to lead.
+        tag(GMMTags.EntityTypes.SKELETON_CHAMPION_RALLY_ALLIES)
+                .add(net.minecraft.world.entity.EntityType.SKELETON,
+                     ModEntities.SKELETON_WARRIOR_TYPE.get(),
+                     ModEntities.WINGED_SKELETON_TYPE.get(),
+                     ModEntities.IRON_SKELETON_TYPE.get(),
+                     ModEntities.MAGMA_SKELETON_TYPE.get(),
+                     ModEntities.FROST_SKELETON_TYPE.get(),
+                     ModEntities.ACID_SKELETON_TYPE.get(),
+                     ModEntities.ELECTRIC_SKELETON_TYPE.get(),
+                     ModEntities.BURNING_SKELETON_TYPE.get(),
+                     ModEntities.BLOODY_BONES_TYPE.get());
+
+        // things the Burning Skeleton's flame (aura/bite/death-burst) won't ignite -- the vanilla
+        // undead roster plus every GMM/DD skeleton-and-undead variant, so it doesn't cook its own
+        // packmates standing next to it in a dungeon room.
+        tag(GMMTags.EntityTypes.BURNING_SKELETON_IGNITE_IMMUNE)
+                .add(net.minecraft.world.entity.EntityType.SKELETON,
+                     net.minecraft.world.entity.EntityType.STRAY,
+                     net.minecraft.world.entity.EntityType.WITHER_SKELETON,
+                     net.minecraft.world.entity.EntityType.ZOMBIE,
+                     net.minecraft.world.entity.EntityType.HUSK,
+                     net.minecraft.world.entity.EntityType.DROWNED,
+                     net.minecraft.world.entity.EntityType.ZOMBIE_VILLAGER,
+                     ModEntities.SKELETON_WARRIOR_TYPE.get(),
+                     ModEntities.WINGED_SKELETON_TYPE.get(),
+                     ModEntities.IRON_SKELETON_TYPE.get(),
+                     ModEntities.MAGMA_SKELETON_TYPE.get(),
+                     ModEntities.FROST_SKELETON_TYPE.get(),
+                     ModEntities.TAINTED_SKELETON_TYPE.get(),
+                     ModEntities.ACID_SKELETON_TYPE.get(),
+                     ModEntities.ELECTRIC_SKELETON_TYPE.get(),
+                     ModEntities.BURNING_SKELETON_TYPE.get(),
+                     ModEntities.BLOODY_BONES_TYPE.get(),
+                     ModEntities.SKELETON_CHAMPION_TYPE.get(),
+                     ModEntities.BLOATER_TYPE.get(),
+                     ModEntities.GRAVE_ZOMBIE_TYPE.get(),
+                     ModEntities.WIGHT_TYPE.get(),
+                     ModEntities.BODAK_TYPE.get());
+
         // a Shrieker's pulse calls in a broad set of common combat-capable dungeon/cave hostiles --
-        // deliberately excludes ambush-disguise mobs (mimics/oozes, whose whole identity is surprise),
-        // passive/ambient mobs (Boulder, Rat, Alligator Gar), and Skeletal Champion (not yet fully
-        // registered in DD -- see the catalog's "Skeletal Champion" entry, still waiting on its model).
+        // deliberately excludes ambush-disguise mobs (mimics/oozes, whose whole identity is surprise)
+        // and passive/ambient mobs (Boulder, Rat, Alligator Gar).
         tag(GMMTags.EntityTypes.SHRIEKER_ALLIES)
                 .add(ModEntities.HEADLESS_ENTITY_TYPE.get(),
                      ModEntities.GAZER_ENTITY_TYPE.get(),
@@ -58,6 +98,7 @@ public class DDEntityTypeTagsProvider extends EntityTypeTagsProvider {
                      ModEntities.BLOATER_TYPE.get(),
                      ModEntities.GRAVE_ZOMBIE_TYPE.get(),
                      ModEntities.WIGHT_TYPE.get(),
-                     ModEntities.BODAK_TYPE.get());
+                     ModEntities.BODAK_TYPE.get(),
+                     ModEntities.SKELETON_CHAMPION_TYPE.get());
     }
 }

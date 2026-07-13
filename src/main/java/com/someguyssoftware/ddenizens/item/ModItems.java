@@ -71,6 +71,7 @@ public class ModItems {
 	public static final RegistryObject<Item> GRAY_OOZE_EGG = ITEMS.register(GRAY_OOZE + "_egg", () -> new ForgeSpawnEggItem(ModEntities.GRAY_OOZE_TYPE, 0x7d8a8f, 0x4a5459, new Item.Properties()));
 	public static final RegistryObject<Item> VANILLA_CHEST_MIMIC_EGG = ITEMS.register(VANILLA_CHEST_MIMIC + "_egg", () -> new ForgeSpawnEggItem(ModEntities.VANILLA_CHEST_MIMIC_TYPE, 0x8f691d, 0x2f3a24, new Item.Properties()));
 	public static final RegistryObject<Item> BARREL_MIMIC_EGG = ITEMS.register(BARREL_MIMIC + "_egg", () -> new ForgeSpawnEggItem(ModEntities.BARREL_MIMIC_TYPE, 0x9f854d, 0x54452c, new Item.Properties()));
+	public static final RegistryObject<Item> SKELETON_CHAMPION_EGG = ITEMS.register(SKELETON_CHAMPION + "_egg", () -> new ForgeSpawnEggItem(ModEntities.SKELETON_CHAMPION_TYPE, 0xc9c9c9, 0x17171a, new Item.Properties()));
 
 	public static final RegistryObject<Item> GARGOYLE_EGG = ITEMS.register(GARGOYLE + "_egg", () -> new GargoyleEggItem(ModEntities.GARGOYLE_TYPE, 0x6d6d81, 0x373b41, new Item.Properties()));
 	public static final RegistryObject<Item> MARGOYLE_EGG = ITEMS.register(MARGOYLE + "_egg", () -> new MargoyleEggItem(ModEntities.MARGOYLE_TYPE, 0x7f7f7f, 0x5a6d41, new Item.Properties()));
@@ -124,6 +125,11 @@ public class ModItems {
 
 		}
 	});
+
+	// skeleton champion's blade pool -- pristine steel, same stats as a vanilla iron sword
+	public static final RegistryObject<Item> ROYAL_OATH = ITEMS.register("royal_oath", () -> new SwordItem(Tiers.IRON, 3, -2.4F, new Item.Properties()));
+	public static final RegistryObject<Item> KINGSHIVER = ITEMS.register("kingshiver", () -> new SwordItem(Tiers.IRON, 3, -2.4F, new Item.Properties()));
+	public static final RegistryObject<Item> BLACKFANG_SWORD = ITEMS.register("blackfang_sword", () -> new SwordItem(Tiers.IRON, 3, -2.4F, new Item.Properties()));
 
 	/*
 	 * a single creative tab holding all Dungeon Denizens content (spawn eggs, weapons, projectile items),
@@ -183,6 +189,9 @@ public class ModItems {
 				output.accept(RUSTY_IRON_AXE2.get());
 				output.accept(SHADOW_BLADE.get());
 				output.accept(SHADOW_FALCHION.get());
+				output.accept(ROYAL_OATH.get());
+				output.accept(KINGSHIVER.get());
+				output.accept(BLACKFANG_SWORD.get());
 				// projectile / misc items
 				output.accept(ROCK_ITEM.get());
 				output.accept(PARALYSIS_SPELL_ITEM.get());

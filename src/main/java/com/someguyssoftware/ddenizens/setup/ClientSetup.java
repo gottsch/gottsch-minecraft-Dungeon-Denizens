@@ -51,6 +51,7 @@ import mod.gottsch.forge.gmm.core.client.renderer.entity.FrostSkeletonRenderer;
 import mod.gottsch.forge.gmm.core.client.model.TaintedSkeletonModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.TaintedSkeletonRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.AcidSkeletonRenderer;
+import mod.gottsch.forge.gmm.core.client.model.ElectricSkeletonModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.ElectricSkeletonRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BurningSkeletonRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BloodyBonesRenderer;
@@ -59,6 +60,8 @@ import mod.gottsch.forge.gmm.core.client.renderer.entity.GraveZombieRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.WightRenderer;
 import mod.gottsch.forge.gmm.core.client.model.BodakModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BodakRenderer;
+import mod.gottsch.forge.gmm.core.client.model.SkeletonChampionModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.SkeletonChampionRenderer;
 import mod.gottsch.forge.gmm.core.client.model.ShriekerModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.ShriekerRenderer;
 import mod.gottsch.forge.gmm.core.client.model.VioletFungusModel;
@@ -142,6 +145,8 @@ public class ClientSetup {
 		event.registerLayerDefinition(MagmaSkeletonModel.LAYER_LOCATION, MagmaSkeletonModel::createBodyLayer);
 		event.registerLayerDefinition(FrostSkeletonModel.LAYER_LOCATION, FrostSkeletonModel::createBodyLayer);
 		event.registerLayerDefinition(TaintedSkeletonModel.LAYER_LOCATION, TaintedSkeletonModel::createBodyLayer);
+		event.registerLayerDefinition(SkeletonChampionModel.LAYER_LOCATION, SkeletonChampionModel::createBodyLayer);
+		event.registerLayerDefinition(ElectricSkeletonModel.LAYER_LOCATION, ElectricSkeletonModel::createBodyLayer);
 		event.registerLayerDefinition(ShriekerModel.LAYER_LOCATION, ShriekerModel::createBodyLayer);
 		event.registerLayerDefinition(VioletFungusModel.LAYER_LOCATION, VioletFungusModel::createBodyLayer);
 		for (int v = 0; v < BoneShardModel.LAYERS.length; v++) {
@@ -186,7 +191,6 @@ public class ClientSetup {
 		event.registerEntityRenderer(ModEntities.TAINTED_SKELETON_TYPE.get(), TaintedSkeletonRenderer::new);
 		// Acid reuses SkeletonWarriorModel.LAYER_LOCATION (registered above) — no new layer definition needed.
 		event.registerEntityRenderer(ModEntities.ACID_SKELETON_TYPE.get(), AcidSkeletonRenderer::new);
-		// Electric likewise reuses SkeletonWarriorModel.LAYER_LOCATION — no new layer definition needed.
 		event.registerEntityRenderer(ModEntities.ELECTRIC_SKELETON_TYPE.get(), ElectricSkeletonRenderer::new);
 		// Burning likewise reuses SkeletonWarriorModel.LAYER_LOCATION — no new layer definition needed.
 		event.registerEntityRenderer(ModEntities.BURNING_SKELETON_TYPE.get(), BurningSkeletonRenderer::new);
@@ -199,6 +203,7 @@ public class ClientSetup {
 		// Wight likewise reuses the vanilla ModelLayers.ZOMBIE rig — no new layer definition needed.
 		event.registerEntityRenderer(ModEntities.WIGHT_TYPE.get(), WightRenderer::new);
 		event.registerEntityRenderer(ModEntities.BODAK_TYPE.get(), BodakRenderer::new);
+		event.registerEntityRenderer(ModEntities.SKELETON_CHAMPION_TYPE.get(), SkeletonChampionRenderer::new);
 		event.registerEntityRenderer(ModEntities.SHRIEKER_TYPE.get(), ShriekerRenderer::new);
 		event.registerEntityRenderer(ModEntities.VIOLET_FUNGUS_TYPE.get(), VioletFungusRenderer::new);
 		// Gelatinous Cube reuses the vanilla ModelLayers.SLIME rig — no new layer definition needed.
