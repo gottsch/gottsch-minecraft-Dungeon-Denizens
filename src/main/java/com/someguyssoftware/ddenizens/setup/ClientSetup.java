@@ -57,7 +57,12 @@ import mod.gottsch.forge.gmm.core.client.renderer.entity.BloodyBonesRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BloaterRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.GraveZombieRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.WightRenderer;
+import mod.gottsch.forge.gmm.core.client.model.BodakModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BodakRenderer;
+import mod.gottsch.forge.gmm.core.client.model.ShriekerModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.ShriekerRenderer;
+import mod.gottsch.forge.gmm.core.client.model.VioletFungusModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.VioletFungusRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.GelatinousCubeRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.OchreJellyRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.GrayOozeRenderer;
@@ -122,6 +127,7 @@ public class ClientSetup {
 		event.registerLayerDefinition(RatModel.LAYER_LOCATION, RatModel::createBodyLayer);
 		event.registerLayerDefinition(AlligatorGarModel.LAYER_LOCATION, AlligatorGarModel::createBodyLayer);
 		event.registerLayerDefinition(EttinModel.LAYER_LOCATION, EttinModel::createBodyLayer);
+		event.registerLayerDefinition(BodakModel.LAYER_LOCATION, BodakModel::createBodyLayer);
 		event.registerLayerDefinition(BeholderModel.LAYER_LOCATION, BeholderModel::createBodyLayer);
 		event.registerLayerDefinition(DeathTyrantModel.LAYER_LOCATION, DeathTyrantModel::createBodyLayer);
 		event.registerLayerDefinition(GazerModel.LAYER_LOCATION, GazerModel::createBodyLayer);
@@ -136,6 +142,8 @@ public class ClientSetup {
 		event.registerLayerDefinition(MagmaSkeletonModel.LAYER_LOCATION, MagmaSkeletonModel::createBodyLayer);
 		event.registerLayerDefinition(FrostSkeletonModel.LAYER_LOCATION, FrostSkeletonModel::createBodyLayer);
 		event.registerLayerDefinition(TaintedSkeletonModel.LAYER_LOCATION, TaintedSkeletonModel::createBodyLayer);
+		event.registerLayerDefinition(ShriekerModel.LAYER_LOCATION, ShriekerModel::createBodyLayer);
+		event.registerLayerDefinition(VioletFungusModel.LAYER_LOCATION, VioletFungusModel::createBodyLayer);
 		for (int v = 0; v < BoneShardModel.LAYERS.length; v++) {
 			final int variant = v;
 			event.registerLayerDefinition(BoneShardModel.LAYERS[variant], () -> BoneShardModel.createBodyLayer(variant));
@@ -191,6 +199,8 @@ public class ClientSetup {
 		// Wight likewise reuses the vanilla ModelLayers.ZOMBIE rig — no new layer definition needed.
 		event.registerEntityRenderer(ModEntities.WIGHT_TYPE.get(), WightRenderer::new);
 		event.registerEntityRenderer(ModEntities.BODAK_TYPE.get(), BodakRenderer::new);
+		event.registerEntityRenderer(ModEntities.SHRIEKER_TYPE.get(), ShriekerRenderer::new);
+		event.registerEntityRenderer(ModEntities.VIOLET_FUNGUS_TYPE.get(), VioletFungusRenderer::new);
 		// Gelatinous Cube reuses the vanilla ModelLayers.SLIME rig — no new layer definition needed.
 		event.registerEntityRenderer(ModEntities.GELATINOUS_CUBE_TYPE.get(), GelatinousCubeRenderer::new);
 		// Ochre Jelly reuses the vanilla ModelLayers.SLIME rig — no new layer definition needed.

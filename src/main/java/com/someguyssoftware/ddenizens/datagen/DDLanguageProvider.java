@@ -123,6 +123,12 @@ DDLanguageProvider extends LanguageProvider {
         add(ModEntities.BODAK_TYPE.get(), "Bodak");
         add(ModItems.BODAK_EGG.get(), "Bodak Spawn Egg");
 
+        add(ModEntities.SHRIEKER_TYPE.get(), "Shrieker");
+        add(ModItems.SHRIEKER_EGG.get(), "Shrieker Spawn Egg");
+
+        add(ModEntities.VIOLET_FUNGUS_TYPE.get(), "Violet Fungus");
+        add(ModItems.VIOLET_FUNGUS_EGG.get(), "Violet Fungus Spawn Egg");
+
         add(ModEntities.GELATINOUS_CUBE_TYPE.get(), "Gelatinous Cube");
         add(ModItems.GELATINOUS_CUBE_EGG.get(), "Gelatinous Cube Spawn Egg");
 

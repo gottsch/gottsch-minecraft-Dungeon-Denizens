@@ -1,0 +1,21 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319,
+		"skyVisibility": "any",
+		"requiresDarkness": true
+	},
+	"properties": {
+		"alertRange": 6.0,
+		"broadcastRange": 16.0,
+		"alertCooldownTicks": 200.0,
+		"maxAlerts": -1.0,
+		"swayDurationTicks": 40.0,
+		"darknessSeconds": 5.0,
+		"darknessOpacity": 0.92
+	},
+	"flags": {
+		"alertsAllies": true
+	}
+}

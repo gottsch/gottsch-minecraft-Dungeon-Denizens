@@ -43,6 +43,8 @@ import mod.gottsch.forge.gmm.core.entity.monster.zombie.Bloater;
 import mod.gottsch.forge.gmm.core.entity.monster.zombie.GraveZombie;
 import mod.gottsch.forge.gmm.core.entity.monster.zombie.Wight;
 import mod.gottsch.forge.gmm.core.entity.monster.zombie.Bodak;
+import mod.gottsch.forge.gmm.core.entity.monster.plant.Shrieker;
+import mod.gottsch.forge.gmm.core.entity.monster.plant.VioletFungus;
 import mod.gottsch.forge.gmm.core.entity.monster.GelatinousCube;
 import mod.gottsch.forge.gmm.core.entity.monster.OchreJelly;
 import mod.gottsch.forge.gmm.core.entity.monster.GrayOoze;
@@ -95,6 +97,8 @@ public class ModEntities {
 	public static final String GRAVE_ZOMBIE = "grave_zombie";
 	public static final String WIGHT = "wight";
 	public static final String BODAK = "bodak";
+	public static final String SHRIEKER = "shrieker";
+	public static final String VIOLET_FUNGUS = "violet_fungus";
 	public static final String GELATINOUS_CUBE = "gelatinous_cube";
 	public static final String OCHRE_JELLY = "ochre_jelly";
 	public static final String GRAY_OOZE = "gray_ooze";
@@ -317,6 +321,23 @@ public class ModEntities {
 			.setShouldReceiveVelocityUpdates(false)
 			.build(BODAK));
 
+	// a 3-mushroom stalk cluster -- permanently rooted (setNoAi), never moves; see Shrieker's class doc.
+	// Sized from the rebuilt (2026-07-10) Blockbench rig's actual bounding box, ~1.25x1.125 blocks
+	// footprint -- wider than a single block, per the user's own "should be wider than 1 block" note.
+	public static final RegistryObject<EntityType<Shrieker>> SHRIEKER_TYPE = ENTITIES.register(SHRIEKER, () -> EntityType.Builder.of(Shrieker::new, MobCategory.MONSTER)
+			.sized(1.3F, 0.85F)
+			.clientTrackingRange(10)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(SHRIEKER));
+
+	// currently shares Shrieker's rig via VioletFungusModel's delegation (see that class's doc) --
+	// matches its footprint for now; will need its own sizing once the tentacle geometry lands.
+	public static final RegistryObject<EntityType<VioletFungus>> VIOLET_FUNGUS_TYPE = ENTITIES.register(VIOLET_FUNGUS, () -> EntityType.Builder.of(VioletFungus::new, MobCategory.MONSTER)
+			.sized(1.3F, 0.85F)
+			.clientTrackingRange(10)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(VIOLET_FUNGUS));
+
 	// smaller than a full-sized ("Big") vanilla Slime (~2.04 blocks); see GelatinousCube's class doc.
 	// this is the size at gmm:mob_config's default "size": 1.0 -- GelatinousCube.getDimensions() scales
 	// it further at spawn if a consumer overrides that key.
@@ -473,6 +494,8 @@ public class ModEntities {
 		ALL_MOBS.add(GRAVE_ZOMBIE_TYPE);
 		ALL_MOBS.add(WIGHT_TYPE);
 		ALL_MOBS.add(BODAK_TYPE);
+		ALL_MOBS.add(SHRIEKER_TYPE);
+		ALL_MOBS.add(VIOLET_FUNGUS_TYPE);
 		ALL_MOBS.add(GELATINOUS_CUBE_TYPE);
 		ALL_MOBS.add(OCHRE_JELLY_TYPE);
 		ALL_MOBS.add(GRAY_OOZE_TYPE);

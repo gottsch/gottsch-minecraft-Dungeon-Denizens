@@ -64,6 +64,8 @@ public class ModItems {
 	public static final RegistryObject<Item> GRAVE_ZOMBIE_EGG = ITEMS.register(GRAVE_ZOMBIE + "_egg", () -> new ForgeSpawnEggItem(ModEntities.GRAVE_ZOMBIE_TYPE, 0x8b5a2b, 0x3e2711, new Item.Properties()));
 	public static final RegistryObject<Item> WIGHT_EGG = ITEMS.register(WIGHT + "_egg", () -> new ForgeSpawnEggItem(ModEntities.WIGHT_TYPE, 0xced1d6, 0x2a2c33, new Item.Properties()));
 	public static final RegistryObject<Item> BODAK_EGG = ITEMS.register(BODAK + "_egg", () -> new ForgeSpawnEggItem(ModEntities.BODAK_TYPE, 0x6b6a63, 0x2b2a26, new Item.Properties()));
+	public static final RegistryObject<Item> SHRIEKER_EGG = ITEMS.register(SHRIEKER + "_egg", () -> new ForgeSpawnEggItem(ModEntities.SHRIEKER_TYPE, 0x8f4f8f, 0xc9a24a, new Item.Properties()));
+	public static final RegistryObject<Item> VIOLET_FUNGUS_EGG = ITEMS.register(VIOLET_FUNGUS + "_egg", () -> new ForgeSpawnEggItem(ModEntities.VIOLET_FUNGUS_TYPE, 0x6e2878, 0x231528, new Item.Properties()));
 	public static final RegistryObject<Item> GELATINOUS_CUBE_EGG = ITEMS.register(GELATINOUS_CUBE + "_egg", () -> new ForgeSpawnEggItem(ModEntities.GELATINOUS_CUBE_TYPE, 0x9adfc7, 0x5fae95, new Item.Properties()));
 	public static final RegistryObject<Item> OCHRE_JELLY_EGG = ITEMS.register(OCHRE_JELLY + "_egg", () -> new ForgeSpawnEggItem(ModEntities.OCHRE_JELLY_TYPE, 0xadb83d, 0x5f6b1f, new Item.Properties()));
 	public static final RegistryObject<Item> GRAY_OOZE_EGG = ITEMS.register(GRAY_OOZE + "_egg", () -> new ForgeSpawnEggItem(ModEntities.GRAY_OOZE_TYPE, 0x7d8a8f, 0x4a5459, new Item.Properties()));
@@ -161,6 +163,8 @@ public class ModItems {
 				output.accept(GRAVE_ZOMBIE_EGG.get());
 				output.accept(WIGHT_EGG.get());
 				output.accept(BODAK_EGG.get());
+				output.accept(SHRIEKER_EGG.get());
+				output.accept(VIOLET_FUNGUS_EGG.get());
 				output.accept(GELATINOUS_CUBE_EGG.get());
 				output.accept(OCHRE_JELLY_EGG.get());
 				output.accept(GRAY_OOZE_EGG.get());

@@ -55,6 +55,8 @@ import mod.gottsch.forge.gmm.core.entity.monster.zombie.Bloater;
 import mod.gottsch.forge.gmm.core.entity.monster.zombie.GraveZombie;
 import mod.gottsch.forge.gmm.core.entity.monster.zombie.Wight;
 import mod.gottsch.forge.gmm.core.entity.monster.zombie.Bodak;
+import mod.gottsch.forge.gmm.core.entity.monster.plant.Shrieker;
+import mod.gottsch.forge.gmm.core.entity.monster.plant.VioletFungus;
 import mod.gottsch.forge.gmm.core.entity.monster.GelatinousCube;
 import mod.gottsch.forge.gmm.core.entity.monster.OchreJelly;
 import mod.gottsch.forge.gmm.core.entity.monster.GrayOoze;
@@ -286,6 +288,8 @@ public class CommonSetup {
 		event.put(ModEntities.GRAVE_ZOMBIE_TYPE.get(), GraveZombie.createAttributes().build());
 		event.put(ModEntities.WIGHT_TYPE.get(), Wight.createAttributes().build());
 		event.put(ModEntities.BODAK_TYPE.get(), Bodak.createAttributes().build());
+		event.put(ModEntities.SHRIEKER_TYPE.get(), Shrieker.createAttributes().build());
+		event.put(ModEntities.VIOLET_FUNGUS_TYPE.get(), VioletFungus.createAttributes().build());
 		event.put(ModEntities.GELATINOUS_CUBE_TYPE.get(), GelatinousCube.createAttributes().build());
 		event.put(ModEntities.OCHRE_JELLY_TYPE.get(), OchreJelly.createAttributes().build());
 		event.put(ModEntities.GRAY_OOZE_TYPE.get(), GrayOoze.createAttributes().build());
@@ -329,6 +333,8 @@ public class CommonSetup {
 		event.register(ModEntities.GRAVE_ZOMBIE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkGraveZombieSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.WIGHT_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.BODAK_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.SHRIEKER_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.VIOLET_FUNGUS_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.GELATINOUS_CUBE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.OCHRE_JELLY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.GRAY_OOZE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
@@ -376,6 +382,8 @@ public class CommonSetup {
 			event.accept(ModItems.GRAVE_ZOMBIE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.WIGHT_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.BODAK_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.SHRIEKER_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.VIOLET_FUNGUS_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.GELATINOUS_CUBE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.OCHRE_JELLY_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.GRAY_OOZE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
