@@ -73,8 +73,13 @@ import mod.gottsch.forge.gmm.core.client.model.VanillaChestMimicModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.VanillaChestMimicRenderer;
 import mod.gottsch.forge.gmm.core.client.model.BarrelMimicModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BarrelMimicRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.AnimatedArmorRenderer;
+import mod.gottsch.forge.gmm.core.client.model.AnimatedWeaponModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.AnimatedWeaponRenderer;
 import mod.gottsch.forge.gmm.core.client.model.BoneShardModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BoneShardRenderer;
+import mod.gottsch.forge.gmm.core.client.model.BloaterArmModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.BloaterArmRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.SpikeGrowthSpellRenderer;
 import mod.gottsch.forge.gmm.core.client.model.WingedSkeletonModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.WingedSkeletonRenderer;
@@ -153,12 +158,17 @@ public class ClientSetup {
 			final int variant = v;
 			event.registerLayerDefinition(BoneShardModel.LAYERS[variant], () -> BoneShardModel.createBodyLayer(variant));
 		}
+		event.registerLayerDefinition(BloaterArmModel.LAYER_LOCATION, BloaterArmModel::createBodyLayer);
 
 		event.registerLayerDefinition(GargoyleModel.LAYER_LOCATION, GargoyleModel::createBodyLayer);
 		event.registerLayerDefinition(MargoyleModel.LAYER_LOCATION, MargoyleModel::createBodyLayer);
 
 		event.registerLayerDefinition(VanillaChestMimicModel.LAYER_LOCATION, VanillaChestMimicModel::createBodyLayer);
 		event.registerLayerDefinition(BarrelMimicModel.LAYER_LOCATION, BarrelMimicModel::createBodyLayer);
+
+		// AnimatedArmor reuses vanilla's own ModelLayers.ZOMBIE/ZOMBIE_INNER_ARMOR/ZOMBIE_OUTER_ARMOR --
+		// vanilla already registers those, no new layer definition needed here.
+		event.registerLayerDefinition(AnimatedWeaponModel.LAYER_LOCATION, AnimatedWeaponModel::createBodyLayer);
 
 	}
 
@@ -218,6 +228,9 @@ public class ClientSetup {
 		event.registerEntityRenderer(ModEntities.GARGOYLE_TYPE.get(), GargoyleRenderer::new);
 		event.registerEntityRenderer(ModEntities.MARGOYLE_TYPE.get(), MargoyleRenderer::new);
 
+		event.registerEntityRenderer(ModEntities.ANIMATED_ARMOR_TYPE.get(), AnimatedArmorRenderer::new);
+		event.registerEntityRenderer(ModEntities.ANIMATED_WEAPON_TYPE.get(), AnimatedWeaponRenderer::new);
+
 
 		event.registerEntityRenderer(ModEntities.PARALYSIS_SPELL_ENTITY_TYPE.get(), (provider) -> {
             // 1.0 = scale, true = full bright
@@ -246,6 +259,7 @@ public class ClientSetup {
         	return new ThrownItemRenderer<>(provider, 0.5F, true);
          });
         event.registerEntityRenderer(ModEntities.BONE_SHARD_ENTITY_TYPE.get(), BoneShardRenderer::new);
+        event.registerEntityRenderer(ModEntities.BLOATER_ARM_ENTITY_TYPE.get(), BloaterArmRenderer::new);
         // block-entity rendering (real BlockState, no custom mesh/texture) — see spell dev guide §2
         event.registerEntityRenderer(ModEntities.SPIKE_GROWTH_SPELL_ENTITY_TYPE.get(), SpikeGrowthSpellRenderer::new);
 	}

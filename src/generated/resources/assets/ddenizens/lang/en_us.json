@@ -1,6 +1,8 @@
 {
   "entity.ddenizens.acid_skeleton": "Acid Skeleton",
   "entity.ddenizens.alligator_gar": "Alligator Gar",
+  "entity.ddenizens.animated_armor": "Animated Armor",
+  "entity.ddenizens.animated_weapon": "Animated Weapon",
   "entity.ddenizens.barrel_mimic": "Barrel Mimic",
   "entity.ddenizens.beholder": "Beholder",
   "entity.ddenizens.bloater": "Bloater",
@@ -40,6 +42,8 @@
   "entity.ddenizens.winged_skeleton": "Winged Skeleton",
   "item.ddenizens.acid_skeleton_egg": "Acid Skeleton Spawn Egg",
   "item.ddenizens.alligator_gar_egg": "Alligator Gar Spawn Egg",
+  "item.ddenizens.animated_armor_egg": "Animated Armor Spawn Egg",
+  "item.ddenizens.animated_weapon_egg": "Animated Weapon Spawn Egg",
   "item.ddenizens.barrel_mimic_egg": "Barrel Mimic Spawn Egg",
   "item.ddenizens.beholder_egg": "Beholder Spawn Egg",
   "item.ddenizens.blackfang_sword": "Blackfang Sword",

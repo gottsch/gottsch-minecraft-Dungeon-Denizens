@@ -76,6 +76,9 @@ public class ModItems {
 	public static final RegistryObject<Item> GARGOYLE_EGG = ITEMS.register(GARGOYLE + "_egg", () -> new GargoyleEggItem(ModEntities.GARGOYLE_TYPE, 0x6d6d81, 0x373b41, new Item.Properties()));
 	public static final RegistryObject<Item> MARGOYLE_EGG = ITEMS.register(MARGOYLE + "_egg", () -> new MargoyleEggItem(ModEntities.MARGOYLE_TYPE, 0x7f7f7f, 0x5a6d41, new Item.Properties()));
 
+	public static final RegistryObject<Item> ANIMATED_ARMOR_EGG = ITEMS.register(ANIMATED_ARMOR + "_egg", () -> new ForgeSpawnEggItem(ModEntities.ANIMATED_ARMOR_TYPE, 0xc0c0c8, 0x4a4a52, new Item.Properties()));
+	public static final RegistryObject<Item> ANIMATED_WEAPON_EGG = ITEMS.register(ANIMATED_WEAPON + "_egg", () -> new ForgeSpawnEggItem(ModEntities.ANIMATED_WEAPON_TYPE, 0xa8adb5, 0xc9a227, new Item.Properties()));
+
 	// projectiles
 	public static final RegistryObject<Item> PARALYSIS_SPELL_ITEM = ITEMS.register(PARALYSIS_SPELL, () -> new Item(new Item.Properties()));
 	public static final RegistryObject<Item> HARM_SPELL_ITEM = ITEMS.register(HARM_SPELL, () -> new Item(new Item.Properties()));
@@ -178,6 +181,8 @@ public class ModItems {
 				output.accept(BARREL_MIMIC_EGG.get());
 				output.accept(GARGOYLE_EGG.get());
 				output.accept(MARGOYLE_EGG.get());
+				output.accept(ANIMATED_ARMOR_EGG.get());
+				output.accept(ANIMATED_WEAPON_EGG.get());
 				// weapons
 				output.accept(CLUB.get());
 				output.accept(SPIKED_CLUB.get());

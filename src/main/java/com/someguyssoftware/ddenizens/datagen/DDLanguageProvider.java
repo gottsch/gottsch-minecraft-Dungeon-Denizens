@@ -153,6 +153,12 @@ DDLanguageProvider extends LanguageProvider {
         add(ModEntities.MARGOYLE_TYPE.get(), "Margoyle");
         add(ModItems.MARGOYLE_EGG.get(), "Margoyle Spawn Egg");
 
+        add(ModEntities.ANIMATED_ARMOR_TYPE.get(), "Animated Armor");
+        add(ModItems.ANIMATED_ARMOR_EGG.get(), "Animated Armor Spawn Egg");
+
+        add(ModEntities.ANIMATED_WEAPON_TYPE.get(), "Animated Weapon");
+        add(ModItems.ANIMATED_WEAPON_EGG.get(), "Animated Weapon Spawn Egg");
+
         add(ModItems.PARALYSIS_SPELL_ITEM.get(), "Slow Spell");
         add(ModItems.HARM_SPELL_ITEM.get(), "Harm Spell");
         add(ModItems.WITHERING_GAZE_SPELL_ITEM.get(), "Withering Gaze Spell");

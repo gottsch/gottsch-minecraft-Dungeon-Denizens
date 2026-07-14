@@ -62,7 +62,10 @@ import mod.gottsch.forge.gmm.core.entity.monster.OchreJelly;
 import mod.gottsch.forge.gmm.core.entity.monster.GrayOoze;
 import mod.gottsch.forge.gmm.core.entity.monster.mimic.VanillaChestMimic;
 import mod.gottsch.forge.gmm.core.entity.monster.mimic.BarrelMimic;
+import mod.gottsch.forge.gmm.core.entity.monster.construct.AnimatedArmor;
+import mod.gottsch.forge.gmm.core.entity.monster.construct.AnimatedWeapon;
 import mod.gottsch.forge.gmm.core.entity.projectile.BoneShard;
+import mod.gottsch.forge.gmm.core.entity.projectile.BloaterArm;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.WingedSkeleton;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.SkeletonChampion;
 import mod.gottsch.forge.gmm.core.entity.monster.beholderkin.Beholder;
@@ -252,6 +255,9 @@ public class CommonSetup {
 		TaintedSkeleton.shardFactory = (shooter, level) -> new BoneShard(ModEntities.BONE_SHARD_ENTITY_TYPE.get(), shooter, level);
 		// Bloody Bones flings the same BoneShard as its "arms and legs" when it collapses to a skull.
 		BloodyBones.shardFactory = (shooter, level) -> new BoneShard(ModEntities.BONE_SHARD_ENTITY_TYPE.get(), shooter, level);
+		// Bloater launches dedicated BloaterArm shrapnel (real zombie-arm shape/texture) when it
+		// ruptures on death.
+		Bloater.armFactory = (shooter, level) -> new BloaterArm(ModEntities.BLOATER_ARM_ENTITY_TYPE.get(), shooter, level);
 	}
 
 	/**
@@ -296,6 +302,8 @@ public class CommonSetup {
 		event.put(ModEntities.GRAY_OOZE_TYPE.get(), GrayOoze.createAttributes().build());
 		event.put(ModEntities.VANILLA_CHEST_MIMIC_TYPE.get(), VanillaChestMimic.createAttributes().build());
 		event.put(ModEntities.BARREL_MIMIC_TYPE.get(), BarrelMimic.createAttributes().build());
+		event.put(ModEntities.ANIMATED_ARMOR_TYPE.get(), AnimatedArmor.createAttributes().build());
+		event.put(ModEntities.ANIMATED_WEAPON_TYPE.get(), AnimatedWeapon.createAttributes().build());
 		event.put(ModEntities.SKELETON_CHAMPION_TYPE.get(), SkeletonChampion.createAttributes().build());
 
 		event.put(ModEntities.GARGOYLE_TYPE.get(), Gargoyle.createAttributes().build());
@@ -345,6 +353,12 @@ public class CommonSetup {
 		event.register(ModEntities.VANILLA_CHEST_MIMIC_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		// same reasoning as VANILLA_CHEST_MIMIC above -- placement rules only, not a biome natural spawn.
 		event.register(ModEntities.BARREL_MIMIC_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		// same reasoning as the two Mimics above -- placement rules only, not a biome natural spawn;
+		// this one's a dormant dungeon prop (see AnimatedArmor's class doc), egg/summon only.
+		event.register(ModEntities.ANIMATED_ARMOR_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		// unlike Animated Armor, this one DOES natural-spawn (see ModEntities.ALL_MOBS) -- a floating
+		// construct, so NO_RESTRICTIONS like Beholder rather than ON_GROUND.
+		event.register(ModEntities.ANIMATED_WEAPON_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
 		event.register(ModEntities.SKELETON_CHAMPION_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
@@ -395,6 +409,10 @@ public class CommonSetup {
 
 			event.accept(ModItems.GARGOYLE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.MARGOYLE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+
+			// Animated Armor deliberately excluded here, same as the two Mimics above -- it's a
+			// dungeon prop, not something that should read as a normal natural-spawn option.
+			event.accept(ModItems.ANIMATED_WEAPON_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 
 		}
 		else if (event.getTabKey() == CreativeModeTabs.COMBAT) {

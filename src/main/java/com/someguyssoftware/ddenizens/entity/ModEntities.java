@@ -12,6 +12,7 @@ import mod.gottsch.forge.gmm.core.entity.projectile.FirewallColumnSpell;
 import mod.gottsch.forge.gmm.core.entity.projectile.SpikeGrowthSpell;
 import mod.gottsch.forge.gmm.core.entity.projectile.Rock;
 import mod.gottsch.forge.gmm.core.entity.projectile.BoneShard;
+import mod.gottsch.forge.gmm.core.entity.projectile.BloaterArm;
 import mod.gottsch.forge.gmm.core.entity.monster.AlligatorGar;
 import mod.gottsch.forge.gmm.core.entity.monster.Boulder;
 import mod.gottsch.forge.gmm.core.entity.monster.Daemon;
@@ -50,6 +51,8 @@ import mod.gottsch.forge.gmm.core.entity.monster.OchreJelly;
 import mod.gottsch.forge.gmm.core.entity.monster.GrayOoze;
 import mod.gottsch.forge.gmm.core.entity.monster.mimic.VanillaChestMimic;
 import mod.gottsch.forge.gmm.core.entity.monster.mimic.BarrelMimic;
+import mod.gottsch.forge.gmm.core.entity.monster.construct.AnimatedArmor;
+import mod.gottsch.forge.gmm.core.entity.monster.construct.AnimatedWeapon;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.SkeletonChampion;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -109,6 +112,8 @@ public class ModEntities {
 	public static final String DEATH_KNIGHT = "death_knight";
 	public static String GARGOYLE = "gargoyle";
 	public static String MARGOYLE = "margoyle";
+	public static final String ANIMATED_ARMOR = "animated_armor";
+	public static final String ANIMATED_WEAPON = "animated_weapon";
 
 	// projectile names (also used as item ids by ModItems)
 	public static final String PARALYSIS_SPELL = "slow";
@@ -121,6 +126,7 @@ public class ModEntities {
 	public static final String WITHERING_GAZE_SPELL = "withering_gaze";
 	public static final String ROCK = "rock";
 	public static final String BONE_SHARD = "bone_shard";
+	public static final String BLOATER_ARM = "bloater_arm";
 
 	// mob collections
 	public static final List<RegistryObject<?>> ALL_MOBS = Lists.newArrayList();
@@ -379,6 +385,24 @@ public class ModEntities {
 			.setShouldReceiveVelocityUpdates(false)
 			.build(BARREL_MIMIC));
 
+	// disguised as a stand of equipped armor; NOT added to ALL_MOBS -- same "dungeon prop, not a
+	// natural biome spawn" treatment as the two Mimics above. Egg/summon only.
+	public static final RegistryObject<EntityType<AnimatedArmor>> ANIMATED_ARMOR_TYPE = ENTITIES.register(ANIMATED_ARMOR, () -> EntityType.Builder.of(AnimatedArmor::new, MobCategory.MONSTER)
+			.sized(0.6F, 1.99F)
+			.clientTrackingRange(10)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(ANIMATED_ARMOR));
+
+	// unlike Animated Armor, this one DOES naturally spawn -- it has no wielder to give away as a
+	// decoy, so there's no ambush/dormant state, see AnimatedWeapon's class doc.
+	// hitbox bumped from the original 0.5x0.5 (user-reported "pretty hard to hit" combined with its
+	// erratic hover movement -- a bare sword-sized box was an unreasonably small click target).
+	public static final RegistryObject<EntityType<AnimatedWeapon>> ANIMATED_WEAPON_TYPE = ENTITIES.register(ANIMATED_WEAPON, () -> EntityType.Builder.of(AnimatedWeapon::new, MobCategory.MONSTER)
+			.sized(0.75F, 0.75F)
+			.clientTrackingRange(10)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(ANIMATED_WEAPON));
+
 	// hitbox widened 1.2x over vanilla skeleton's 0.6x1.99 to match SkeletonChampionRenderer's
 	// visual-only render scale (same 1.2x) -- an elite pack leader should physically read as bigger
 	// than the rank-and-file skeletons it rallies, not just render oversized with a mismatched hitbox.
@@ -473,6 +497,14 @@ public class ModEntities {
 			.updateInterval(20)
 			.build(BONE_SHARD));
 
+	// arrow-like severed-arm projectile (Bloater's death-rupture shrapnel); mirrors vanilla arrow tracking
+	public static final RegistryObject<EntityType<BloaterArm>> BLOATER_ARM_ENTITY_TYPE =
+			ENTITIES.register(BLOATER_ARM, () -> EntityType.Builder.<BloaterArm>of(BloaterArm::new, MobCategory.MISC)
+			.sized(0.5F, 0.5F)
+			.clientTrackingRange(4)
+			.updateInterval(20)
+			.build(BLOATER_ARM));
+
 	// NOTE must add mob to ALL_MOBS collection in order to register them to the biomes - see CommonSetup.onBiomeLoading
 	// NOTE 7/3/2025 - this doesn't apply to 1.20.1+ as Biomes are handled in data files.
 	static {
@@ -513,6 +545,7 @@ public class ModEntities {
 		ALL_MOBS.add(SKELETON_CHAMPION_TYPE);
 		ALL_MOBS.add(GARGOYLE_TYPE);
 		ALL_MOBS.add(MARGOYLE_TYPE);
+		ALL_MOBS.add(ANIMATED_WEAPON_TYPE);
 	}
 
 	public static void init() {
