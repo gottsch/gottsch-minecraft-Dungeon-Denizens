@@ -8,6 +8,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Added
+
+- 🐀 **Rat** — a small, common nuisance that lurks in the dark and swarms at night.
+- 🧟 **Sewer Ghoul** — a mossy, underground-dwelling cousin of the Ghoul. Like its kin it hunts farm animals and heals when it eats meat, but it never surfaces — you'll only meet it below ground.
+- 🐊 **Alligator Gar** — a hostile predator fish that lurks in rivers. A relatively rare find, but dangerous if it catches you in the water.
+- ❄️ **Frost Skeleton** — an ice-boned skeleton of snowy biomes. Its melee strikes chill you with Slowness and a freezing shiver, its arrows do the same when it carries a bow, and it freezes water into ice underfoot as it walks. Immune to freezing itself.
+- 💥 **Tainted Skeleton** — a corrupted skeleton that bursts into a spray of bone shrapnel when it dies, peppering anything nearby (the shrapnel won't harm the terrain).
+- 🧪 **Acid Skeleton** — caustic to the touch; its hits corrode and wear down your armor and weapons.
+- ⚡ **Electric Skeleton** — arcs chain lightning that leaps between several nearby targets, and strikes especially hard against anything wet. Marked by a spinning cuff of electricity on each forearm and lightning-crack eyes.
+- 🔥 **Burning Skeleton** — wreathed in a flame aura that periodically ignites nearby creatures, sets you alight on contact, and erupts into a burst of fire when it's destroyed.
+- 🩸 **Bloody Bones** — collapses into a heap when struck down and hauls itself back up to keep fighting — up to three times — before it finally stays dead.
+- 💀 **Skeleton Champion** — a hulking, black-armored skeleton commander, noticeably bigger than the ranks it leads. It always carries a shield, wields real weapons you can actually see, and periodically lets out a rallying war cry that buffs nearby skeletons.
+- 🪦 **Grave Zombie** — burrows out of sight and lies in wait, then erupts from the ground to ambush you at close range.
+- 🤢 **Bloater** — a swollen, distended zombie that bursts when it dies, flinging its arms off as flying shrapnel and leaving behind a lingering cloud that poisons, starves, and nauseates anything caught in it.
+- 🧛 **Wight** — a lordly undead that stacks Wither on its victims and steals their life, summons lesser undead to fight beside it, and can enthrall the living to turn against their own allies.
+- ☠️ **Bodak** — its lethal death-gaze punishes anyone caught looking at it, and it panics and flees in daylight.
+- 📣 **Shrieker** — a fungal sentry that shrieks to alert and rally nearby monsters, and smothers intruders in Darkness.
+- 🍄 **Violet Fungus** — a rooted, plant-like horror that lashes anything straying within reach, stacking Wither on its target.
+- 🟩 **Gelatinous Cube** — a translucent ooze that engulfs and holds its prey while its acid dissolves armor and weapons, slowing and poisoning all the while. Dwells deep underground.
+- 🟡 **Ochre Jelly** — splits into smaller copies each time it's struck, and is especially vulnerable to fire. Dwells deep underground.
+- ⬜ **Gray Ooze** — masquerades as ordinary stone until you draw near, then strikes; its acid corrodes gear fast. Dwells deep underground.
+- 🧰 **Chest Mimic** — a monster disguised as an ordinary chest, waiting for a careless hand.
+- 🛢️ **Barrel Mimic** — a mimic in the shape of a barrel that springs to life when disturbed.
+- 🛡️ **Animated Armor** — an unremarkable stand of armor... until you wander too close, or hit it. Never found in the wild — only hand-placed or summoned.
+- ⚔️ **Animated Weapon** — a masterless sword or axe that hovers in place, tracks you down, and telegraphs its swing with a brief windup before it strikes. Found lurking in dark dungeon biomes.
+- 🌳 **Wood Golem** — a bark-and-root guardian that holds its post instead of wandering, and slams anything that strays too close with a heavy knockback hit. Peaceful toward players by default (a setting can change that), but always ready to fight off nearby hostile monsters. Never found in the wild — only hand-placed or summoned.
+- 🧙 **Orc Shaman** — a spellcasting Orc that keeps its distance and pelts you with Spike Growth rather than closing to melee. Goes down easier than a regular Orc in a straight fight, but dangerous if you let it keep its distance.
+
+### Changed
+
+- **Major internal rewrite:** Dungeon Denizens' monsters now run on a shared framework called *gottsch's Monster Manual*, split out so the same monster code can be reused across mods. Monster behavior, spawning, and stats are meant to feel exactly the same as before — this is a foundation change, not a rebalance.
+- **New required companion mod:** Dungeon Denizens now needs *gottsch's Monster Manual* installed alongside it to work. Grab both when you update.
+- Each monster's spawn conditions (whether it needs open sky, darkness, etc.) are now set individually through data files instead of being hardcoded, making them easier for pack authors to retune without a code change.
+- **Skeleton Warriors** and **Wights** can now raise a shield to block your hits when you close to melee — neither is guaranteed to carry one, but a **Skeleton Champion** always does.
+- **Beholders** and **Wights** may now show up already accompanied by an escort — a Gazer or two for the Beholder, allies of its own for the Wight.
+- The Beholderkin family's **Paralysis** attack now genuinely roots you in place for a moment instead of just slowing you down.
+
+### Removed
+
+- **In-game documentation trimmed for easier upkeep:** the detailed stat readouts that appeared on legacy mob spawn eggs (health, damage, rarity, spawn locations, specials, etc.) and the Patchouli *Bestiary* guide book have both been removed.
+
+---
+
 ## [1.6.0] - 2026-06-29
 
 ### Added

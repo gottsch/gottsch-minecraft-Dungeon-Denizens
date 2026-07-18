@@ -1,0 +1,20 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319,
+		"skyVisibility": "any",
+		"requiresDarkness": true
+	},
+	"properties": {
+		"cloudRadius": 3.0,
+		"cloudDuration": 160.0,
+		"poisonDuration": 100.0,
+		"poisonAmplifier": 0.0
+	},
+	"flags": {
+		"burstOnDeath": true,
+		"hunger": true,
+		"nausea": true
+	}
+}

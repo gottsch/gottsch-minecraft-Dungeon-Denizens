@@ -1,0 +1,13 @@
+{
+	"type": "forge:add_spawns",
+	"biomes": [
+		"minecraft:dripstone_caves",
+		"minecraft:deep_dark"
+	],
+	"spawners": {
+		"type": "ddenizens:gray_ooze",
+		"weight": 10,
+		"minCount": 1,
+		"maxCount": 1
+	}
+}

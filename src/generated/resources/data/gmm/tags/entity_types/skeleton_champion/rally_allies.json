@@ -1,0 +1,14 @@
+{
+  "values": [
+    "minecraft:skeleton",
+    "ddenizens:skeleton_warrior",
+    "ddenizens:winged_skeleton",
+    "ddenizens:iron_skeleton",
+    "ddenizens:magma_skeleton",
+    "ddenizens:frost_skeleton",
+    "ddenizens:acid_skeleton",
+    "ddenizens:electric_skeleton",
+    "ddenizens:burning_skeleton",
+    "ddenizens:bloody_bones"
+  ]
+}

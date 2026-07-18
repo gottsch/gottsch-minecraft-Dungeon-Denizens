@@ -1,0 +1,25 @@
+{
+  "values": [
+    "ddenizens:headless",
+    "ddenizens:gazer",
+    "ddenizens:beholder",
+    "ddenizens:ghoul",
+    "ddenizens:sewer_ghoul",
+    "ddenizens:orc",
+    "ddenizens:orc_shaman",
+    "ddenizens:skeleton_warrior",
+    "ddenizens:winged_skeleton",
+    "ddenizens:iron_skeleton",
+    "ddenizens:magma_skeleton",
+    "ddenizens:frost_skeleton",
+    "ddenizens:acid_skeleton",
+    "ddenizens:electric_skeleton",
+    "ddenizens:burning_skeleton",
+    "ddenizens:bloody_bones",
+    "ddenizens:bloater",
+    "ddenizens:grave_zombie",
+    "ddenizens:wight",
+    "ddenizens:bodak",
+    "ddenizens:skeleton_champion"
+  ]
+}

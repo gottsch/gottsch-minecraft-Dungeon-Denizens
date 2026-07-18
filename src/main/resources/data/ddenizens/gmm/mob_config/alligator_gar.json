@@ -1,0 +1,8 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": 30,
+		"maxHeight": 80,
+		"requiresDarkness": true
+	}
+}

@@ -48,6 +48,8 @@ public class DataGenerators {
             DDBlockTagsProvider blockTags = new DDBlockTagsProvider(output, lookupProvider, event.getExistingFileHelper());
             generator.addProvider(true, blockTags);
             generator.addProvider(true, new DDItemTagsProvider(output, lookupProvider, blockTags.contentsGetter(), event.getExistingFileHelper()));
+            // populates gmm's ally entity-type tags with DD mobs (output -> data/gmm/...)
+            generator.addProvider(true, new DDEntityTypeTagsProvider(output, lookupProvider));
 
 //            generator.addProvider(new TutRecipes(generator));
 //            generator.addProvider(new TutLootTables(generator));

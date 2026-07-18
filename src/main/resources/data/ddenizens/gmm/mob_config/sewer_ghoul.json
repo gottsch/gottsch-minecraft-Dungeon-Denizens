@@ -1,0 +1,14 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 64,
+		"skyVisibility": "must_not_see"
+	},
+	"properties": {
+		"healAmount": 4.0
+	},
+	"flags": {
+		"canOpenDoors": true
+	}
+}

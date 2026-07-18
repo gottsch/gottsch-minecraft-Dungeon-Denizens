@@ -33,12 +33,6 @@ public class Integrations {
     public static void registerTreasure2Integration() {
         if (ModList.get().isLoaded("treasure2")) {
             DD.LOGGER.debug("treasure2 IS loaded");
-            // get the class by reflection
-//            Class<?> clazz = Class.forName("com.baeldung.reflection.Goat");
-            // get the method by reflection
-//            Method method = clazz.getMethod("greeting", String.class);
-            // invoke the method
-//            Object result = method.invoke(null, "Eric");
             TreasureApi.registerLootTables(DD.MODID);
         }
     }

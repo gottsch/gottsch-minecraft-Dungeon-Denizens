@@ -1,0 +1,19 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319,
+		"skyVisibility": "any",
+		"requiresDarkness": true
+	},
+	"properties": {
+		"chainRange": 4.0,
+		"chainTargets": 3.0,
+		"chainDamage": 3.0,
+		"wetBonus": 3.0
+	},
+	"flags": {
+		"chainLightning": true,
+		"bonusVsWet": true
+	}
+}
