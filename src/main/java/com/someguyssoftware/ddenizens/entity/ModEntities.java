@@ -53,6 +53,7 @@ import mod.gottsch.forge.gmm.core.entity.monster.mimic.VanillaChestMimic;
 import mod.gottsch.forge.gmm.core.entity.monster.mimic.BarrelMimic;
 import mod.gottsch.forge.gmm.core.entity.monster.construct.AnimatedArmor;
 import mod.gottsch.forge.gmm.core.entity.monster.construct.AnimatedWeapon;
+import mod.gottsch.forge.gmm.core.entity.monster.construct.WoodGolem;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.SkeletonChampion;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -114,6 +115,7 @@ public class ModEntities {
 	public static String MARGOYLE = "margoyle";
 	public static final String ANIMATED_ARMOR = "animated_armor";
 	public static final String ANIMATED_WEAPON = "animated_weapon";
+	public static final String WOOD_GOLEM = "wood_golem";
 
 	// projectile names (also used as item ids by ModItems)
 	public static final String PARALYSIS_SPELL = "slow";
@@ -392,6 +394,16 @@ public class ModEntities {
 			.clientTrackingRange(10)
 			.setShouldReceiveVelocityUpdates(false)
 			.build(ANIMATED_ARMOR));
+
+	// structure-bound guardian construct, ported from Treasure2's WitherwoodGolem -- NOT added to
+	// ALL_MOBS, same "hand/structure-placed dungeon prop, not a biome natural spawn" treatment as the
+	// Mimics/AnimatedArmor above (anchored instead via a consumer calling Mob#restrictTo). Size/tracking
+	// values match Treasure2's own original registration.
+	public static final RegistryObject<EntityType<WoodGolem>> WOOD_GOLEM_TYPE = ENTITIES.register(WOOD_GOLEM, () -> EntityType.Builder.of(WoodGolem::new, MobCategory.MONSTER)
+			.sized(0.6F, 1.95F)
+			.clientTrackingRange(12)
+			.setShouldReceiveVelocityUpdates(true)
+			.build(WOOD_GOLEM));
 
 	// unlike Animated Armor, this one DOES naturally spawn -- it has no wielder to give away as a
 	// decoy, so there's no ambush/dormant state, see AnimatedWeapon's class doc.

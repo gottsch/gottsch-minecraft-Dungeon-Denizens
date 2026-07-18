@@ -8,7 +8,7 @@
 	},
 	"properties": {
 		"rangedProbability": 0,
-		"spellChargeTime": 160,
+		"spellChargeTime": 120,
 		"spellMinRange": 4.0
 	}
 }

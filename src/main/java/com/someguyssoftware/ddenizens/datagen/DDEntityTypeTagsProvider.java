@@ -75,6 +75,16 @@ public class DDEntityTypeTagsProvider extends EntityTypeTagsProvider {
                      ModEntities.WIGHT_TYPE.get(),
                      ModEntities.BODAK_TYPE.get());
 
+        // a naturally-spawned Beholder gets a Gazer escort or two (see GMM's Companion Spawning --
+        // GMMMonster#getCompanionPool / gmm:mob_config's companionMin/companionMax/companionChance).
+        tag(GMMTags.EntityTypes.BEHOLDER_COMPANIONS)
+                .add(ModEntities.GAZER_ENTITY_TYPE.get());
+
+        // a naturally-spawned Wight gets a zombie guard or two -- otherwise it's an easy-to-kite lone
+        // caster; same zombie default as its own summon_allies/enthrall_candidates tags.
+        tag(GMMTags.EntityTypes.WIGHT_COMPANIONS)
+                .add(net.minecraft.world.entity.EntityType.ZOMBIE);
+
         // a Shrieker's pulse calls in a broad set of common combat-capable dungeon/cave hostiles --
         // deliberately excludes ambush-disguise mobs (mimics/oozes, whose whole identity is surprise)
         // and passive/ambient mobs (Boulder, Rat, Alligator Gar).

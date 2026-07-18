@@ -55,6 +55,10 @@ public class DDItemModelsProvider extends ItemModelProvider {
         singleTexture("rock",
                 mcLoc("item/generated"), "layer0", modLoc("item/rock"));
 
+        // guide book -- custom monster_manual item texture
+        singleTexture(ModItems.GUIDE.getId().getPath(),
+                mcLoc("item/generated"), "layer0", modLoc("item/monster_manual"));
+
         singleTexture(ModItems.TAB_ICON.getId().getPath(),
                 mcLoc("item/generated"), "layer0", modLoc("item/tab"));
 
@@ -142,6 +146,7 @@ public class DDItemModelsProvider extends ItemModelProvider {
         withExistingParent(ModItems.MARGOYLE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.ANIMATED_ARMOR_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.ANIMATED_WEAPON_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.WOOD_GOLEM_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
     }
 }

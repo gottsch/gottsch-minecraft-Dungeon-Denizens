@@ -64,6 +64,7 @@ import mod.gottsch.forge.gmm.core.entity.monster.mimic.VanillaChestMimic;
 import mod.gottsch.forge.gmm.core.entity.monster.mimic.BarrelMimic;
 import mod.gottsch.forge.gmm.core.entity.monster.construct.AnimatedArmor;
 import mod.gottsch.forge.gmm.core.entity.monster.construct.AnimatedWeapon;
+import mod.gottsch.forge.gmm.core.entity.monster.construct.WoodGolem;
 import mod.gottsch.forge.gmm.core.entity.projectile.BoneShard;
 import mod.gottsch.forge.gmm.core.entity.projectile.BloaterArm;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.WingedSkeleton;
@@ -304,6 +305,7 @@ public class CommonSetup {
 		event.put(ModEntities.BARREL_MIMIC_TYPE.get(), BarrelMimic.createAttributes().build());
 		event.put(ModEntities.ANIMATED_ARMOR_TYPE.get(), AnimatedArmor.createAttributes().build());
 		event.put(ModEntities.ANIMATED_WEAPON_TYPE.get(), AnimatedWeapon.createAttributes().build());
+		event.put(ModEntities.WOOD_GOLEM_TYPE.get(), WoodGolem.createAttributes().build());
 		event.put(ModEntities.SKELETON_CHAMPION_TYPE.get(), SkeletonChampion.createAttributes().build());
 
 		event.put(ModEntities.GARGOYLE_TYPE.get(), Gargoyle.createAttributes().build());
@@ -356,6 +358,9 @@ public class CommonSetup {
 		// same reasoning as the two Mimics above -- placement rules only, not a biome natural spawn;
 		// this one's a dormant dungeon prop (see AnimatedArmor's class doc), egg/summon only.
 		event.register(ModEntities.ANIMATED_ARMOR_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		// same reasoning again -- placement rules only, not a biome natural spawn; a structure-bound
+		// guardian anchored via Mob#restrictTo, egg/summon only (see WoodGolem's class doc).
+		event.register(ModEntities.WOOD_GOLEM_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		// unlike Animated Armor, this one DOES natural-spawn (see ModEntities.ALL_MOBS) -- a floating
 		// construct, so NO_RESTRICTIONS like Beholder rather than ON_GROUND.
 		event.register(ModEntities.ANIMATED_WEAPON_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);

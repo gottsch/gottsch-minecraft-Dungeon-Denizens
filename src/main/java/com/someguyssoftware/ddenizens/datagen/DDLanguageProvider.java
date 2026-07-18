@@ -159,6 +159,9 @@ DDLanguageProvider extends LanguageProvider {
         add(ModEntities.ANIMATED_WEAPON_TYPE.get(), "Animated Weapon");
         add(ModItems.ANIMATED_WEAPON_EGG.get(), "Animated Weapon Spawn Egg");
 
+        add(ModEntities.WOOD_GOLEM_TYPE.get(), "Wood Golem");
+        add(ModItems.WOOD_GOLEM_EGG.get(), "Wood Golem Spawn Egg");
+
         add(ModItems.PARALYSIS_SPELL_ITEM.get(), "Slow Spell");
         add(ModItems.HARM_SPELL_ITEM.get(), "Harm Spell");
         add(ModItems.WITHERING_GAZE_SPELL_ITEM.get(), "Withering Gaze Spell");
@@ -182,41 +185,13 @@ DDLanguageProvider extends LanguageProvider {
         add(ModItems.KINGSHIVER.get(), "Kingshiver");
         add(ModItems.BLACKFANG_SWORD.get(), "Blackfang Sword");
 
-        add(LangUtil.tooltip("boolean.yes"), "Yes");
-        add(LangUtil.tooltip("boolean.no"), "No");
-        add(LangUtil.tooltip("hold_shift"), "Hold [SHIFT] to expand");
-        add(LangUtil.tooltip("stats.number_appearing"), "Number: %s");
-        add(LangUtil.tooltip("stats.size"), "Size: %s");
-        add(LangUtil.tooltip("stats.size.small"), "Small");
-        add(LangUtil.tooltip("stats.size.medium"), "Medium");
-        add(LangUtil.tooltip("stats.size.large"), "Large");
-        add(LangUtil.tooltip("stats.size.huge"), "Huge");
-        add(LangUtil.tooltip("stats.level"), "Level: %s");
-        add(LangUtil.tooltip("stats.level.mob"), "Mob");
-        add(LangUtil.tooltip("stats.level.mini_boss"), "Mini-Boss");
-        add(LangUtil.tooltip("stats.level.boss"), "Boss");
-        add(LangUtil.tooltip("stats.rarity"), "Rarity: %s");
-        add(LangUtil.tooltip("stats.rarity.common"), "Common");
-        add(LangUtil.tooltip("stats.rarity.uncommon"), "Uncommon");
-        add(LangUtil.tooltip("stats.rarity.scarce"), "Scarce");
-        add(LangUtil.tooltip("stats.rarity.rare"), "Rare");
-        add(LangUtil.tooltip("stats.rarity.very_rare"), "Very Rare");
-        add(LangUtil.tooltip("stats.movement"), "Movement: %s");
-        add(LangUtil.tooltip("stats.movement.flies"), "Flies/Hovers");
-        add(LangUtil.tooltip("stats.movement.walks"), "Walks");
-        add(LangUtil.tooltip("stats.speed"), "Speed: %s");
-        add(LangUtil.tooltip("stats.speed.normal"), "Normal");
-        add(LangUtil.tooltip("stats.health"), "Health: %s");
-        add(LangUtil.tooltip("stats.damage"), "Damage: %s");
-        add(LangUtil.tooltip("stats.daylight"), "Daylight: %s");
-        add(LangUtil.tooltip("stats.despawn"), "Despawn: %s");
-        add(LangUtil.tooltip("stats.spawns"), "Spawns: %s");
-        add(LangUtil.tooltip("stats.spawns.overworld"), "Overworld");
-        add(LangUtil.tooltip("stats.spawns.underworld"), "Underworld");
-        add(LangUtil.tooltip("stats.spawns.nether"), "Nether");
-        add(LangUtil.tooltip("stats.specials"), "Weapons/Specials:");
-        add(LangUtil.tooltip("stats.weakness"), "Weakness:");
         add(LangUtil.tooltip("shadow_falchion.bonus_damage"), "+1 Attack Damage vs. Shadowspawn.");
+
+        // guide book
+        add(ModItems.GUIDE.get(), "Dungeon Denizens Guide");
+        add(LangUtil.tooltip("guide.use"), "Right-click to open");
+        add(LangUtil.screen("guide.intro"), "The full bestiary -- every monster's stats, spawn conditions, and abilities -- is documented on the wiki.");
+        add(LangUtil.screen("guide.link_label"), "Open the Wiki");
         add(LangUtil.tooltip("shadow_blade.bonus_damage"), "+2 Attack Damage vs. Shadowspawn.");
 
     }

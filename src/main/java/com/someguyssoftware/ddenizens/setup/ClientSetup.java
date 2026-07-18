@@ -56,6 +56,7 @@ import mod.gottsch.forge.gmm.core.client.renderer.entity.ElectricSkeletonRendere
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BurningSkeletonRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BloodyBonesRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BloaterRenderer;
+import mod.gottsch.forge.gmm.core.client.model.BloaterZombieModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.GraveZombieRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.WightRenderer;
 import mod.gottsch.forge.gmm.core.client.model.BodakModel;
@@ -76,6 +77,8 @@ import mod.gottsch.forge.gmm.core.client.renderer.entity.BarrelMimicRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.AnimatedArmorRenderer;
 import mod.gottsch.forge.gmm.core.client.model.AnimatedWeaponModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.AnimatedWeaponRenderer;
+import mod.gottsch.forge.gmm.core.client.model.WoodGolemModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.WoodGolemRenderer;
 import mod.gottsch.forge.gmm.core.client.model.BoneShardModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.BoneShardRenderer;
 import mod.gottsch.forge.gmm.core.client.model.BloaterArmModel;
@@ -136,6 +139,7 @@ public class ClientSetup {
 		event.registerLayerDefinition(AlligatorGarModel.LAYER_LOCATION, AlligatorGarModel::createBodyLayer);
 		event.registerLayerDefinition(EttinModel.LAYER_LOCATION, EttinModel::createBodyLayer);
 		event.registerLayerDefinition(BodakModel.LAYER_LOCATION, BodakModel::createBodyLayer);
+		event.registerLayerDefinition(BloaterZombieModel.LAYER_LOCATION, BloaterZombieModel::createBodyLayer);
 		event.registerLayerDefinition(BeholderModel.LAYER_LOCATION, BeholderModel::createBodyLayer);
 		event.registerLayerDefinition(DeathTyrantModel.LAYER_LOCATION, DeathTyrantModel::createBodyLayer);
 		event.registerLayerDefinition(GazerModel.LAYER_LOCATION, GazerModel::createBodyLayer);
@@ -169,6 +173,7 @@ public class ClientSetup {
 		// AnimatedArmor reuses vanilla's own ModelLayers.ZOMBIE/ZOMBIE_INNER_ARMOR/ZOMBIE_OUTER_ARMOR --
 		// vanilla already registers those, no new layer definition needed here.
 		event.registerLayerDefinition(AnimatedWeaponModel.LAYER_LOCATION, AnimatedWeaponModel::createBodyLayer);
+		event.registerLayerDefinition(WoodGolemModel.LAYER_LOCATION, WoodGolemModel::createBodyLayer);
 
 	}
 
@@ -206,7 +211,6 @@ public class ClientSetup {
 		event.registerEntityRenderer(ModEntities.BURNING_SKELETON_TYPE.get(), BurningSkeletonRenderer::new);
 		// Bloody Bones reuses SkeletonWarriorModel.LAYER_LOCATION (registered above) — no new layer definition needed.
 		event.registerEntityRenderer(ModEntities.BLOODY_BONES_TYPE.get(), BloodyBonesRenderer::new);
-		// Bloater reuses the vanilla ModelLayers.ZOMBIE rig — no new layer definition needed.
 		event.registerEntityRenderer(ModEntities.BLOATER_TYPE.get(), BloaterRenderer::new);
 		// Grave Zombie likewise reuses the vanilla ModelLayers.ZOMBIE rig — no new layer definition needed.
 		event.registerEntityRenderer(ModEntities.GRAVE_ZOMBIE_TYPE.get(), GraveZombieRenderer::new);
@@ -230,6 +234,7 @@ public class ClientSetup {
 
 		event.registerEntityRenderer(ModEntities.ANIMATED_ARMOR_TYPE.get(), AnimatedArmorRenderer::new);
 		event.registerEntityRenderer(ModEntities.ANIMATED_WEAPON_TYPE.get(), AnimatedWeaponRenderer::new);
+		event.registerEntityRenderer(ModEntities.WOOD_GOLEM_TYPE.get(), WoodGolemRenderer::new);
 
 
 		event.registerEntityRenderer(ModEntities.PARALYSIS_SPELL_ENTITY_TYPE.get(), (provider) -> {
