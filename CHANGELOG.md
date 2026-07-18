@@ -15,12 +15,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 🐀 **Rat** — a small, common nuisance that lurks in the dark and swarms at night.
 - 🧟 **Sewer Ghoul** — a mossy, underground-dwelling cousin of the Ghoul. Like its kin it hunts farm animals and heals when it eats meat, but it never surfaces — you'll only meet it below ground.
 - 🐊 **Alligator Gar** — a hostile predator fish that lurks in rivers. A relatively rare find, but dangerous if it catches you in the water.
+- 🌳 **Wood Golem** — a bark-and-root guardian that holds its post instead of wandering, and slams anything that strays too close with a heavy knockback hit. Peaceful toward players by default (a setting can change that), but always ready to fight off nearby hostile monsters. Never found in the wild — only hand-placed or summoned.
+- 🛡️ **Animated Armor** — an unremarkable stand of armor... until you wander too close, or hit it. Never found in the wild — only hand-placed or summoned.
+- ⚔️ **Animated Weapon** — a masterless sword or axe that hovers in place, tracks you down, and telegraphs its swing with a brief windup before it strikes. Found lurking in dark dungeon biomes.
+- 🧙 **Orc Shaman** — a spellcasting Orc that keeps its distance and pelts you with Spike Growth rather than closing to melee. Goes down easier than a regular Orc in a straight fight, but dangerous if you let it keep its distance.
+- 💀 **Skeleton Champion** — a hulking, black-armored skeleton commander, noticeably bigger than the ranks it leads. It always carries a shield, wields real weapons you can actually see, and periodically lets out a rallying war cry that buffs nearby skeletons.
+- ⚡ **Electric Skeleton** — crackles with its own look now: a spinning cuff of electricity on each forearm and matching lightning-crack eyes.
 
 ### Changed
 
 - **Major internal rewrite:** Dungeon Denizens' monsters now run on a shared framework called *gottsch's Monster Manual*, split out so the same monster code can be reused across mods. Monster behavior, spawning, and stats are meant to feel exactly the same as before — this is a foundation change, not a rebalance.
 - **New required companion mod:** Dungeon Denizens now needs *gottsch's Monster Manual* installed alongside it to work. Grab both when you update.
 - Each monster's spawn conditions (whether it needs open sky, darkness, etc.) are now set individually through data files instead of being hardcoded, making them easier for pack authors to retune without a code change.
+- **Skeleton Warriors** and **Wights** can now raise a shield to block your hits when you close to melee — neither is guaranteed to carry one, but a **Skeleton Champion** always does.
+- **Bloater** has its own genuinely bloated look now instead of borrowing the plain zombie model, and bursts into flying arm shrapnel when it dies.
+- **Beholders** and **Wights** may now show up already accompanied by an escort — a Gazer or two for the Beholder, allies of its own for the Wight.
+- The Beholderkin family's **Paralysis** attack now genuinely roots you in place for a moment instead of just slowing you down.
+
+### Fixed
+
+- **Gelatinous Cube's** engulf attack now actually holds you in place for about a second before you can wriggle free, instead of releasing you the instant it grabs you.
+- Paralysis and a couple of other status effects were missing their icons and names in the effects list.
+- **Burning Skeleton** no longer sets nearby friendly undead on fire with its flame aura.
+- Fixed a hand-placed **Grave Zombie** trying to wander back to its own grave mid-fight instead of continuing to chase you.
 
 ---
 
