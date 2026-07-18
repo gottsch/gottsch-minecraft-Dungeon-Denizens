@@ -109,7 +109,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 	implementation fg.deobf("gottsch:gottschcore:1.20.1-2.6.0")
     // gottsch's Monster Manual (gmm) - shared mob base-class/asset library (v2.0 API refactor)
-    implementation fg.deobf("gottsch:monster-manual:1.20.1-1.0.0")
+    implementation fg.deobf("gottsch:monster-manual:[1.20.1-1.0.1,1.20.1-2.0.0)")
     compileOnly fg.deobf("gottsch:treasure2:1.20.1-3.6.2")
     // Jade (HUD) - dev-only QoL for inspecting mob health/AI state in-game; not shipped.
     // Auto-exclude Jade from any 'data' task as a precaution against datagen-time mixin conflicts.
