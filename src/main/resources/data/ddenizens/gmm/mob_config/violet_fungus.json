@@ -1,0 +1,18 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319,
+		"skyVisibility": "any",
+		"requiresDarkness": true
+	},
+	"properties": {
+		"lashRange": 3.0,
+		"lashCooldownTicks": 30.0,
+		"witherDurationTicks": 100.0,
+		"maxWitherStacks": 2.0
+	},
+	"flags": {
+		"appliesWither": true
+	}
+}

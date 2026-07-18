@@ -1,0 +1,20 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319,
+		"skyVisibility": "any",
+		"requiresDarkness": true
+	},
+	"properties": {
+		"detectRange": 16.0,
+		"ambushMinRadius": 2.0,
+		"ambushMaxRadius": 6.0,
+		"surfaceTicks": 50.0,
+		"reburrowTicks": 50.0,
+		"loseSightTicks": 100.0
+	},
+	"flags": {
+		"ambush": true
+	}
+}

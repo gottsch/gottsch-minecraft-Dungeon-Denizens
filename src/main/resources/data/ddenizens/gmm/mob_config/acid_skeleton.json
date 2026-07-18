@@ -1,0 +1,15 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319,
+		"skyVisibility": "any",
+		"requiresDarkness": true
+	},
+	"properties": {
+		"corrosion": 15.0
+	},
+	"flags": {
+		"corrodeGear": true
+	}
+}

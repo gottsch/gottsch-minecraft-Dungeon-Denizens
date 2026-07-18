@@ -1,0 +1,10 @@
+{
+	"spawn": {
+		"enabled": false,
+		"minHeight": -64,
+		"maxHeight": 60
+	},
+	"flags": {
+		"despawn": true
+	}
+}

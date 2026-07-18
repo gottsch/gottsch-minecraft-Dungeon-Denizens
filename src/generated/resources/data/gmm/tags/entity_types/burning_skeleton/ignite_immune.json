@@ -1,0 +1,26 @@
+{
+  "values": [
+    "minecraft:skeleton",
+    "minecraft:stray",
+    "minecraft:wither_skeleton",
+    "minecraft:zombie",
+    "minecraft:husk",
+    "minecraft:drowned",
+    "minecraft:zombie_villager",
+    "ddenizens:skeleton_warrior",
+    "ddenizens:winged_skeleton",
+    "ddenizens:iron_skeleton",
+    "ddenizens:magma_skeleton",
+    "ddenizens:frost_skeleton",
+    "ddenizens:tainted_skeleton",
+    "ddenizens:acid_skeleton",
+    "ddenizens:electric_skeleton",
+    "ddenizens:burning_skeleton",
+    "ddenizens:bloody_bones",
+    "ddenizens:skeleton_champion",
+    "ddenizens:bloater",
+    "ddenizens:grave_zombie",
+    "ddenizens:wight",
+    "ddenizens:bodak"
+  ]
+}

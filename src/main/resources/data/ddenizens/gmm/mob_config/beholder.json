@@ -1,0 +1,24 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 60
+	},
+	"netherSpawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319
+	},
+	"properties": {
+		"maxFloatHeight": 7,
+		"biteCooldownTime": 40,
+		"spellChargeTime": 80,
+		"summonCooldownTime": 1200,
+		"minSummonSpawns": 1,
+		"maxSummonSpawns": 1,
+		"summonDaemonCooldownTime": 2400
+	},
+	"flags": {
+		"despawn": true
+	}
+}

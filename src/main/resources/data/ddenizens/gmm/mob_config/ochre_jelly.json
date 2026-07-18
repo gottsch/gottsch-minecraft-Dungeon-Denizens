@@ -1,0 +1,18 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 50,
+		"skyVisibility": "must_not_see",
+		"requiresDarkness": true
+	},
+	"properties": {
+		"fireDamageMultiplier": 1.5,
+		"maxSplits": 2,
+		"splitHealthFraction": 0.75,
+		"attackCooldown": 40.0
+	},
+	"flags": {
+		"split": true
+	}
+}

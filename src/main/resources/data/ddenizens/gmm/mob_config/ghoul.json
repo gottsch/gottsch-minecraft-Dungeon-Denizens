@@ -1,0 +1,13 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319
+	},
+	"properties": {
+		"healAmount": 4.0
+	},
+	"flags": {
+		"canOpenDoors": true
+	}
+}

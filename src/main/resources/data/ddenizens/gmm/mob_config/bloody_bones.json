@@ -1,0 +1,17 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319,
+		"skyVisibility": "any",
+		"requiresDarkness": true
+	},
+	"properties": {
+		"maxResurrects": 3.0,
+		"downedTicks": 100.0,
+		"reviveHealthPct": 0.5
+	},
+	"flags": {
+		"selfResurrect": true
+	}
+}

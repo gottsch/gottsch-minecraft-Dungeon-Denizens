@@ -1,0 +1,14 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319
+	},
+	"properties": {
+		"explosionRadius": 1.5,
+		"shrapnelCount": 14
+	},
+	"flags": {
+		"destroyBlocks": false
+	}
+}

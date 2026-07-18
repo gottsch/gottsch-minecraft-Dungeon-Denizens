@@ -1,0 +1,15 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319
+	},
+	"netherSpawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319
+	},
+	"properties": {
+		"landProximity": 2.0
+	}
+}

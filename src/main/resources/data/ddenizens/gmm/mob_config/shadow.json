@@ -1,0 +1,18 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 60
+	},
+	"netherSpawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319
+	},
+	"properties": {
+		"blindnessProbability": 75.0,
+		"blindnessDuration": 60,
+		"weaknessProbability": 20.0,
+		"weaknessDuration": 100
+	}
+}

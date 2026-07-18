@@ -1,0 +1,7 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319
+	}
+}
