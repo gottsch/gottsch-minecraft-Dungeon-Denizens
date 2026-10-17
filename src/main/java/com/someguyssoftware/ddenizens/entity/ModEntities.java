@@ -25,7 +25,10 @@ import mod.gottsch.forge.gmm.core.entity.monster.Shadowlord;
 import mod.gottsch.forge.gmm.core.entity.monster.beholderkin.Spectator;
 import mod.gottsch.forge.gmm.core.entity.monster.beholderkin.Beholder;
 import mod.gottsch.forge.gmm.core.entity.monster.Headless;
+import mod.gottsch.forge.gmm.core.entity.monster.Minotaur;
+import mod.gottsch.forge.gmm.core.entity.monster.EmberHound;
 import mod.gottsch.forge.gmm.core.entity.monster.Orc;
+import mod.gottsch.forge.gmm.core.entity.monster.OrcWarlord;
 import mod.gottsch.forge.gmm.core.entity.monster.OrcShaman;
 import mod.gottsch.forge.gmm.core.entity.monster.ghoul.Ghoul;
 import mod.gottsch.forge.gmm.core.entity.monster.ghoul.SewerGhoul;
@@ -47,6 +50,7 @@ import mod.gottsch.forge.gmm.core.entity.monster.zombie.Bodak;
 import mod.gottsch.forge.gmm.core.entity.monster.plant.Shrieker;
 import mod.gottsch.forge.gmm.core.entity.monster.plant.VioletFungus;
 import mod.gottsch.forge.gmm.core.entity.monster.GelatinousCube;
+import mod.gottsch.forge.gmm.core.entity.monster.BlackPudding;
 import mod.gottsch.forge.gmm.core.entity.monster.OchreJelly;
 import mod.gottsch.forge.gmm.core.entity.monster.GrayOoze;
 import mod.gottsch.forge.gmm.core.entity.monster.mimic.VanillaChestMimic;
@@ -86,8 +90,11 @@ public class ModEntities {
 	public static final String GAZER = "gazer";
 	public static final String DAEMON = "daemon";
 	public static final String BOULDER = "boulder";
+	public static final String MINOTAUR = "minotaur";
+	public static final String EMBER_HOUND = "ember_hound";
 	public static final String ORC = "orc";
 	public static final String ORC_SHAMAN = "orc_shaman";
+	public static final String ORC_WARLORD = "orc_warlord";
 	public static final String SKELETON_WARRIOR = "skeleton_warrior";
 	public static final String WINGED_SKELETON = "winged_skeleton";
 	public static final String IRON_SKELETON = "iron_skeleton";
@@ -107,6 +114,7 @@ public class ModEntities {
 	public static final String GELATINOUS_CUBE = "gelatinous_cube";
 	public static final String OCHRE_JELLY = "ochre_jelly";
 	public static final String GRAY_OOZE = "gray_ooze";
+	public static final String BLACK_PUDDING = "black_pudding";
 	public static final String VANILLA_CHEST_MIMIC = "vanilla_chest_mimic";
 	public static final String BARREL_MIMIC = "barrel_mimic";
 	public static final String SKELETON_CHAMPION = "skeleton_champion";
@@ -160,6 +168,15 @@ public class ModEntities {
 			.clientTrackingRange(12)
 			.setShouldReceiveVelocityUpdates(false)
 			.build(ORC_SHAMAN));
+
+	// Sized as a plain Orc, NOT 1.2x. The 1.2x is a RENDER scale in OrcWarlordRenderer; growing the
+	// hitbox to match would wedge the chief in the doorways his own warband walks through. Same call
+	// SkeletonChampion makes.
+	public static final RegistryObject<EntityType<OrcWarlord>> ORC_WARLORD_ENTITY_TYPE = ENTITIES.register(ORC_WARLORD, () -> EntityType.Builder.of(OrcWarlord::new, MobCategory.MONSTER)
+			.sized(1F, 1.99F)
+			.clientTrackingRange(12)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(ORC_WARLORD));
 
 	public static final RegistryObject<EntityType<Ghoul>> GHOUL_ENTITY_TYPE = ENTITIES.register(GHOUL, () -> EntityType.Builder.of(Ghoul::new, MobCategory.MONSTER)
 			.sized(0.6F, 1.68F)
@@ -371,6 +388,15 @@ public class ModEntities {
 			.setShouldReceiveVelocityUpdates(false)
 			.build(GRAY_OOZE));
 
+	// the family's fastest and deadliest -- an active pursuer rather than a trap or an ambusher. Sized
+	// between the Cube and the Jelly; its split children shrink via BlackPudding#getDimensions rather
+	// than a separate EntityType, so one registration covers every generation.
+	public static final RegistryObject<EntityType<BlackPudding>> BLACK_PUDDING_TYPE = ENTITIES.register(BLACK_PUDDING, () -> EntityType.Builder.of(BlackPudding::new, MobCategory.MONSTER)
+			.sized(0.9F, 0.9F)
+			.clientTrackingRange(15)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(BLACK_PUDDING));
+
 	// disguised as a plain chest; NOT added to ALL_MOBS -- it's a dungeon-loot-room ambusher, not a
 	// biome-roaming natural spawn (see MobIdeasCatalog's "Chest Mimic" entry). Test via spawn egg / summon.
 	public static final RegistryObject<EntityType<VanillaChestMimic>> VANILLA_CHEST_MIMIC_TYPE = ENTITIES.register(VANILLA_CHEST_MIMIC, () -> EntityType.Builder.of(VanillaChestMimic::new, MobCategory.MONSTER)
@@ -423,6 +449,25 @@ public class ModEntities {
 			.clientTrackingRange(12)
 			.setShouldReceiveVelocityUpdates(false)
 			.build(SKELETON_CHAMPION));
+
+	// 1.0 wide rather than the ~1.25 the shoulders and horns actually measure, matching the Orc's
+	// convention: a >1 hitbox cannot path a 1-block corridor, and a dungeon brute that cannot follow
+	// you down a hallway is not a threat. Height 2.2 is the real model (feet y1 to horn tips y36.15).
+	public static final RegistryObject<EntityType<Minotaur>> MINOTAUR_TYPE = ENTITIES.register(MINOTAUR, () -> EntityType.Builder.of(Minotaur::new, MobCategory.MONSTER)
+			.sized(1.0F, 2.2F)
+			.clientTrackingRange(12)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(MINOTAUR));
+
+	// a minor fire elemental in hound shape (rig + texture from Mage Flame). Natural-spawns in dry,
+	// rainless overworld biomes and the Nether (see its biome modifiers). fireImmune() is also
+	// overridden in gmm.
+	public static final RegistryObject<EntityType<EmberHound>> EMBER_HOUND_TYPE = ENTITIES.register(EMBER_HOUND, () -> EntityType.Builder.of(EmberHound::new, MobCategory.MONSTER)
+			.sized(EmberHound.WIDTH, EmberHound.HEIGHT)
+			.fireImmune()
+			.clientTrackingRange(10)
+			.setShouldReceiveVelocityUpdates(false)
+			.build(EMBER_HOUND));
 
 	public static final RegistryObject<EntityType<Gargoyle>> GARGOYLE_TYPE = ENTITIES.register(GARGOYLE, () -> EntityType.Builder.of(Gargoyle::new, MobCategory.MONSTER)
 			.sized(0.75F, 1.75F)
@@ -535,6 +580,7 @@ public class ModEntities {
 		ALL_MOBS.add(DAEMON_ENTITY_TYPE);
 		ALL_MOBS.add(ORC_ENTITY_TYPE);
 		ALL_MOBS.add(ORC_SHAMAN_ENTITY_TYPE);
+		ALL_MOBS.add(ORC_WARLORD_ENTITY_TYPE);
 		ALL_MOBS.add(SKELETON_WARRIOR_TYPE);
 		ALL_MOBS.add(WINGED_SKELETON_TYPE);
 		ALL_MOBS.add(MAGMA_SKELETON_TYPE);
@@ -553,8 +599,11 @@ public class ModEntities {
 		ALL_MOBS.add(GELATINOUS_CUBE_TYPE);
 		ALL_MOBS.add(OCHRE_JELLY_TYPE);
 		ALL_MOBS.add(GRAY_OOZE_TYPE);
+		ALL_MOBS.add(BLACK_PUDDING_TYPE);
 		ALL_MOBS.add(IRON_SKELETON_TYPE);
 		ALL_MOBS.add(SKELETON_CHAMPION_TYPE);
+		ALL_MOBS.add(MINOTAUR_TYPE);
+		ALL_MOBS.add(EMBER_HOUND_TYPE);
 		ALL_MOBS.add(GARGOYLE_TYPE);
 		ALL_MOBS.add(MARGOYLE_TYPE);
 		ALL_MOBS.add(ANIMATED_WEAPON_TYPE);

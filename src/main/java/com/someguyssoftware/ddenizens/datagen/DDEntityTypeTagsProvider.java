@@ -34,6 +34,14 @@ public class DDEntityTypeTagsProvider extends EntityTypeTagsProvider {
                 .add(ModEntities.HEADLESS_ENTITY_TYPE.get(),
                      ModEntities.GAZER_ENTITY_TYPE.get());
 
+        // The warlord's rally AND his ally-alert both read this one tag: what he leads, he alerts.
+        // Only the two orc types on purpose -- a summoned mob this tag does not name would arrive and
+        // then be excluded from the rally, which is the one combination that makes the chief look
+        // broken rather than dangerous. Keep this in step with OrcWarlord.summonMobs in CommonSetup.
+        tag(GMMTags.EntityTypes.ORC_WARLORD_RALLY_ALLIES)
+                .add(ModEntities.ORC_ENTITY_TYPE.get(),
+                     ModEntities.ORC_SHAMAN_ENTITY_TYPE.get());
+
         // a rallied skeleton champion buffs nearby tagged pack-mates -- the vanilla skeleton plus DD's
         // own rank-and-file skeleton variants, so the rally has an actual pack to lead.
         tag(GMMTags.EntityTypes.SKELETON_CHAMPION_RALLY_ALLIES)

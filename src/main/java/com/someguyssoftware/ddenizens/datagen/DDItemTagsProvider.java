@@ -58,6 +58,11 @@ public class DDItemTagsProvider extends ItemTagsProvider {
         tag(GMMTags.Items.SHADOW_BANE).add(ModItems.SHADOW_BLADE.get());
         tag(GMMTags.Items.SHADOW_MINOR_BANE).add(ModItems.SHADOW_FALCHION.get());
 
+        // gmm Minotaur weapon pool. The minotaur axe ALONE, not one option among several: gmm ships
+        // no default for this tag precisely so the consumer's entry is the whole pool, and the axe is
+        // the mob's signature weapon rather than something it happens to have picked up.
+        tag(GMMTags.Items.MINOTAUR_WEAPONS).add(ModItems.MINOTAUR_AXE.get());
+
         // gmm SkeletonChampion weapon pool -- pristine steel blades (consumed by gmm's tag-driven equipment selection)
         tag(GMMTags.Items.SKELETON_CHAMPION_WEAPONS)
                 .add(ModItems.ROYAL_OATH.get(), ModItems.KINGSHIVER.get(), ModItems.BLACKFANG_SWORD.get());

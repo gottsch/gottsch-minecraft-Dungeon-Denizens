@@ -12,6 +12,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- 🐂 **Minotaur** — a bull-headed brute that would rather run you down than walk up to you. It plants
+  itself, drops its head so the horns lead, and then charges — and being hit by one throws you a long
+  way. Heavy enough that knocking it back barely works, and it will smash through a wall to reach you
+  rather than give up and go around.
+- 🗡️ **Orc Warlord** — the war-chief of an orc band, and he leads rather than swinging first. He
+  blows a horn to call more orcs to the fight, periodically rallies the ones already there with a
+  war cry that makes them faster and stronger, and the moment he spots you the whole warband spots
+  you with him. He also keeps to the edge of his own troops, so a wide swing catches grunts and not
+  the chief. Carries a real axe rather than the warband's chipped stone one.
+- 🪓 **Minotaur Axe** — the great axe a Minotaur carries, and the only weapon one ever wields. It
+  hits harder than the rusty axes found elsewhere in a dungeon and swings slower for it, and a
+  Minotaur will sometimes drop the one it was holding.
+- 🟪 **Black Pudding** — the ooze family's fastest and deadliest member; where the Gelatinous Cube is
+  a slow trap and the Gray Ooze a stationary ambusher, this one actively runs you down. Its strike
+  reaches noticeably further than melee range, so backing away doesn't buy the safety it would
+  against the other oozes. Cut it with a sword or axe (or catch it with lightning) and it splits in
+  two, each half weaker than the last — but hit it any other way and it just dies, no split. Found
+  deep in the Deep Dark.
+- 🔥 **Ember Hound** — a hound made of living fire, hunting in small packs across deserts, badlands
+  and savannas at night, and throughout the Nether. It leaps in to bite, and the bite sets you
+  alight. Punching or swinging at it up close burns you too, so a bow is the safer answer. Standing
+  in fire or lava heals it. Water is its weakness: a dunk, a rainstorm or a splash water bottle
+  douses it, and for a while its bite stops burning, it slows down and its glow fades.
+
+## [2.0.0] - 2026-07-18
+
+### Added
+
 - 🐀 **Rat** — a small, common nuisance that lurks in the dark and swarms at night.
 - 🧟 **Sewer Ghoul** — a mossy, underground-dwelling cousin of the Ghoul. Like its kin it hunts farm animals and heals when it eats meat, but it never surfaces — you'll only meet it below ground.
 - 🐊 **Alligator Gar** — a hostile predator fish that lurks in rivers. A relatively rare find, but dangerous if it catches you in the water.

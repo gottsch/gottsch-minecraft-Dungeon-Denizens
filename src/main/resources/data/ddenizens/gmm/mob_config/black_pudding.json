@@ -1,0 +1,19 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 30,
+		"skyVisibility": "must_not_see",
+		"requiresDarkness": true
+	},
+	"properties": {
+		"reachBonus": 1.0,
+		"maxGeneration": 3,
+		"splitHealthFraction": 0.5,
+		"attackCooldown": 30.0
+	},
+	"flags": {
+		"split": true,
+		"tendrilLash": true
+	}
+}

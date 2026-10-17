@@ -46,6 +46,9 @@ DDLanguageProvider extends LanguageProvider {
         add(ModItems.HEADLESS_EGG.get(), "Headless Spawn Egg");
     	add(ModEntities.ORC_ENTITY_TYPE.get(), "Orc");
         add(ModItems.ORC_EGG.get(), "Orc Spawn Egg");
+
+        add(ModEntities.ORC_WARLORD_ENTITY_TYPE.get(), "Orc Warlord");
+        add(ModItems.ORC_WARLORD_EGG.get(), "Orc Warlord Spawn Egg");
         add(ModEntities.ORC_SHAMAN_ENTITY_TYPE.get(), "Orc Shaman");
         add(ModItems.ORC_SHAMAN_EGG.get(), "Orc Shaman Spawn Egg");
         add(ModEntities.GHOUL_ENTITY_TYPE.get(), "Ghoul");
@@ -126,6 +129,11 @@ DDLanguageProvider extends LanguageProvider {
         add(ModEntities.SKELETON_CHAMPION_TYPE.get(), "Skeleton Champion");
         add(ModItems.SKELETON_CHAMPION_EGG.get(), "Skeleton Champion Spawn Egg");
 
+        add(ModEntities.MINOTAUR_TYPE.get(), "Minotaur");
+        add(ModItems.MINOTAUR_EGG.get(), "Minotaur Spawn Egg");
+        add(ModEntities.EMBER_HOUND_TYPE.get(), "Ember Hound");
+        add(ModItems.EMBER_HOUND_EGG.get(), "Ember Hound Spawn Egg");
+
         add(ModEntities.SHRIEKER_TYPE.get(), "Shrieker");
         add(ModItems.SHRIEKER_EGG.get(), "Shrieker Spawn Egg");
 
@@ -140,6 +148,8 @@ DDLanguageProvider extends LanguageProvider {
 
         add(ModEntities.GRAY_OOZE_TYPE.get(), "Gray Ooze");
         add(ModItems.GRAY_OOZE_EGG.get(), "Gray Ooze Spawn Egg");
+        add(ModEntities.BLACK_PUDDING_TYPE.get(), "Black Pudding");
+        add(ModItems.BLACK_PUDDING_EGG.get(), "Black Pudding Spawn Egg");
 
         add(ModEntities.VANILLA_CHEST_MIMIC_TYPE.get(), "Chest Mimic");
         add(ModItems.VANILLA_CHEST_MIMIC_EGG.get(), "Chest Mimic Spawn Egg");
@@ -174,6 +184,7 @@ DDLanguageProvider extends LanguageProvider {
         add(ModItems.CLUB.get(), "Club");
         add(ModItems.SPIKED_CLUB.get(), "Spiked Club");
         add(ModItems.RUSTY_IRON_AXE1.get(), "Rusty Iron Axe");
+        add(ModItems.MINOTAUR_AXE.get(), "Minotaur Axe");
         add(ModItems.RUSTY_IRON_AXE2.get(), "Rusty Iron Axe");
         add(ModItems.RUSTY_IRON_SWORD1.get(), "Rusty Iron Sword");
         add(ModItems.RUSTY_IRON_SWORD2.get(), "Rusty Iron Sword");

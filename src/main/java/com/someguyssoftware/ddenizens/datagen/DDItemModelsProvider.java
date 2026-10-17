@@ -71,6 +71,9 @@ public class DDItemModelsProvider extends ItemModelProvider {
 
         singleTexture(ModItems.RUSTY_IRON_AXE1.getId().getPath(),
                 modLoc("item/single_edge_sword"), "layer0", modLoc("item/" + ModItems.RUSTY_IRON_AXE1.getId().getPath()));
+        // same held-item display parent as the other DD weapons, so it sits in a hand the same way
+        singleTexture(ModItems.MINOTAUR_AXE.getId().getPath(),
+                modLoc("item/single_edge_sword"), "layer0", modLoc("item/" + ModItems.MINOTAUR_AXE.getId().getPath()));
         singleTexture(ModItems.RUSTY_IRON_AXE2.getId().getPath(),
                 modLoc("item/single_edge_sword"), "layer0", modLoc("item/" + ModItems.RUSTY_IRON_AXE2.getId().getPath()));
         singleTexture(ModItems.RUSTY_IRON_SWORD1.getId().getPath(),
@@ -107,6 +110,7 @@ public class DDItemModelsProvider extends ItemModelProvider {
         // ddenizens-forge-1.20.1-Handoff-Jul09.md §5d.
     	withExistingParent(ModItems.HEADLESS_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     	withExistingParent(ModItems.ORC_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.ORC_WARLORD_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     	withExistingParent(ModItems.ORC_SHAMAN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     	withExistingParent(ModItems.GHOUL_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     	withExistingParent(ModItems.SEWER_GHOUL_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
@@ -138,10 +142,13 @@ public class DDItemModelsProvider extends ItemModelProvider {
         withExistingParent(ModItems.VIOLET_FUNGUS_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.GELATINOUS_CUBE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.OCHRE_JELLY_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.BLACK_PUDDING_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.GRAY_OOZE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.VANILLA_CHEST_MIMIC_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.BARREL_MIMIC_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.SKELETON_CHAMPION_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.MINOTAUR_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.EMBER_HOUND_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.GARGOYLE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.MARGOYLE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.ANIMATED_ARMOR_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));

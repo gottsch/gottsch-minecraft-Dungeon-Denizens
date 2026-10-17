@@ -1,0 +1,30 @@
+{
+	"spawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319,
+		"skyVisibility": "any",
+		"requiresDarkness": true
+	},
+	"netherSpawn": {
+		"enabled": true,
+		"minHeight": -64,
+		"maxHeight": 319
+	},
+	"properties": {
+		"meleeFireSeconds": 4.0,
+		"fireFormSeconds": 3.0,
+		"stokeHeal": 1.0,
+		"stokeInterval": 20.0,
+		"wetDousedTicks": 100.0,
+		"splashDousedTicks": 200.0,
+		"dousedSlow": 0.3
+	},
+	"flags": {
+		"igniteOnHit": true,
+		"fireForm": true,
+		"stoked": true,
+		"doused": true,
+		"hurtByWater": false
+	}
+}

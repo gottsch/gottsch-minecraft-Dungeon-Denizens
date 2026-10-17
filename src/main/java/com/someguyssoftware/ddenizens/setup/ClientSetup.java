@@ -36,10 +36,15 @@ import mod.gottsch.forge.gmm.core.client.model.HeadlessModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.HeadlessRenderer;
 import mod.gottsch.forge.gmm.core.client.model.SkeletonWarriorModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.SkeletonWarriorRenderer;
+import mod.gottsch.forge.gmm.core.client.model.MinotaurModel;
+import mod.gottsch.forge.gmm.core.client.model.EmberHoundModel;
 import mod.gottsch.forge.gmm.core.client.model.OrcModel;
 import mod.gottsch.forge.gmm.core.client.model.OrcShamanModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.MinotaurRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.EmberHoundRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.OrcRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.OrcShamanRenderer;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.OrcWarlordRenderer;
 import mod.gottsch.forge.gmm.core.client.model.ShadowModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.ShadowRenderer;
 import mod.gottsch.forge.gmm.core.client.model.IronSkeletonModel;
@@ -69,6 +74,8 @@ import mod.gottsch.forge.gmm.core.client.model.VioletFungusModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.VioletFungusRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.GelatinousCubeRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.OchreJellyRenderer;
+import mod.gottsch.forge.gmm.core.client.model.BlackPuddingModel;
+import mod.gottsch.forge.gmm.core.client.renderer.entity.BlackPuddingRenderer;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.GrayOozeRenderer;
 import mod.gottsch.forge.gmm.core.client.model.VanillaChestMimicModel;
 import mod.gottsch.forge.gmm.core.client.renderer.entity.VanillaChestMimicRenderer;
@@ -130,6 +137,7 @@ public class ClientSetup {
 	 */
 	@SubscribeEvent()
 	public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+		event.registerLayerDefinition(BlackPuddingModel.LAYER_LOCATION, BlackPuddingModel::createBodyLayer);
 		event.registerLayerDefinition(HeadlessModel.LAYER_LOCATION, HeadlessModel::createBodyLayer);
 		event.registerLayerDefinition(OrcModel.LAYER_LOCATION, OrcModel::createBodyLayer);
 		event.registerLayerDefinition(OrcShamanModel.LAYER_LOCATION, OrcShamanModel::createBodyLayer);
@@ -155,6 +163,8 @@ public class ClientSetup {
 		event.registerLayerDefinition(FrostSkeletonModel.LAYER_LOCATION, FrostSkeletonModel::createBodyLayer);
 		event.registerLayerDefinition(TaintedSkeletonModel.LAYER_LOCATION, TaintedSkeletonModel::createBodyLayer);
 		event.registerLayerDefinition(SkeletonChampionModel.LAYER_LOCATION, SkeletonChampionModel::createBodyLayer);
+		event.registerLayerDefinition(MinotaurModel.LAYER_LOCATION, MinotaurModel::createBodyLayer);
+		event.registerLayerDefinition(EmberHoundModel.LAYER_LOCATION, EmberHoundModel::createBodyLayer);
 		event.registerLayerDefinition(ElectricSkeletonModel.LAYER_LOCATION, ElectricSkeletonModel::createBodyLayer);
 		event.registerLayerDefinition(ShriekerModel.LAYER_LOCATION, ShriekerModel::createBodyLayer);
 		event.registerLayerDefinition(VioletFungusModel.LAYER_LOCATION, VioletFungusModel::createBodyLayer);
@@ -186,6 +196,8 @@ public class ClientSetup {
         event.registerEntityRenderer(ModEntities.HEADLESS_ENTITY_TYPE.get(), HeadlessRenderer::new);
         event.registerEntityRenderer(ModEntities.ORC_ENTITY_TYPE.get(), OrcRenderer::new);
         event.registerEntityRenderer(ModEntities.ORC_SHAMAN_ENTITY_TYPE.get(), OrcShamanRenderer::new);
+        // re-bakes OrcModel.LAYER_LOCATION, already registered above -- no layer definition of its own
+        event.registerEntityRenderer(ModEntities.ORC_WARLORD_ENTITY_TYPE.get(), OrcWarlordRenderer::new);
         event.registerEntityRenderer(ModEntities.GHOUL_ENTITY_TYPE.get(), GhoulRenderer::new);
 		event.registerEntityRenderer(ModEntities.SEWER_GHOUL_ENTITY_TYPE.get(), SewerGhoulRenderer::new);
 		event.registerEntityRenderer(ModEntities.RAT_ENTITY_TYPE.get(), RatRenderer::new);
@@ -218,6 +230,8 @@ public class ClientSetup {
 		event.registerEntityRenderer(ModEntities.WIGHT_TYPE.get(), WightRenderer::new);
 		event.registerEntityRenderer(ModEntities.BODAK_TYPE.get(), BodakRenderer::new);
 		event.registerEntityRenderer(ModEntities.SKELETON_CHAMPION_TYPE.get(), SkeletonChampionRenderer::new);
+		event.registerEntityRenderer(ModEntities.MINOTAUR_TYPE.get(), MinotaurRenderer::new);
+		event.registerEntityRenderer(ModEntities.EMBER_HOUND_TYPE.get(), EmberHoundRenderer::new);
 		event.registerEntityRenderer(ModEntities.SHRIEKER_TYPE.get(), ShriekerRenderer::new);
 		event.registerEntityRenderer(ModEntities.VIOLET_FUNGUS_TYPE.get(), VioletFungusRenderer::new);
 		// Gelatinous Cube reuses the vanilla ModelLayers.SLIME rig — no new layer definition needed.
@@ -226,6 +240,7 @@ public class ClientSetup {
 		event.registerEntityRenderer(ModEntities.OCHRE_JELLY_TYPE.get(), OchreJellyRenderer::new);
 		// Gray Ooze reuses the vanilla ModelLayers.SLIME rig — no new layer definition needed.
 		event.registerEntityRenderer(ModEntities.GRAY_OOZE_TYPE.get(), GrayOozeRenderer::new);
+		event.registerEntityRenderer(ModEntities.BLACK_PUDDING_TYPE.get(), BlackPuddingRenderer::new);
 		event.registerEntityRenderer(ModEntities.VANILLA_CHEST_MIMIC_TYPE.get(), VanillaChestMimicRenderer::new);
 		event.registerEntityRenderer(ModEntities.BARREL_MIMIC_TYPE.get(), BarrelMimicRenderer::new);
 

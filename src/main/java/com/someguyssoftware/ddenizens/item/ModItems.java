@@ -33,6 +33,10 @@ public class ModItems {
 	public static final RegistryObject<Item> HEADLESS_EGG = ITEMS.register(HEADLESS + "_egg", () -> new ForgeSpawnEggItem(ModEntities.HEADLESS_ENTITY_TYPE, 0xc8b486, 0x6f5e48, new Item.Properties()));
 	public static final RegistryObject<Item> ORC_EGG = ITEMS.register(ORC + "_egg", () -> new ForgeSpawnEggItem(ModEntities.ORC_ENTITY_TYPE, 0x6b8e4e, 0x3f5c2c, new Item.Properties()));
 	public static final RegistryObject<Item> ORC_SHAMAN_EGG = ITEMS.register(ORC_SHAMAN + "_egg", () -> new ForgeSpawnEggItem(ModEntities.ORC_SHAMAN_ENTITY_TYPE, 0x6b8e4e, 0x4b2e83, new Item.Properties()));
+	// The warband green of ORC_EGG's primary over the warlord's oxblood -- "an orc, but the red
+	// one", which is exactly what the mob is. Same colours Dungeons2 uses, so the egg reads the
+	// same in a pack carrying both.
+	public static final RegistryObject<Item> ORC_WARLORD_EGG = ITEMS.register(ORC_WARLORD + "_egg", () -> new ForgeSpawnEggItem(ModEntities.ORC_WARLORD_ENTITY_TYPE, 0x5d6b4a, 0x6b1f22, new Item.Properties()));
 	public static final RegistryObject<Item> GHOUL_EGG = ITEMS.register(GHOUL + "_egg", () -> new ForgeSpawnEggItem(ModEntities.GHOUL_ENTITY_TYPE, 0x9fc2b8, 0x4f5b56, new Item.Properties()));
 	public static final RegistryObject<Item> SEWER_GHOUL_EGG = ITEMS.register(SEWER_GHOUL + "_egg", () -> new ForgeSpawnEggItem(ModEntities.SEWER_GHOUL_ENTITY_TYPE, 0x5a6650, 0x3d4636, new Item.Properties()));
 	public static final RegistryObject<Item> RAT_EGG = ITEMS.register(RAT + "_egg", () -> new ForgeSpawnEggItem(ModEntities.RAT_ENTITY_TYPE, 0x7a5c3e, 0x4a3521, new Item.Properties()));
@@ -69,9 +73,13 @@ public class ModItems {
 	public static final RegistryObject<Item> GELATINOUS_CUBE_EGG = ITEMS.register(GELATINOUS_CUBE + "_egg", () -> new ForgeSpawnEggItem(ModEntities.GELATINOUS_CUBE_TYPE, 0x9adfc7, 0x5fae95, new Item.Properties()));
 	public static final RegistryObject<Item> OCHRE_JELLY_EGG = ITEMS.register(OCHRE_JELLY + "_egg", () -> new ForgeSpawnEggItem(ModEntities.OCHRE_JELLY_TYPE, 0xadb83d, 0x5f6b1f, new Item.Properties()));
 	public static final RegistryObject<Item> GRAY_OOZE_EGG = ITEMS.register(GRAY_OOZE + "_egg", () -> new ForgeSpawnEggItem(ModEntities.GRAY_OOZE_TYPE, 0x7d8a8f, 0x4a5459, new Item.Properties()));
+	public static final RegistryObject<Item> BLACK_PUDDING_EGG = ITEMS.register(BLACK_PUDDING + "_egg", () -> new ForgeSpawnEggItem(ModEntities.BLACK_PUDDING_TYPE, 0x2b1d33, 0x5e456b, new Item.Properties()));
 	public static final RegistryObject<Item> VANILLA_CHEST_MIMIC_EGG = ITEMS.register(VANILLA_CHEST_MIMIC + "_egg", () -> new ForgeSpawnEggItem(ModEntities.VANILLA_CHEST_MIMIC_TYPE, 0x8f691d, 0x2f3a24, new Item.Properties()));
 	public static final RegistryObject<Item> BARREL_MIMIC_EGG = ITEMS.register(BARREL_MIMIC + "_egg", () -> new ForgeSpawnEggItem(ModEntities.BARREL_MIMIC_TYPE, 0x9f854d, 0x54452c, new Item.Properties()));
 	public static final RegistryObject<Item> SKELETON_CHAMPION_EGG = ITEMS.register(SKELETON_CHAMPION + "_egg", () -> new ForgeSpawnEggItem(ModEntities.SKELETON_CHAMPION_TYPE, 0xc9c9c9, 0x17171a, new Item.Properties()));
+
+	public static final RegistryObject<Item> MINOTAUR_EGG = ITEMS.register(MINOTAUR + "_egg", () -> new ForgeSpawnEggItem(ModEntities.MINOTAUR_TYPE, 0x8a4a34, 0xe8e2d2, new Item.Properties()));
+	public static final RegistryObject<Item> EMBER_HOUND_EGG = ITEMS.register(EMBER_HOUND + "_egg", () -> new ForgeSpawnEggItem(ModEntities.EMBER_HOUND_TYPE, 0xe8a33a, 0x8a2a0a, new Item.Properties()));
 
 	public static final RegistryObject<Item> GARGOYLE_EGG = ITEMS.register(GARGOYLE + "_egg", () -> new ForgeSpawnEggItem(ModEntities.GARGOYLE_TYPE, 0x6d6d81, 0x373b41, new Item.Properties()));
 	public static final RegistryObject<Item> MARGOYLE_EGG = ITEMS.register(MARGOYLE + "_egg", () -> new ForgeSpawnEggItem(ModEntities.MARGOYLE_TYPE, 0x7f7f7f, 0x5a6d41, new Item.Properties()));
@@ -114,6 +122,11 @@ public class ModItems {
 	public static final RegistryObject<Item> RUSTY_IRON_SWORD4 = ITEMS.register("rusty_iron_sword_4", () -> new SwordItem(Tiers.IRON, 3, -2.4F, new Item.Properties()));
 	public static final RegistryObject<Item> RUSTY_IRON_AXE1 = ITEMS.register("rusty_iron_axe", () -> new AxeItem(Tiers.IRON, 6F, -3F, new Item.Properties()));
 	public static final RegistryObject<Item> RUSTY_IRON_AXE2 = ITEMS.register("rusty_iron_axe_2", () -> new AxeItem(Tiers.IRON, 6F, -3F, new Item.Properties()));
+	// The Minotaur's signature greataxe: a notch above the rusty axes above (10 damage vs 9) and
+	// slower to swing for it. Iron tier rather than diamond deliberately -- it drops at the same
+	// 25% hand-drop chance the mob's other gear does, and a diamond-tier drop off a mid-tier brute
+	// would outclass what the player is likely carrying when they meet one.
+	public static final RegistryObject<Item> MINOTAUR_AXE = ITEMS.register("minotaur_axe", () -> new AxeItem(Tiers.IRON, 7F, -3.4F, new Item.Properties()));
 	public static final RegistryObject<Item> SHADOW_BLADE = ITEMS.register("shadow_blade", () -> new SwordItem(Tiers.IRON, 3, -2F, new Item.Properties()) {
 		@Override
 		public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
@@ -152,6 +165,7 @@ public class ModItems {
 				output.accept(HEADLESS_EGG.get());
 				output.accept(ORC_EGG.get());
 					output.accept(ORC_SHAMAN_EGG.get());
+					output.accept(ORC_WARLORD_EGG.get());
 				output.accept(GHOUL_EGG.get());
 				output.accept(SEWER_GHOUL_EGG.get());
 				output.accept(RAT_EGG.get());
@@ -183,8 +197,11 @@ public class ModItems {
 				output.accept(GELATINOUS_CUBE_EGG.get());
 				output.accept(OCHRE_JELLY_EGG.get());
 				output.accept(GRAY_OOZE_EGG.get());
+				output.accept(BLACK_PUDDING_EGG.get());
 				output.accept(VANILLA_CHEST_MIMIC_EGG.get());
 				output.accept(BARREL_MIMIC_EGG.get());
+				output.accept(MINOTAUR_EGG.get());
+				output.accept(EMBER_HOUND_EGG.get());
 				output.accept(GARGOYLE_EGG.get());
 				output.accept(MARGOYLE_EGG.get());
 				output.accept(ANIMATED_ARMOR_EGG.get());
@@ -199,6 +216,7 @@ public class ModItems {
 				output.accept(RUSTY_IRON_SWORD4.get());
 				output.accept(RUSTY_IRON_AXE1.get());
 				output.accept(RUSTY_IRON_AXE2.get());
+				output.accept(MINOTAUR_AXE.get());
 				output.accept(SHADOW_BLADE.get());
 				output.accept(SHADOW_FALCHION.get());
 				output.accept(ROYAL_OATH.get());

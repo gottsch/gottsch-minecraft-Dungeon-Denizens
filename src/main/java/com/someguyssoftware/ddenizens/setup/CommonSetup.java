@@ -28,7 +28,10 @@ import mod.gottsch.forge.gmm.core.entity.monster.ghoul.SewerGhoul;
 import mod.gottsch.forge.gmm.core.entity.monster.Rat;
 import mod.gottsch.forge.gmm.core.entity.monster.AlligatorGar;
 import mod.gottsch.forge.gmm.core.entity.monster.Headless;
+import mod.gottsch.forge.gmm.core.entity.monster.Minotaur;
+import mod.gottsch.forge.gmm.core.entity.monster.EmberHound;
 import mod.gottsch.forge.gmm.core.entity.monster.Orc;
+import mod.gottsch.forge.gmm.core.entity.monster.OrcWarlord;
 import mod.gottsch.forge.gmm.core.entity.monster.OrcShaman;
 import mod.gottsch.forge.gmm.core.entity.monster.Shadow;
 import mod.gottsch.forge.gmm.core.entity.monster.skeleton.SkeletonWarrior;
@@ -58,6 +61,7 @@ import mod.gottsch.forge.gmm.core.entity.monster.zombie.Bodak;
 import mod.gottsch.forge.gmm.core.entity.monster.plant.Shrieker;
 import mod.gottsch.forge.gmm.core.entity.monster.plant.VioletFungus;
 import mod.gottsch.forge.gmm.core.entity.monster.GelatinousCube;
+import mod.gottsch.forge.gmm.core.entity.monster.BlackPudding;
 import mod.gottsch.forge.gmm.core.entity.monster.OchreJelly;
 import mod.gottsch.forge.gmm.core.entity.monster.GrayOoze;
 import mod.gottsch.forge.gmm.core.entity.monster.mimic.VanillaChestMimic;
@@ -194,6 +198,20 @@ public class CommonSetup {
 		DeathTyrant.spellCaster = paralysisSpell;
 		Spectator.spellCaster = paralysisSpell;
 
+		// The warlord's horn. This is one of TWO hooks the warlord needs and BOTH fail silently:
+		// unset, the summon goal is never even added and the chief simply never calls anyone, with
+		// nothing in the log. The other is the gmm:orc_warlord/rally_allies entity tag, populated in
+		// DDEntityTypeTagsProvider -- keep the two in step, because a summoned mob the tag does not
+		// name arrives and is then excluded from the rally.
+		//
+		// His own warband, as TROOPS rather than a second boss wave. The shaman is in at 25% for
+		// texture: one caster among three grunts changes where the player has to stand, where four
+		// identical melee orcs would just be more of the same body. Same split Dungeons2 uses.
+		WeightedCollection<Double, EntityType<? extends Mob>> warlordMobs = new WeightedCollection<>();
+		warlordMobs.add(75D, ModEntities.ORC_ENTITY_TYPE.get());
+		warlordMobs.add(25D, ModEntities.ORC_SHAMAN_ENTITY_TYPE.get());
+		OrcWarlord.summonMobs = warlordMobs;
+
 		WeightedCollection<Double, EntityType<? extends Mob>> beholderMobs = new WeightedCollection<>();
 		beholderMobs.add(60D, ModEntities.HEADLESS_ENTITY_TYPE.get());
 		beholderMobs.add(40D, ModEntities.ORC_ENTITY_TYPE.get());
@@ -270,6 +288,7 @@ public class CommonSetup {
 		event.put(ModEntities.HEADLESS_ENTITY_TYPE.get(), Headless.createAttributes().build());
 		event.put(ModEntities.ORC_ENTITY_TYPE.get(), Orc.createAttributes().build());
 		event.put(ModEntities.ORC_SHAMAN_ENTITY_TYPE.get(), OrcShaman.createAttributes().build());
+		event.put(ModEntities.ORC_WARLORD_ENTITY_TYPE.get(), OrcWarlord.createAttributes().build());
 		event.put(ModEntities.GHOUL_ENTITY_TYPE.get(), Ghoul.createAttributes().build());
 		event.put(ModEntities.SEWER_GHOUL_ENTITY_TYPE.get(), SewerGhoul.createAttributes().build());
 		event.put(ModEntities.RAT_ENTITY_TYPE.get(), Rat.createAttributes().build());
@@ -301,12 +320,15 @@ public class CommonSetup {
 		event.put(ModEntities.GELATINOUS_CUBE_TYPE.get(), GelatinousCube.createAttributes().build());
 		event.put(ModEntities.OCHRE_JELLY_TYPE.get(), OchreJelly.createAttributes().build());
 		event.put(ModEntities.GRAY_OOZE_TYPE.get(), GrayOoze.createAttributes().build());
+		event.put(ModEntities.BLACK_PUDDING_TYPE.get(), BlackPudding.createAttributes().build());
 		event.put(ModEntities.VANILLA_CHEST_MIMIC_TYPE.get(), VanillaChestMimic.createAttributes().build());
 		event.put(ModEntities.BARREL_MIMIC_TYPE.get(), BarrelMimic.createAttributes().build());
 		event.put(ModEntities.ANIMATED_ARMOR_TYPE.get(), AnimatedArmor.createAttributes().build());
 		event.put(ModEntities.ANIMATED_WEAPON_TYPE.get(), AnimatedWeapon.createAttributes().build());
 		event.put(ModEntities.WOOD_GOLEM_TYPE.get(), WoodGolem.createAttributes().build());
 		event.put(ModEntities.SKELETON_CHAMPION_TYPE.get(), SkeletonChampion.createAttributes().build());
+		event.put(ModEntities.MINOTAUR_TYPE.get(), Minotaur.createAttributes().build());
+		event.put(ModEntities.EMBER_HOUND_TYPE.get(), EmberHound.createAttributes().build());
 
 		event.put(ModEntities.GARGOYLE_TYPE.get(), Gargoyle.createAttributes().build());
 		event.put(ModEntities.MARGOYLE_TYPE.get(), Margoyle.createAttributes().build());
@@ -318,6 +340,7 @@ public class CommonSetup {
 		event.register(ModEntities.HEADLESS_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.ORC_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.ORC_SHAMAN_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.ORC_WARLORD_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.GHOUL_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.SEWER_GHOUL_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.RAT_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
@@ -350,6 +373,7 @@ public class CommonSetup {
 		event.register(ModEntities.GELATINOUS_CUBE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.OCHRE_JELLY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.GRAY_OOZE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.BLACK_PUDDING_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		// placement rules only -- NOT added to ModEntities.ALL_MOBS, so this never natural-spawns by
 		// biome; it's a dungeon-loot-room ambusher meant to be hand-placed, see ModEntities note.
 		event.register(ModEntities.VANILLA_CHEST_MIMIC_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
@@ -366,6 +390,8 @@ public class CommonSetup {
 		event.register(ModEntities.ANIMATED_WEAPON_TYPE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
 		event.register(ModEntities.SKELETON_CHAMPION_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.MINOTAUR_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.EMBER_HOUND_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
 		event.register(ModEntities.GARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.MARGOYLE_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnRulesUtil::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
@@ -378,6 +404,7 @@ public class CommonSetup {
 			event.accept(ModItems.HEADLESS_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.ORC_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.ORC_SHAMAN_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.ORC_WARLORD_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.GHOUL_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.SEWER_GHOUL_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.RAT_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
@@ -410,7 +437,10 @@ public class CommonSetup {
 			event.accept(ModItems.GELATINOUS_CUBE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.OCHRE_JELLY_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.GRAY_OOZE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.BLACK_PUDDING_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.SKELETON_CHAMPION_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.MINOTAUR_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.accept(ModItems.EMBER_HOUND_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 
 			event.accept(ModItems.GARGOYLE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.accept(ModItems.MARGOYLE_EGG.get(), TabVisibility.PARENT_AND_SEARCH_TABS);
